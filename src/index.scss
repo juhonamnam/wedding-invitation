@@ -1,0 +1,56 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.background {
+  // background-color: #282c34;
+  background-color: #FFEAEA;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-width: 100vw;
+
+  .card-view {
+    width: 500px;
+
+    .section {
+      background-color: #fff;
+      width: 100%;
+
+      box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+
+      // margin: 0px;
+      // padding: 20px;
+
+      // border-radius: 10px;
+
+      display: inline-block;
+      border: 1px solid #e0e0e0;
+
+      // display: flex;
+      // flex-direction: column;
+      // align-items: center;
+      // justify-content: center;
+      // .title {
+      //   font-size: 24px;
+      //   font-weight: bold;
+      //   margin-bottom: 20px;
+      // }
+      // .input {
+      //   width: 100%;
+      //   margin-bottom: 20px;
+      // }
+      // .button {
+      //   width: 100%;
+      //   margin-bottom: 20px;
+      // }
+    }
+  }
+}
