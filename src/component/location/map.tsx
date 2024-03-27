@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 
 const NAVER_MAP_URL = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.REACT_APP_NAVER_MAP_CLIENT_ID}`
+const WEDDING_HALL_POSITION = [126.9594982, 37.4657134]
 
 interface MapProps extends React.HTMLAttributes<HTMLDivElement> {
   mapOption?: {
@@ -10,13 +11,11 @@ interface MapProps extends React.HTMLAttributes<HTMLDivElement> {
   markerOptions?: Array<{ position: [number, number] }>
 }
 
-export const Map = (props: MapProps) => {
-  const { mapOption, markerOptions, ...rest } = props
-
+export const Map = (props: React.HTMLAttributes<HTMLDivElement>) => {
   return process.env.REACT_APP_NAVER_MAP_CLIENT_ID ? (
     <NaverMap {...props} />
   ) : (
-    <div {...rest}>
+    <div {...props}>
       Client id for naver map api is not defined. Please add your client id in
       <code>.env</code> file in the following format: <br />
       <code>REACT_APP_NAVER_MAP_CLIENT_ID=your_client_id</code>
@@ -25,8 +24,6 @@ export const Map = (props: MapProps) => {
 }
 
 const NaverMap = (props: MapProps) => {
-  const { mapOption = {}, markerOptions = [], ...rest } = props
-
   const [naver, setNaver] = useState<any>(null)
   const ref = useRef<HTMLDivElement>(null)
 
@@ -45,16 +42,18 @@ const NaverMap = (props: MapProps) => {
 
   useEffect(() => {
     if (naver) {
-      const map = new naver.maps.Map(ref.current, mapOption)
+      const map = new naver.maps.Map(ref.current, {
+        center: WEDDING_HALL_POSITION,
+        zoom: 17,
+      })
 
-      for (const markerOption of markerOptions) {
-        new naver.maps.Marker({ ...markerOption, map })
-      }
+      new naver.maps.Marker({ position: WEDDING_HALL_POSITION, map })
+
       return () => {
         map.destroy()
       }
     }
-  }, [naver, mapOption, markerOptions])
+  }, [naver])
 
-  return <div {...rest} ref={ref}></div>
+  return <div {...props} ref={ref}></div>
 }

@@ -1,0 +1,11 @@
+button.button {
+  font-family: inherit;
+  background: none;
+  position: relative;
+  z-index: 3;
+  cursor: pointer;
+  border: solid 0.1rem var(--primary-color);
+  border-radius: 0.3rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+}

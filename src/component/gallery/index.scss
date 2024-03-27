@@ -1,0 +1,39 @@
+.gallery {
+  .carousel-wrapper {
+    display: flex;
+    justify-content: center;
+    .carousel {
+      width: 21rem;
+      overflow: hidden;
+      position: relative;
+      z-index: 3;
+
+      /* 글자 드래그 막기 */
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+
+      .carousel-list {
+        display: flex;
+        width: fit-content;
+        justify-content: center;
+
+        &.transitioning {
+          transition: 0.3s ease-out;
+        }
+
+        .carousel-item {
+          width: 21rem;
+          height: 21rem;
+          img {
+            max-width: 21rem;
+            max-height: 21rem;
+            width: auto;
+            height: auto;
+          }
+        }
+      }
+    }
+  }
+}
