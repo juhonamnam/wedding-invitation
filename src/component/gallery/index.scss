@@ -1,7 +1,8 @@
 .gallery {
   .carousel-wrapper {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     .carousel {
       width: 21rem;
       overflow: hidden;
@@ -32,6 +33,28 @@
             width: auto;
             height: auto;
           }
+        }
+      }
+    }
+
+    .carousel-indicator {
+      display: flex;
+      justify-content: center;
+      margin-top: 1rem;
+
+      .indicator {
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+        background-color: var(--dark-grey-color);
+        margin: 0 0.2rem;
+        position: relative;
+        z-index: 3;
+        cursor: pointer;
+
+        &.active {
+          background-color: var(--dark-color);
+          cursor: default;
         }
       }
     }
