@@ -6,7 +6,8 @@
 @use "./component/gallery";
 
 :root {
-  --primary-color: #ffeaea;
+  --theme-color: #ff8585;
+  --theme-bg-color: #ffeaea;
   --dark-color: #282c34;
   --dark-grey-color: #c4c4c4;
   --light-grey-color: #f5f5f5;
@@ -55,11 +56,10 @@ body {
 * {
   box-sizing: border-box;
   color: var(--dark-color);
-  // color: #804E2D;
 }
 
 .background {
-  background-color: var(--primary-color);
+  background-color: var(--theme-bg-color);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -68,7 +68,6 @@ body {
   min-width: 100vw;
 
   .card-view {
-    // border: 1px solid #e0e0e0;
     width: 980px;
     text-align: center;
 
@@ -98,7 +97,7 @@ body {
 
         padding: 20px;
         // border-radius: 10px;
-        border: 1px solid var(--info-color);
+        border: 1px solid var(--light-grey-color);
         width: 50%;
 
         display: flex;
@@ -117,5 +116,14 @@ body {
         }
       }
     }
+  }
+}
+
+h2 {
+  font-size: 1.5rem;
+  color: var(--theme-color);
+  font-weight: 500;
+  &.english {
+    font-family: "Allura";
   }
 }

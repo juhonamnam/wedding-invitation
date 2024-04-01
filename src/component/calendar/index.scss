@@ -1,8 +1,5 @@
 .calendar {
-  .title {
-    font-size: 1.5rem;
-  }
-  .calendar-component {
+  .calendar-wrapper {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     margin: 1rem;
@@ -34,7 +31,7 @@
         > div.heart {
           width: 50%;
           height: 50%;
-          background: var(--primary-color);
+          background: var(--theme-bg-color);
           top: 35%;
           left: 25%;
           position: absolute;
@@ -48,7 +45,7 @@
             top: -50%;
             left: 0%;
             border-radius: 50%;
-            background: var(--primary-color);
+            background: var(--theme-bg-color);
           }
           &::after {
             content: "";
@@ -57,7 +54,7 @@
             position: absolute;
             left: -50%;
             border-radius: 50%;
-            background: var(--primary-color);
+            background: var(--theme-bg-color);
           }
         }
       }

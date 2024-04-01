@@ -30,9 +30,9 @@ export const Calendar = () => {
 
   return (
     <div className="section calendar">
-      <div className="title">Calendar</div>
+      <h2 className="english">Calendar</h2>
       {WEDDING_DATE.format("YYYY년 MMMM D일 dddd A h시")}
-      <div className="calendar-component">
+      <div className="calendar-wrapper">
         <div className="head holiday">
           <span>Su</span>
         </div>
