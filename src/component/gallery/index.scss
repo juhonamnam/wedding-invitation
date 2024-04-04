@@ -1,3 +1,6 @@
+$gallery-width: 21rem;
+$gallery-height: 25rem;
+
 .gallery {
   .carousel-wrapper {
     display: flex;
@@ -23,11 +26,11 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          width: 21rem;
-          height: 30rem;
+          width: $gallery-width;
+          height: $gallery-height;
           img {
-            max-width: 21rem;
-            max-height: 30rem;
+            max-width: $gallery-width;
+            max-height: $gallery-height;
             width: auto;
             height: auto;
           }

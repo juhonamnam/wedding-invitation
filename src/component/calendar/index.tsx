@@ -7,6 +7,11 @@ const daysInMonth = WEDDING_DATE.daysInMonth()
 export const Calendar = () => {
   const [tsDiff, setTsDiff] = useState(WEDDING_DATE.diff())
 
+  const dayDiff = useMemo(() => {
+    const dayOffset = WEDDING_DATE.diff(WEDDING_DATE.startOf("day"))
+    return Math.ceil((tsDiff - dayOffset) / 1000 / 60 / 60 / 24)
+  }, [tsDiff])
+
   useEffect(() => {
     const interval = setInterval(() => {
       const diff = WEDDING_DATE.diff()
@@ -30,7 +35,7 @@ export const Calendar = () => {
 
   return (
     <div className="section calendar">
-      <h2 className="english">Calendar</h2>
+      <h2 className="english">The Wedding Day</h2>
       {WEDDING_DATE.format("YYYY년 MMMM D일 dddd A h시")}
       <div className="calendar-wrapper">
         <div className="head holiday">
@@ -85,13 +90,42 @@ export const Calendar = () => {
           )
         })}
       </div>
-
-      <div className="d-day">
-        <div>day: {diffs.days}</div>
-        <div>hour: {diffs.hours}</div>
-        <div>minute: {diffs.minutes}</div>
-        <div>second: {diffs.seconds}</div>
+      <div className="countdown">
+        <div>
+          <div className="count">{diffs.days}</div>
+          <div className="unit">DAY</div>
+        </div>
+        <span>:</span>
+        <div>
+          <div className="count">{diffs.hours}</div>
+          <div className="unit">HOUR</div>
+        </div>
+        <span>:</span>
+        <div>
+          <div className="count">{diffs.minutes}</div>
+          <div className="unit">MIN</div>
+        </div>
+        <span>:</span>
+        <div>
+          <div className="count">{diffs.seconds}</div>
+          <div className="unit">SEC</div>
+        </div>
       </div>
+      <br />
+      <p>
+        주호 & 지원의 결혼식이{" "}
+        {dayDiff > 0 ? (
+          <>
+            <span className="d-day">{dayDiff}</span>일 남았습니다.
+          </>
+        ) : dayDiff === 0 ? (
+          <>오늘입니다.</>
+        ) : (
+          <>
+            <span className="d-day">{-dayDiff}</span>일 지났습니다.
+          </>
+        )}
+      </p>
     </div>
   )
 }

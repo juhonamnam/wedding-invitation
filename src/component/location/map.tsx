@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react"
 
 const NAVER_MAP_URL = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.REACT_APP_NAVER_MAP_CLIENT_ID}`
 const WEDDING_HALL_POSITION = [126.9594982, 37.4657134]
+const BUS_STOP_POSITION = [126.957706, 37.465071]
+const PARKING_LOT_POSITION = [126.960266, 37.465467]
 
 interface MapProps extends React.HTMLAttributes<HTMLDivElement> {
   mapOption?: {
@@ -48,6 +50,8 @@ const NaverMap = (props: MapProps) => {
       })
 
       new naver.maps.Marker({ position: WEDDING_HALL_POSITION, map })
+      new naver.maps.Marker({ position: BUS_STOP_POSITION, map })
+      new naver.maps.Marker({ position: PARKING_LOT_POSITION, map })
 
       return () => {
         map.destroy()

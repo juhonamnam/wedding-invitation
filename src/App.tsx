@@ -30,19 +30,20 @@ function App() {
         <div className="section-group">
           {/* 오시는길 */}
           <Location />
+        </div>
 
+        <div className="section-group">
           {/* 마음 전하기 */}
           <div className="section" style={{ height: 500 }}>
             <h1>마음 전하기 (계좌번호)</h1>
           </div>
-        </div>
-
-        <div className="section-group">
           {/* 참석 의사 */}
           <div className="section" style={{ height: 400 }}>
             <h1>참석 의사</h1>
           </div>
+        </div>
 
+        <div className="section-group">
           {/* 방명록 */}
           <div className="section" style={{ height: 500 }}>
             <h1>방명록</h1>

@@ -29,12 +29,17 @@ export const Front = () => {
         </div>
       </div>
       <img src={sample} alt="sample" style={{ width: "100%" }} />
-      <p className="subtitle">Save the date for the wedding of</p>
-      <p>
+      <br />
+      <span className="subtitle">Save the date for the wedding of</span>
+      <br />
+      <span>
         {GROOM} & {BRIDE}
-      </p>
-      <p>{WEDDING_DATE.format("YYYY년 MMMM D일 dddd A h시")}</p>
-      <p>서울대 연구공원 웨딩홀</p>
+      </span>
+      <br />
+      <span>{WEDDING_DATE.format("YYYY년 MMMM D일 dddd A h시")}</span>
+      <br />
+      <span>서울대 연구공원 웨딩홀</span>
+      <br />
     </div>
   )
 }

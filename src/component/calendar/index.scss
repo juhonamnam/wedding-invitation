@@ -60,4 +60,34 @@
       }
     }
   }
+
+  .countdown {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    * {
+      margin: 0 0.1rem;
+    }
+    .count {
+      background-color: var(--theme-bg-light-color);
+      padding: 0.8rem;
+      padding-bottom: 0.3rem;
+      border-radius: 0.3rem;
+      opacity: 0.8;
+    }
+    .unit {
+      margin-top: 0.2rem;
+      background-color: var(--theme-bg-light-color);
+      padding: 0.5rem;
+      padding-top: 0.2rem;
+      border-radius: 0.3rem;
+      font-weight: bold;
+      font-size: 0.5rem;
+      opacity: 0.8;
+    }
+  }
+
+  .d-day {
+    color: var(--theme-color);
+  }
 }
