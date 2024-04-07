@@ -116,7 +116,7 @@ export const Gallery = () => {
 
       setDragOption({
         ...dragOption,
-        currentTranslateX: moveTranslateX - carouselRef.current.clientWidth,
+        currentTranslateX: moveTranslateX - carouselWidth,
       })
     },
     [],
