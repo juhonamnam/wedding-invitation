@@ -4,7 +4,13 @@ export const Location = () => {
   return (
     <>
       <div className="section location">
-        <h1>오시는길</h1>
+        <h2 className="english">location</h2>
+        <p>
+          서울대학교 연구공원 웨딩홀
+          <br />
+          <br />
+          서울시 관악구 관악로 1, 연구공원 본관 1층
+        </p>
         <Map className="map" />
         <div>
           <p>대중교통</p>

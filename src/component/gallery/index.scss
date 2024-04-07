@@ -1,5 +1,5 @@
 $gallery-width: 21rem;
-$gallery-height: 25rem;
+$gallery-height: 24rem;
 
 .gallery {
   .carousel-wrapper {
@@ -11,7 +11,6 @@ $gallery-height: 25rem;
       overflow: hidden;
       position: relative;
       z-index: 3;
-      user-select: none;
 
       .carousel-list {
         display: flex;

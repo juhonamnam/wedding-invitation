@@ -124,7 +124,7 @@ export const BGEffect = () => {
 
   return (
     <div className="bg-effect">
-      <canvas ref={ref} style={{ position: "absolute" }} />
+      <canvas ref={ref} />
     </div>
   )
 }

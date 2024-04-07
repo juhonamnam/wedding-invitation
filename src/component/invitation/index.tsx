@@ -12,6 +12,9 @@ export const Invitation = () => {
   return (
     <div className="section invitation">
       <h2 className="english">Invitation</h2>
+
+      <br />
+
       <p className="letter-content">
         서로 마주 보며 다져온 사랑이 이제 결실을 맺습니다.
       </p>
@@ -41,6 +44,7 @@ export const Invitation = () => {
         {BRIDE}
       </p>
 
+      <br />
       <br />
 
       <Button onClick={() => alert("test")}>연락하기</Button>

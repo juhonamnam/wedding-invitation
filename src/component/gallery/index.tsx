@@ -20,9 +20,12 @@ const ITEMS = [
   </div>
 ))
 
+const DRAG_SENSITIVITY = 15
+
 type Status =
   | "stationary"
   | "clicked"
+  | "clickCanceled"
   | "dragging"
   | "dragEnding"
   | "prepareMoving"
@@ -30,6 +33,7 @@ type Status =
 
 type DragOption = {
   startingClientX: number
+  startingClientY: number
   currentTranslateX: number
 }
 
@@ -56,10 +60,12 @@ export const Gallery = () => {
 
   const [dragOption, _setDragOption] = useState<DragOption>({
     startingClientX: 0,
+    startingClientY: 0,
     currentTranslateX: 0,
   })
   const dragOptionRef = useRef<DragOption>({
     startingClientX: 0,
+    startingClientY: 0,
     currentTranslateX: 0,
   })
   const setDragOption = (dragOption: DragOption) => {
@@ -83,101 +89,118 @@ export const Gallery = () => {
   //   console.log(status)
   // }, [status])
 
-  const click = (status: Status, clientX: number) => {
+  const click = (
+    status: Status,
+    clientX: number,
+    clientY: number,
+    carouselWidth: number,
+  ) => {
     if (status !== "stationary") return
     setDragOption({
       startingClientX: clientX,
-      currentTranslateX: -carouselRef.current.clientWidth,
+      startingClientY: clientY,
+      currentTranslateX: -carouselWidth,
     })
     setStatus("clicked")
   }
 
-  const dragging = useCallback((dragOption: DragOption, clientX: number) => {
-    let moveTranslateX = clientX - dragOption.startingClientX
-    if (moveTranslateX === 0) return
+  const dragging = useCallback(
+    (dragOption: DragOption, clientX: number, carouselWidth: number) => {
+      let moveTranslateX = clientX - dragOption.startingClientX
 
-    setStatus("dragging")
+      if (moveTranslateX > carouselWidth) {
+        moveTranslateX = carouselWidth
+      } else if (moveTranslateX < -carouselWidth) {
+        moveTranslateX = -carouselWidth
+      }
 
-    if (moveTranslateX > carouselRef.current.clientWidth) {
-      moveTranslateX = carouselRef.current.clientWidth
-    } else if (moveTranslateX < -carouselRef.current.clientWidth) {
-      moveTranslateX = -carouselRef.current.clientWidth
-    }
-
-    setDragOption({
-      ...dragOption,
-      currentTranslateX: moveTranslateX - carouselRef.current.clientWidth,
-    })
-  }, [])
-
-  const dragEnd = useCallback((slide: number, dragOption: DragOption) => {
-    let move = 0
-    if (dragOption.currentTranslateX < -carouselRef.current.clientWidth * 1.1) {
-      move = 1
-    } else if (
-      dragOption.currentTranslateX >
-      -carouselRef.current.clientWidth * 0.9
-    ) {
-      move = -1
-    }
-
-    setDragOption({
-      ...dragOption,
-      currentTranslateX: -carouselRef.current.clientWidth * (move + 1),
-    })
-
-    setStatus("dragEnding")
-
-    setTimeout(() => {
       setDragOption({
         ...dragOption,
-        currentTranslateX: -carouselRef.current.clientWidth,
+        currentTranslateX: moveTranslateX - carouselRef.current.clientWidth,
       })
-      setStatus("stationary")
-      setSlide((slide + move + ITEMS.length) % ITEMS.length)
-    }, 300)
-  }, [])
+    },
+    [],
+  )
 
-  const move = useCallback((srcIdx: number, dstIdx: number) => {
-    setSlide(dstIdx)
-    setStatus("prepareMoving")
-    let srcTranslateX
-    let dstTranslateX: number
-    if (srcIdx < dstIdx) {
-      srcTranslateX = 0
-      dstTranslateX = -carouselRef.current.clientWidth * (dstIdx - srcIdx)
-    } else {
-      srcTranslateX = -carouselRef.current.clientWidth * (srcIdx - dstIdx)
-      dstTranslateX = 0
-    }
+  const dragEnd = useCallback(
+    (slide: number, dragOption: DragOption, carouselWidth: number) => {
+      let move = 0
+      if (dragOption.currentTranslateX < -carouselWidth * 1.1) {
+        move = 1
+      } else if (dragOption.currentTranslateX > -carouselWidth * 0.9) {
+        move = -1
+      }
 
-    setMoveOption({
-      currentTranslateX: srcTranslateX,
-      srcIdx,
-      dstIdx,
-    })
+      setDragOption({
+        ...dragOption,
+        currentTranslateX: -carouselWidth * (move + 1),
+      })
 
-    setTimeout(() => {
-      setStatus("moving")
+      setStatus("dragEnding")
+
+      setTimeout(() => {
+        setDragOption({
+          ...dragOption,
+          currentTranslateX: -carouselWidth,
+        })
+        setStatus("stationary")
+        setSlide((slide + move + ITEMS.length) % ITEMS.length)
+      }, 300)
+    },
+    [],
+  )
+
+  const move = useCallback(
+    (srcIdx: number, dstIdx: number, carouselWidth: number) => {
+      setSlide(dstIdx)
+      setStatus("prepareMoving")
+      let srcTranslateX
+      let dstTranslateX: number
+      if (srcIdx < dstIdx) {
+        srcTranslateX = 0
+        dstTranslateX = -carouselWidth * (dstIdx - srcIdx)
+      } else {
+        srcTranslateX = -carouselWidth * (srcIdx - dstIdx)
+        dstTranslateX = 0
+      }
+
       setMoveOption({
-        currentTranslateX: dstTranslateX,
+        currentTranslateX: srcTranslateX,
         srcIdx,
         dstIdx,
       })
-      setTimeout(() => {
-        setClickMove(null)
-        setStatus("stationary")
-      }, 300)
-    }, 0)
-  }, [])
 
+      // TODO: find a way to execute after render
+      setTimeout(() => {
+        setStatus("moving")
+        setMoveOption({
+          currentTranslateX: dstTranslateX,
+          srcIdx,
+          dstIdx,
+        })
+        setTimeout(() => {
+          setClickMove(null)
+          setStatus("stationary")
+        }, 300)
+      }, 0)
+    },
+    [],
+  )
+
+  /* Events */
   const onMouseMove = useCallback(
     (e: MouseEvent) => {
       const status = statusRef.current
 
-      if (["clicked", "dragging"].includes(status)) {
+      if (status === "clicked") {
+        setStatus("dragging")
+      } else if (status === "dragging") {
         e.preventDefault()
-        dragging(dragOptionRef.current, e.clientX)
+        dragging(
+          dragOptionRef.current,
+          e.clientX,
+          carouselRef.current.clientWidth,
+        )
       }
     },
     [dragging],
@@ -187,9 +210,24 @@ export const Gallery = () => {
     (e: TouchEvent) => {
       const status = statusRef.current
 
-      if (["clicked", "dragging"].includes(status)) {
+      if (status === "clicked") {
         e.preventDefault()
-        dragging(dragOptionRef.current, e.targetTouches[0].clientX)
+        const xMove =
+          e.targetTouches[0].clientX - dragOptionRef.current.startingClientX
+        const yMove =
+          e.targetTouches[0].clientY - dragOptionRef.current.startingClientY
+        if (Math.abs(xMove) > DRAG_SENSITIVITY) {
+          setStatus("dragging")
+        } else if (Math.abs(yMove) > DRAG_SENSITIVITY) {
+          setStatus("clickCanceled")
+        }
+      } else if (status === "dragging") {
+        e.preventDefault()
+        dragging(
+          dragOptionRef.current,
+          e.targetTouches[0].clientX,
+          carouselRef.current.clientWidth,
+        )
       }
     },
     [dragging],
@@ -202,26 +240,33 @@ export const Gallery = () => {
 
     if (status === "clicked") {
       if (clickMove === "left") {
-        move(slide, (slide + ITEMS.length - 1) % ITEMS.length)
+        move(
+          slide,
+          (slide + ITEMS.length - 1) % ITEMS.length,
+          carouselRef.current.clientWidth,
+        )
       } else if (clickMove === "right") {
-        move(slide, (slide + 1) % ITEMS.length)
+        move(slide, (slide + 1) % ITEMS.length, carouselRef.current.clientWidth)
       } else {
         setStatus("stationary")
       }
     } else if (status === "dragging") {
-      dragEnd(slide, dragOptionRef.current)
+      dragEnd(slide, dragOptionRef.current, carouselRef.current.clientWidth)
+    } else if (status === "clickCanceled") {
+      setStatus("stationary")
     }
   }, [dragEnd, move])
 
   useEffect(() => {
+    const carouselElement = carouselRef.current
+
     window.addEventListener("mousemove", onMouseMove)
-    window.addEventListener("touchmove", onTouchMove)
+    carouselElement.addEventListener("touchmove", onTouchMove)
     window.addEventListener("mouseup", onMouseTouchUp)
     window.addEventListener("touchend", onMouseTouchUp)
-
     return () => {
       window.removeEventListener("mousemove", onMouseMove)
-      window.removeEventListener("touchmove", onTouchMove)
+      carouselElement.removeEventListener("touchmove", onTouchMove)
       window.removeEventListener("mouseup", onMouseTouchUp)
       window.removeEventListener("touchend", onMouseTouchUp)
     }
@@ -230,7 +275,7 @@ export const Gallery = () => {
   const onIndicatorClick = useCallback(
     (status: Status, srcIdx: number, dstIdx: number) => {
       if (status !== "stationary" || srcIdx === dstIdx) return
-      move(srcIdx, dstIdx)
+      move(srcIdx, dstIdx, carouselRef.current.clientWidth)
     },
     [move],
   )
@@ -255,8 +300,22 @@ export const Gallery = () => {
         <div
           className="carousel"
           ref={carouselRef}
-          onMouseDown={(e) => click(status, e.clientX)}
-          onTouchStart={(e) => click(status, e.targetTouches[0].clientX)}
+          onMouseDown={(e) =>
+            click(
+              statusRef.current,
+              e.clientX,
+              e.clientY,
+              e.currentTarget.clientWidth,
+            )
+          }
+          onTouchStart={(e) =>
+            click(
+              statusRef.current,
+              e.targetTouches[0].clientX,
+              e.targetTouches[0].clientY,
+              e.currentTarget.clientWidth,
+            )
+          }
         >
           <div
             className={`carousel-list${["dragEnding", "moving"].includes(status) ? " transitioning" : ""}`}
@@ -272,16 +331,17 @@ export const Gallery = () => {
                 Math.min(moveOption.srcIdx, moveOption.dstIdx),
                 Math.max(moveOption.srcIdx, moveOption.dstIdx) + 1,
               )}
-            {["stationary", "clicked"].includes(status) && ITEMS[slide]}
+            {["stationary", "clicked", "clickCanceled"].includes(status) &&
+              ITEMS[slide]}
           </div>
           <div className="carousel-control">
             <div
               className="control left"
               onMouseDown={() => {
-                if (status === "stationary") setClickMove("left")
+                if (statusRef.current === "stationary") setClickMove("left")
               }}
               onTouchStart={() => {
-                if (status === "stationary") setClickMove("left")
+                if (statusRef.current === "stationary") setClickMove("left")
               }}
             >
               <ArrowLeft className="arrow" />
@@ -289,10 +349,10 @@ export const Gallery = () => {
             <div
               className="control right"
               onMouseDown={() => {
-                if (status === "stationary") setClickMove("right")
+                if (statusRef.current === "stationary") setClickMove("right")
               }}
               onTouchStart={() => {
-                if (status === "stationary") setClickMove("right")
+                if (statusRef.current === "stationary") setClickMove("right")
               }}
             >
               <ArrowLeft className="arrow right" />
@@ -304,7 +364,9 @@ export const Gallery = () => {
             <div
               key={idx}
               className={`indicator${idx === slide ? " active" : ""}`}
-              onClick={() => onIndicatorClick(status, slide, idx)}
+              onClick={() =>
+                onIndicatorClick(statusRef.current, slideRef.current, idx)
+              }
             />
           ))}
         </div>

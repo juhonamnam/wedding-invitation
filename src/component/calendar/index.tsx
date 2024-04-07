@@ -90,42 +90,39 @@ export const Calendar = () => {
           )
         })}
       </div>
-      <div className="countdown">
-        <div>
-          <div className="count">{diffs.days}</div>
+      <div className="countdown-wrapper">
+        <div className="countdown">
           <div className="unit">DAY</div>
-        </div>
-        <span>:</span>
-        <div>
-          <div className="count">{diffs.hours}</div>
+          <div />
           <div className="unit">HOUR</div>
-        </div>
-        <span>:</span>
-        <div>
-          <div className="count">{diffs.minutes}</div>
+          <div />
           <div className="unit">MIN</div>
-        </div>
-        <span>:</span>
-        <div>
-          <div className="count">{diffs.seconds}</div>
+          <div />
           <div className="unit">SEC</div>
+          <div className="count">{diffs.days}</div>
+          <span>:</span>
+          <div className="count">{diffs.hours}</div>
+          <span>:</span>
+          <div className="count">{diffs.minutes}</div>
+          <span>:</span>
+          <div className="count">{diffs.seconds}</div>
         </div>
+        <br />
+        <p>
+          주호 & 지원의 결혼식이{" "}
+          {dayDiff > 0 ? (
+            <>
+              <span className="d-day">{dayDiff}</span>일 남았습니다.
+            </>
+          ) : dayDiff === 0 ? (
+            <>오늘입니다.</>
+          ) : (
+            <>
+              <span className="d-day">{-dayDiff}</span>일 지났습니다.
+            </>
+          )}
+        </p>
       </div>
-      <br />
-      <p>
-        주호 & 지원의 결혼식이{" "}
-        {dayDiff > 0 ? (
-          <>
-            <span className="d-day">{dayDiff}</span>일 남았습니다.
-          </>
-        ) : dayDiff === 0 ? (
-          <>오늘입니다.</>
-        ) : (
-          <>
-            <span className="d-day">{-dayDiff}</span>일 지났습니다.
-          </>
-        )}
-      </p>
     </div>
   )
 }

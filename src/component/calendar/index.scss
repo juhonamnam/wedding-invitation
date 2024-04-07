@@ -61,33 +61,33 @@
     }
   }
 
-  .countdown {
+  .countdown-wrapper {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    * {
-      margin: 0 0.1rem;
-    }
-    .count {
-      background-color: var(--theme-bg-light-color);
-      padding: 0.8rem;
-      padding-bottom: 0.3rem;
-      border-radius: 0.3rem;
-      opacity: 0.8;
-    }
-    .unit {
-      margin-top: 0.2rem;
-      background-color: var(--theme-bg-light-color);
-      padding: 0.5rem;
-      padding-top: 0.2rem;
-      border-radius: 0.3rem;
-      font-weight: bold;
-      font-size: 0.5rem;
-      opacity: 0.8;
-    }
-  }
 
-  .d-day {
-    color: var(--theme-color);
+    .countdown {
+      display: grid;
+      width: 15rem;
+      grid-template-columns: 1fr 1rem 1fr 1rem 1fr 1rem 1fr;
+      align-items: center;
+      * {
+        margin: 0 0.1rem;
+      }
+      .count {
+        opacity: 0.8;
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+      .unit {
+        font-weight: bold;
+        font-size: 0.6rem;
+        opacity: 0.5;
+      }
+    }
+
+    .d-day {
+      color: var(--theme-color);
+    }
   }
 }
