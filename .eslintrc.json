@@ -2,9 +2,10 @@
   "extends": ["react-app", "react-app/jest"],
   "overrides": [
     {
-      "files": ["**/*.ts", "**/*.tsx"],
+      "files": ["src/**/*.ts", "src/**/*.tsx"],
       "rules": {
-        "@typescript-eslint/no-unused-vars": "warn"
+        "@typescript-eslint/no-unused-vars": "warn",
+        "no-console": "warn"
       }
     }
   ]
