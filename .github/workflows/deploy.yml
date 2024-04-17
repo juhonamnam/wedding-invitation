@@ -16,8 +16,6 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-      REACT_APP_NAVER_MAP_CLIENT_ID: ${{ secrets.NAVER_MAP_CLIENT_ID }}
-      REACT_APP_KAKAO_SDK_JS_KEY: ${{ secrets.KAKAO_SDK_JS_KEY }}
 
     runs-on: ubuntu-latest
 
@@ -29,6 +27,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Setup Environment Variables
+        run: |
+          echo "REACT_APP_NAVER_MAP_CLIENT_ID=$REACT_APP_NAVER_MAP_CLIENT_ID
+          REACT_APP_KAKAO_SDK_JS_KEY=$REACT_APP_KAKAO_SDK_JS_KEY" >> .env
+        env:
+          REACT_APP_NAVER_MAP_CLIENT_ID: ${{ secrets.NAVER_MAP_CLIENT_ID }}
+          REACT_APP_KAKAO_SDK_JS_KEY: ${{ secrets.KAKAO_SDK_JS_KEY }}
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
