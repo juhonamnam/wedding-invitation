@@ -1,5 +1,8 @@
 import { useEffect, useRef } from "react"
 import { useKakao, useNaver } from "../../store"
+import nmapIcon from "../../image/nmap-icon.png"
+import knaviIcon from "../../image/knavi-icon.png"
+import tmapIcon from "../../image/tmap-icon.png"
 
 const WEDDING_HALL_POSITION = [126.9594982, 37.4657134]
 const BUS_STOP_POSITION = [126.957706, 37.465071]
@@ -66,78 +69,71 @@ const NaverMap = (props: MapProps) => {
   return (
     <>
       <div {...props} ref={ref}></div>
-      <div
-        style={{
-          position: "relative",
-          zIndex: 3,
-        }}
-        onClick={() => {
-          switch (checkDevice()) {
-            case "ios":
-            case "android":
-              window.open(`nmap://place?id=${NMAP_PLACE_ID}`, "_self")
-              break
-            default:
-              window.open(
-                `https://map.naver.com/p/entry/place/${NMAP_PLACE_ID}`,
-                "_blank",
-              )
-              break
-          }
-        }}
-      >
-        네이버 지도
-      </div>
-      <div
-        style={{
-          position: "relative",
-          zIndex: 3,
-        }}
-        onClick={() => {
-          switch (checkDevice()) {
-            case "ios":
-            case "android":
-              kakao.Navi.start({
-                name: "서울대학교 연구공원 웨딩홀",
-                x: WEDDING_HALL_POSITION[0],
-                y: WEDDING_HALL_POSITION[1],
-                coordType: "wgs84",
-              })
-              break
-            default:
-              window.open(
-                `https://map.kakao.com/link/map/${KMAP_PLACE_ID}`,
-                "_blank",
-              )
-              break
-          }
-        }}
-      >
-        카카오내비
-      </div>
-      <div
-        style={{
-          position: "relative",
-          zIndex: 3,
-        }}
-        onClick={() => {
-          switch (checkDevice()) {
-            case "ios":
-            case "android":
-              const params = new URLSearchParams({
-                goalx: WEDDING_HALL_POSITION[0].toString(),
-                goaly: WEDDING_HALL_POSITION[1].toString(),
-                goalName: "서울대학교 연구공원 웨딩홀",
-              })
-              window.open(`tmap://route?${params.toString()}`, "_self")
-              break
-            default:
-              alert("모바일에서 확인하실 수 있습니다.")
-              break
-          }
-        }}
-      >
-        티맵
+      <div className="navigation">
+        <div
+          onClick={() => {
+            switch (checkDevice()) {
+              case "ios":
+              case "android":
+                window.open(`nmap://place?id=${NMAP_PLACE_ID}`, "_self")
+                break
+              default:
+                window.open(
+                  `https://map.naver.com/p/entry/place/${NMAP_PLACE_ID}`,
+                  "_blank",
+                )
+                break
+            }
+          }}
+        >
+          <img src={nmapIcon} alt="naver-map-icon" />
+          네이버 지도
+        </div>
+        <div
+          onClick={() => {
+            switch (checkDevice()) {
+              case "ios":
+              case "android":
+                kakao.Navi.start({
+                  name: "서울대학교 연구공원 웨딩홀",
+                  x: WEDDING_HALL_POSITION[0],
+                  y: WEDDING_HALL_POSITION[1],
+                  coordType: "wgs84",
+                })
+                break
+              default:
+                window.open(
+                  `https://map.kakao.com/link/map/${KMAP_PLACE_ID}`,
+                  "_blank",
+                )
+                break
+            }
+          }}
+        >
+          <img src={knaviIcon} alt="kakao-navi-icon" />
+          카카오 내비
+        </div>
+        <div
+          onClick={() => {
+            switch (checkDevice()) {
+              case "ios":
+              case "android":
+                const params = new URLSearchParams({
+                  goalx: WEDDING_HALL_POSITION[0].toString(),
+                  goaly: WEDDING_HALL_POSITION[1].toString(),
+                  goalName: "서울대학교 연구공원 웨딩홀",
+                })
+                window.open(`tmap://route?${params.toString()}`, "_self")
+                break
+              default:
+                alert("모바일에서 확인하실 수 있습니다.")
+                break
+            }
+          }}
+        >
+          <img src={tmapIcon} alt="t-map-icon" />
+          티맵
+        </div>
       </div>
     </>
   )
