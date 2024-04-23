@@ -1,0 +1,57 @@
+.guestbook {
+  .card {
+    text-align: left;
+    box-shadow: 0.1rem 0.1rem 0.3rem 0 rgba(0, 0, 0, 0.1);
+    background-color: var(--white-color);
+    border-radius: 0.5rem;
+    border: 1px solid var(--light-grey-color);
+    font-size: 0.9rem;
+
+    .heading {
+      margin: 0.5rem;
+      display: flex;
+      justify-content: flex-end;
+      .close-button {
+        cursor: pointer;
+        position: relative;
+        z-index: 3;
+        width: 0.8rem;
+        height: 0.8rem;
+        &::before {
+          content: "";
+          width: 0.1rem;
+          height: 100%;
+          background-color: var(--dark-grey-color);
+          position: absolute;
+          transform: rotate(45deg);
+          left: 50%;
+        }
+        &::after {
+          content: "";
+          width: 0.1rem;
+          height: 100%;
+          background-color: var(--dark-grey-color);
+          position: absolute;
+          transform: rotate(135deg);
+          left: 50%;
+        }
+      }
+    }
+
+    .body {
+      margin: 0 1.3rem 1.3rem 1.3rem;
+      .title {
+        display: flex;
+        align-items: center;
+        .name {
+          margin-right: 0.5rem;
+        }
+        .date {
+          font-size: 0.8rem;
+          opacity: 0.5;
+        }
+        margin-bottom: 0.8rem;
+      }
+    }
+  }
+}

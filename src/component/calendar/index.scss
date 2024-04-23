@@ -3,6 +3,7 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     margin: 1rem;
+    border: 1px solid var(--light-grey-color);
 
     > div {
       aspect-ratio: 1;
@@ -17,7 +18,7 @@
 
       &.holiday {
         > span {
-          color: red;
+          color: var(--red-color);
         }
       }
 

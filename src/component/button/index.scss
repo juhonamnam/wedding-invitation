@@ -4,6 +4,7 @@ button.button {
   position: relative;
   z-index: 3;
   cursor: pointer;
+  background-color: var(--white-color);
   border: solid 0.05rem var(--theme-color);
   color: var(--theme-color);
   border-radius: 0.3rem;
@@ -15,6 +16,6 @@ button.button {
   &:hover {
     border: solid 0.05rem var(--theme-bg-color);
     background-color: var(--theme-bg-color);
-    color: var(--light-color);
+    color: var(--white-color);
   }
 }

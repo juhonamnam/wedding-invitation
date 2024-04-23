@@ -25,9 +25,9 @@ class Petal {
     this.opacity = this.w / 80
     this.flip = Math.random()
 
-    this.xSpeed = 1.5 + Math.random() * 2
-    this.ySpeed = 1 + Math.random() * 1
-    this.flipSpeed = Math.random() * 0.03
+    this.xSpeed = 0.5 + Math.random() * 0.5
+    this.ySpeed = 0.3 + Math.random() * 0.3
+    this.flipSpeed = Math.random() * 0.02
   }
 
   draw() {

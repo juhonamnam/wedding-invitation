@@ -47,7 +47,13 @@ export const Invitation = () => {
       <br />
       <br />
 
-      <Button onClick={() => alert("test")}>연락하기</Button>
+      <Button
+        onClick={() => {
+          //
+        }}
+      >
+        연락하기
+      </Button>
     </div>
   )
 }

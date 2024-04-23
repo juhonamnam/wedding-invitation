@@ -7,6 +7,8 @@ dayjs.extend(utc)
 dayjs.extend(timezone)
 dayjs.locale("ko")
 
+export { dayjs }
+
 export const WEDDING_DATE = dayjs.tz("2024-08-24 13:00", "Asia/Seoul")
 export const HOLIDAYS = [15]
 

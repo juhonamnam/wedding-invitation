@@ -5,6 +5,8 @@ import { BGEffect } from "./component/bgEffect"
 import { Invitation } from "./component/invitation"
 import { Calendar } from "./component/calendar"
 import { Gallery } from "./component/gallery"
+import { Donation } from "./component/donation"
+import { GuestBook } from "./component/guestbook"
 
 function App() {
   return (
@@ -34,20 +36,9 @@ function App() {
 
         <div className="section-group">
           {/* 마음 전하기 */}
-          <div className="section" style={{ height: 500 }}>
-            <h1>마음 전하기 (계좌번호)</h1>
-          </div>
-          {/* 참석 의사 */}
-          <div className="section" style={{ height: 400 }}>
-            <h1>참석 의사</h1>
-          </div>
-        </div>
-
-        <div className="section-group">
+          <Donation />
           {/* 방명록 */}
-          <div className="section" style={{ height: 500 }}>
-            <h1>방명록</h1>
-          </div>
+          <GuestBook />
         </div>
       </div>
     </div>
