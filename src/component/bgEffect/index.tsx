@@ -25,8 +25,8 @@ class Petal {
     this.opacity = this.w / 80
     this.flip = Math.random()
 
-    this.xSpeed = 0.5 + Math.random() * 0.5
-    this.ySpeed = 0.3 + Math.random() * 0.3
+    this.xSpeed = 0.3 + Math.random() * 0.4
+    this.ySpeed = 0.2 + Math.random() * 0.2
     this.flipSpeed = Math.random() * 0.02
   }
 
@@ -34,8 +34,8 @@ class Petal {
     if (this.y > this.canvas.height || this.x > this.canvas.width) {
       this.x = -this.petalImg.width
       this.y = Math.random() * this.canvas.height * 2 - this.canvas.height
-      this.xSpeed = 1.5 + Math.random() * 2
-      this.ySpeed = 1 + Math.random() * 1
+      this.xSpeed = 0.3 + Math.random() * 0.4
+      this.ySpeed = 0.2 + Math.random() * 0.2
       this.flip = Math.random()
 
       const rand = Math.random() * (this.canvas.width + this.canvas.height)
