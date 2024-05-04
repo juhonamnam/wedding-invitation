@@ -1,17 +1,25 @@
 import { useEffect, useRef } from "react"
 import patelUrl from "../../image/petal.png"
 
+const X_SPEED = 0.6
+const X_SPEED_VARIANCE = 0.8
+
+const Y_SPEED = 0.4
+const Y_SPEED_VARIANCE = 0.4
+
+const FLIP_SPEED_VARIANCE = 0.02
+
 // Petal class
 class Petal {
   x: number
   y: number
-  w: number
-  h: number
-  opacity: number
-  flip: number
-  xSpeed: number
-  ySpeed: number
-  flipSpeed: number
+  w: number = 0
+  h: number = 0
+  opacity: number = 0
+  flip: number = 0
+  xSpeed: number = 0
+  ySpeed: number = 0
+  flipSpeed: number = 0
 
   constructor(
     private canvas: HTMLCanvasElement,
@@ -20,23 +28,24 @@ class Petal {
   ) {
     this.x = Math.random() * canvas.width
     this.y = Math.random() * canvas.height * 2 - canvas.height
+
+    this.initialize()
+  }
+
+  initialize() {
     this.w = 25 + Math.random() * 15
     this.h = 20 + Math.random() * 10
     this.opacity = this.w / 80
     this.flip = Math.random()
 
-    this.xSpeed = 0.3 + Math.random() * 0.4
-    this.ySpeed = 0.2 + Math.random() * 0.2
-    this.flipSpeed = Math.random() * 0.02
+    this.xSpeed = X_SPEED + Math.random() * X_SPEED_VARIANCE
+    this.ySpeed = Y_SPEED + Math.random() * Y_SPEED_VARIANCE
+    this.flipSpeed = Math.random() * FLIP_SPEED_VARIANCE
   }
 
   draw() {
     if (this.y > this.canvas.height || this.x > this.canvas.width) {
-      this.x = -this.petalImg.width
-      this.y = Math.random() * this.canvas.height * 2 - this.canvas.height
-      this.xSpeed = 0.3 + Math.random() * 0.4
-      this.ySpeed = 0.2 + Math.random() * 0.2
-      this.flip = Math.random()
+      this.initialize()
 
       const rand = Math.random() * (this.canvas.width + this.canvas.height)
       if (rand > this.canvas.width) {
