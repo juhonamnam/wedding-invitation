@@ -110,7 +110,7 @@ body {
         &.active {
           animation-name: fade-in;
           animation-duration: 2s;
-          animation-fill-mode: forwards;
+          opacity: 1;
         }
       }
 
@@ -132,7 +132,7 @@ body {
           &.active {
             animation-name: fade-in;
             animation-duration: 2s;
-            animation-fill-mode: forwards;
+            opacity: 1;
           }
         }
       }
