@@ -1,5 +1,15 @@
 $gallery-width: 21rem;
 $gallery-height: 24rem;
+$transition-duration: 0.3s;
+
+@keyframes moving-right {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc($gallery-width - 100%));
+  }
+}
 
 .gallery {
   .carousel-wrapper {
@@ -18,7 +28,20 @@ $gallery-height: 24rem;
         justify-content: center;
 
         &.transitioning {
-          transition: 0.3s ease-out;
+          transition: $transition-duration ease-out;
+        }
+
+        &.moving-left {
+          animation-name: moving-right;
+          animation-duration: $transition-duration;
+          animation-fill-mode: forwards;
+          animation-direction: reverse;
+        }
+
+        &.moving-right {
+          animation-name: moving-right;
+          animation-duration: $transition-duration;
+          animation-fill-mode: forwards;
         }
 
         .carousel-item {

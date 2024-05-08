@@ -29,8 +29,8 @@ type Status =
   | "clickCanceled"
   | "dragging"
   | "dragEnding"
-  | "prepareMoving"
-  | "moving"
+  | "moving-left"
+  | "moving-right"
 
 type DragOption = {
   startingClientX: number
@@ -75,7 +75,6 @@ export const Gallery = () => {
   }
 
   const [moveOption, setMoveOption] = useState({
-    currentTranslateX: 0,
     srcIdx: 0,
     dstIdx: 0,
   })
@@ -154,36 +153,18 @@ export const Gallery = () => {
   const move = useCallback(
     (srcIdx: number, dstIdx: number, carouselWidth: number) => {
       setSlide(dstIdx)
-      setStatus("prepareMoving")
-      let srcTranslateX
-      let dstTranslateX: number
       if (srcIdx < dstIdx) {
-        srcTranslateX = 0
-        dstTranslateX = -carouselWidth * (dstIdx - srcIdx)
+        setStatus("moving-right")
       } else {
-        srcTranslateX = -carouselWidth * (srcIdx - dstIdx)
-        dstTranslateX = 0
+        setStatus("moving-left")
       }
 
-      setMoveOption({
-        currentTranslateX: srcTranslateX,
-        srcIdx,
-        dstIdx,
-      })
+      setMoveOption({ srcIdx, dstIdx })
 
-      // TODO: find a way to execute after render
       setTimeout(() => {
-        setStatus("moving")
-        setMoveOption({
-          currentTranslateX: dstTranslateX,
-          srcIdx,
-          dstIdx,
-        })
-        setTimeout(() => {
-          setClickMove(null)
-          setStatus("stationary")
-        }, 300)
-      }, 0)
+        setClickMove(null)
+        setStatus("stationary")
+      }, 300)
     },
     [],
   )
@@ -286,13 +267,24 @@ export const Gallery = () => {
       case "dragging":
       case "dragEnding":
         return { transform: `translateX(${dragOption.currentTranslateX}px)` }
-      case "prepareMoving":
-      case "moving":
-        return { transform: `translateX(${moveOption.currentTranslateX}px)` }
       default:
         return {}
     }
-  }, [status, dragOption, moveOption])
+  }, [status, dragOption])
+
+  const transformClass = useMemo(() => {
+    const className = "carousel-list"
+    switch (status) {
+      case "dragEnding":
+        return className + " transitioning"
+      case "moving-left":
+        return className + " moving-left"
+      case "moving-right":
+        return className + " moving-right"
+      default:
+        return className
+    }
+  }, [status])
 
   return (
     <LazyDiv className="card gallery">
@@ -318,20 +310,16 @@ export const Gallery = () => {
             )
           }
         >
-          <div
-            className={`carousel-list${["dragEnding", "moving"].includes(status) ? " transitioning" : ""}`}
-            style={transformStyle}
-          >
+          <div className={transformClass} style={transformStyle}>
             {["dragging", "dragEnding"].includes(status) && [
               ...(slide === 0 ? [ITEMS[ITEMS.length - 1]] : []),
               ...ITEMS.slice(slide === 0 ? 0 : slide - 1, slide + 2),
               ...(slide === ITEMS.length - 1 ? [ITEMS[0]] : []),
             ]}
-            {["prepareMoving", "moving"].includes(status) &&
-              ITEMS.slice(
-                Math.min(moveOption.srcIdx, moveOption.dstIdx),
-                Math.max(moveOption.srcIdx, moveOption.dstIdx) + 1,
-              )}
+            {status === "moving-right" &&
+              ITEMS.slice(moveOption.srcIdx, moveOption.dstIdx + 1)}
+            {status === "moving-left" &&
+              ITEMS.slice(moveOption.dstIdx, moveOption.srcIdx + 1)}
             {["stationary", "clicked", "clickCanceled"].includes(status) &&
               ITEMS[slide]}
           </div>
