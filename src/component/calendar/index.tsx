@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react"
 import { HOLIDAYS, WEDDING_DATE } from "../../const"
+import { LazyDiv } from "../lazyDiv"
 
 const firstDayOfWeek = WEDDING_DATE.startOf("month").day()
 const daysInMonth = WEDDING_DATE.daysInMonth()
@@ -34,7 +35,7 @@ export const Calendar = () => {
   }, [tsDiff])
 
   return (
-    <div className="section calendar">
+    <LazyDiv className="card calendar">
       <h2 className="english">The Wedding Day</h2>
       {WEDDING_DATE.format("YYYY년 MMMM D일 dddd A h시")}
       <div className="calendar-wrapper">
@@ -123,6 +124,6 @@ export const Calendar = () => {
           )}
         </p>
       </div>
-    </div>
+    </LazyDiv>
   )
 }

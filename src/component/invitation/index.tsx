@@ -7,10 +7,11 @@ import {
   GROOM_MOTHER,
 } from "../../const"
 import { Button } from "../button"
+import { LazyDiv } from "../lazyDiv"
 
 export const Invitation = () => {
   return (
-    <div className="section invitation">
+    <LazyDiv className="card invitation">
       <h2 className="english">Invitation</h2>
 
       <br />
@@ -54,6 +55,6 @@ export const Invitation = () => {
       >
         연락하기
       </Button>
-    </div>
+    </LazyDiv>
   )
 }

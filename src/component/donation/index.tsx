@@ -1,8 +1,9 @@
 import { Button } from "../button"
+import { LazyDiv } from "../lazyDiv"
 
 export const Donation = () => {
   return (
-    <div className="section donation">
+    <LazyDiv className="card donation">
       <h2 className="english">Donation</h2>
       <div className="content">
         참석이 어려워 직접 축하해주지 못하는
@@ -28,6 +29,6 @@ export const Donation = () => {
       >
         신부측 계좌번호 보기
       </Button>
-    </div>
+    </LazyDiv>
   )
 }

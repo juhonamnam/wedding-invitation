@@ -1,9 +1,10 @@
 import { BRIDE, GROOM, WEDDING_DATE } from "../../const"
 import sample from "../../image/sample5.png"
+import { LazyDiv } from "../lazyDiv"
 
 export const Front = () => {
   return (
-    <div className="section front">
+    <LazyDiv className="card front">
       <div
         style={{
           display: "flex",
@@ -40,6 +41,6 @@ export const Front = () => {
       <br />
       <span>서울대 연구공원 웨딩홀</span>
       <br />
-    </div>
+    </LazyDiv>
   )
 }

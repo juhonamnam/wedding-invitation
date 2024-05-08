@@ -6,6 +6,7 @@ import image3 from "../../image/sample3.png"
 import image4 from "../../image/sample4.png"
 import image5 from "../../image/sample5.png"
 import image6 from "../../image/sample6.png"
+import { LazyDiv } from "../lazyDiv"
 
 const ITEMS = [
   <img src={image1} draggable={false} alt="image1" />,
@@ -294,7 +295,7 @@ export const Gallery = () => {
   }, [status, dragOption, moveOption])
 
   return (
-    <div className="section gallery">
+    <LazyDiv className="card gallery">
       <h2 className="english">Gallery</h2>
       <div className="carousel-wrapper">
         <div
@@ -371,6 +372,6 @@ export const Gallery = () => {
           ))}
         </div>
       </div>
-    </div>
+    </LazyDiv>
   )
 }
