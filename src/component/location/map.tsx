@@ -11,25 +11,14 @@ const PARKING_LOT_POSITION = [126.960266, 37.465467]
 const NMAP_PLACE_ID = 13321741
 const KMAP_PLACE_ID = 8634826
 
-interface MapProps extends React.HTMLAttributes<HTMLDivElement> {
-  mapOption?: {
-    center: [number, number]
-    zoom: number
-  }
-  markerOptions?: Array<{ position: [number, number] }>
-}
+interface MapProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export const Map = (props: React.HTMLAttributes<HTMLDivElement>) => {
+export const Map = (props: MapProps) => {
   return process.env.REACT_APP_NAVER_MAP_CLIENT_ID &&
     process.env.REACT_APP_KAKAO_SDK_JS_KEY ? (
     <NaverMap {...props} />
   ) : (
-    <div {...props}>
-      Required environment variables are not defined. Please add your
-      <code>.env</code> file in the following format: <br />
-      <code>REACT_APP_NAVER_MAP_CLIENT_ID=your_client_id</code>
-      <code>REACT_APP_NAVER_MAP_CLIENT_ID=your_client_id</code>
-    </div>
+    <div {...props}>Map is not available</div>
   )
 }
 

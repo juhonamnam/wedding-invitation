@@ -1,6 +1,7 @@
 import {
   createContext,
   PropsWithChildren,
+  ReactNode,
   useContext,
   useEffect,
   useState,
@@ -14,15 +15,44 @@ const GlobalContext = createContext({
   setNaver: (_naver: any) => {},
   kakao: null as any,
   setKakao: (_kakao: any) => {},
+  modalComponent: null as ReactNode | null,
+  openModal: (_component: ReactNode) => {},
+  closeModal: () => {},
 })
 
 export const GlobalProvider = ({ children }: PropsWithChildren) => {
   const [naver, setNaver] = useState<any>(null)
   const [kakao, setKakao] = useState<any>(null)
+  const [modalComponent, setModalComponent] = useState<ReactNode | null>(null)
+  const closeModal = () => setModalComponent(null)
 
   return (
-    <GlobalContext.Provider value={{ naver, setNaver, kakao, setKakao }}>
+    <GlobalContext.Provider
+      value={{
+        naver,
+        setNaver,
+        kakao,
+        setKakao,
+        modalComponent,
+        openModal: setModalComponent,
+        closeModal,
+      }}
+    >
       {children}
+      {modalComponent && (
+        <>
+          <div className="modal-background" onClick={closeModal}>
+            <div
+              className="modal"
+              onClick={(e) => {
+                e.stopPropagation()
+              }}
+            >
+              {modalComponent}
+            </div>
+          </div>
+        </>
+      )}
     </GlobalContext.Provider>
   )
 }
@@ -60,4 +90,9 @@ export const useKakao = () => {
   }, [kakao, setKakao])
 
   return kakao
+}
+
+export const useModal = () => {
+  const { modalComponent, openModal, closeModal } = useContext(GlobalContext)
+  return { modalComponent, openModal, closeModal }
 }
