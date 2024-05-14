@@ -5,29 +5,14 @@ import { LazyDiv } from "../lazyDiv"
 export const Front = () => {
   return (
     <LazyDiv className="card front">
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "right",
-          alignItems: "right",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "right",
-            alignItems: "center",
-          }}
-        >
-          <div className="title">우리</div>
-          <div className="title-deco">
-            {WEDDING_DATE.format("MM")}
-            <br />
-            {WEDDING_DATE.format("DD")}
-          </div>
-          <div className="title">결혼합니다</div>
+      <div className="title-group">
+        <div className="title">우리</div>
+        <div className="title-deco">
+          {WEDDING_DATE.format("MM")}
+          <br />
+          {WEDDING_DATE.format("DD")}
         </div>
+        <div className="title">결혼합니다</div>
       </div>
       <img src={sample} alt="sample" style={{ width: "100%" }} />
       <br />

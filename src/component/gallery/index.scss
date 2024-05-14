@@ -83,7 +83,6 @@ $transition-duration: 0.3s;
           .arrow {
             width: 2rem;
             opacity: 0.2;
-            cursor: pointer;
             &.right {
               transform: rotate(180deg);
             }
@@ -111,10 +110,8 @@ $transition-duration: 0.3s;
         }
         position: relative;
         z-index: 3;
-        cursor: pointer;
 
         &.active {
-          cursor: default;
           &::before {
             background-color: var(--dark-color);
           }

@@ -3,12 +3,17 @@
     font-size: 1.5rem;
   }
 
-  .title-deco {
-    font-size: 2rem;
-    opacity: 0.5;
-    padding: 1rem;
-  }
+  .title-group {
+    display: flex;
+    justify-content: right;
+    align-items: center;
 
+    .title-deco {
+      font-size: 2rem;
+      opacity: 0.5;
+      padding: 1rem;
+    }
+  }
   .subtitle {
     font-size: 1.5rem;
     font-family: "Allura";
