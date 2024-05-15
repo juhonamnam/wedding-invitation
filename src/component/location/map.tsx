@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react"
-import { useKakao, useNaver } from "../../store"
+import { useKakao, useNaver } from "../../component/store"
 import nmapIcon from "../../image/nmap-icon.png"
 import knaviIcon from "../../image/knavi-icon.png"
 import tmapIcon from "../../image/tmap-icon.png"

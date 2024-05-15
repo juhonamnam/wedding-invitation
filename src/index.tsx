@@ -2,14 +2,14 @@ import React from "react"
 import ReactDOM from "react-dom/client"
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"
-import { GlobalProvider } from "./store"
+import { StoreProvider } from "./component/store"
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 root.render(
   <React.StrictMode>
-    <GlobalProvider>
+    <StoreProvider>
       <App />
-    </GlobalProvider>
+    </StoreProvider>
   </React.StrictMode>,
 )
 

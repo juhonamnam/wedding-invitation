@@ -20,7 +20,7 @@ const GlobalContext = createContext({
   closeModal: () => {},
 })
 
-export const GlobalProvider = ({ children }: PropsWithChildren) => {
+export const StoreProvider = ({ children }: PropsWithChildren) => {
   const [naver, setNaver] = useState<any>(null)
   const [kakao, setKakao] = useState<any>(null)
   const [modalComponent, setModalComponent] = useState<ReactNode | null>(null)
