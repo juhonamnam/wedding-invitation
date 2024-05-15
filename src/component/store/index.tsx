@@ -48,6 +48,9 @@ export const StoreProvider = ({ children }: PropsWithChildren) => {
                 e.stopPropagation()
               }}
             >
+              <div className="header">
+                <div className="close-button" onClick={closeModal} />
+              </div>
               {modalComponent}
             </div>
           </div>

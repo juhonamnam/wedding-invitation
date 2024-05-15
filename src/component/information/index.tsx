@@ -1,7 +1,10 @@
+import { BRIDE_INFO, GROOM_INFO } from "../../const"
 import { Button } from "../button"
 import { LazyDiv } from "../lazyDiv"
+import { useModal } from "../store"
 
 export const Information = () => {
+  const { openModal } = useModal()
   return (
     <LazyDiv className="card information">
       <h2 className="english">Information</h2>
@@ -29,7 +32,28 @@ export const Information = () => {
         <Button
           style={{ width: "100%" }}
           onClick={() => {
-            //
+            openModal(
+              <div className="donation-modal">
+                <div className="content">
+                  <div className="title">신랑측 계좌번호</div>
+                  {GROOM_INFO.filter(({ accountNo }) => !!accountNo).map(
+                    ({ relation, name, bank, accountNo }) => (
+                      <div className="account-info" key={relation}>
+                        <div>
+                          <div className="name">
+                            <span className="relation">{relation}</span> {name}
+                          </div>
+                          <div>
+                            {bank} {accountNo}
+                          </div>
+                        </div>
+                        <Button className="copy-button">복사하기</Button>
+                      </div>
+                    ),
+                  )}
+                </div>
+              </div>,
+            )
           }}
         >
           신랑측 계좌번호 보기
@@ -38,7 +62,28 @@ export const Information = () => {
         <Button
           style={{ width: "100%" }}
           onClick={() => {
-            //
+            openModal(
+              <div className="donation-modal">
+                <div className="content">
+                  <div className="title">신부측 계좌번호</div>
+                  {BRIDE_INFO.filter(({ accountNo }) => !!accountNo).map(
+                    ({ relation, name, bank, accountNo }) => (
+                      <div className="account-info" key={relation}>
+                        <div>
+                          <div className="name">
+                            <span className="relation">{relation}</span> {name}
+                          </div>
+                          <div>
+                            {bank} {accountNo}
+                          </div>
+                        </div>
+                        <Button className="copy-button">복사하기</Button>
+                      </div>
+                    ),
+                  )}
+                </div>
+              </div>,
+            )
           }}
         >
           신부측 계좌번호 보기

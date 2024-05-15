@@ -1,11 +1,11 @@
 import { Fragment } from "react/jsx-runtime"
 import {
   BRIDE,
-  BRIDE_CONTACTS,
+  BRIDE_INFO,
   BRIDE_FATHER,
   BRIDE_MOTHER,
   GROOM,
-  GROOM_CONTACTS,
+  GROOM_INFO,
   GROOM_FATHER,
   GROOM_MOTHER,
 } from "../../const"
@@ -16,7 +16,7 @@ import { ReactComponent as PhoneIcon } from "../../image/phone-flip-icon.svg"
 import { ReactComponent as EnvelopeIcon } from "../../image/envelope-icon.svg"
 
 export const Invitation = () => {
-  const { openModal, closeModal } = useModal()
+  const { openModal } = useModal()
   return (
     <LazyDiv className="card invitation">
       <h2 className="english">Invitation</h2>
@@ -52,9 +52,6 @@ export const Invitation = () => {
         onClick={() => {
           openModal(
             <div className="contact-modal">
-              <div className="heading">
-                <div className="close-button" onClick={() => closeModal()} />
-              </div>
               <div className="content">
                 <div className="title-group">
                   <div className="title">축하 인사 전하기</div>
@@ -63,7 +60,7 @@ export const Invitation = () => {
                   </div>
                 </div>
                 <div className="contact-info">
-                  {GROOM_CONTACTS.map(({ relation, name, phone }) => (
+                  {GROOM_INFO.map(({ relation, name, phone }) => (
                     <Fragment key={relation}>
                       <div className="relation">{relation}</div>
                       <div>{name}</div>
@@ -75,7 +72,7 @@ export const Invitation = () => {
                   ))}
                 </div>
                 <div className="contact-info">
-                  {BRIDE_CONTACTS.map(({ relation, name, phone }) => (
+                  {BRIDE_INFO.map(({ relation, name, phone }) => (
                     <Fragment key={relation}>
                       <div className="relation">{relation}</div>
                       <div>{name}</div>
