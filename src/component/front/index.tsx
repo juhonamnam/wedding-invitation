@@ -14,7 +14,13 @@ export const Front = () => {
         </div>
         <div className="title">결혼합니다</div>
       </div>
-      <img src={sample} alt="sample" style={{ width: "100%" }} />
+      <img
+        src={sample}
+        alt="sample"
+        width="100%"
+        height="25rem"
+        style={{ width: "100%", height: "auto" }}
+      />
       <br />
       <span className="subtitle">Save the date for the wedding of</span>
       <br />
