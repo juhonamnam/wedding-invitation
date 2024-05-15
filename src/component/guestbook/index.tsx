@@ -42,6 +42,10 @@ export const GuestBook = () => {
       <div className="break" />
 
       <Button>방명록 작성하기</Button>
+
+      <div className="break" />
+
+      <Button>방명록 전체보기</Button>
     </LazyDiv>
   )
 }

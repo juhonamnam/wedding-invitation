@@ -5,7 +5,7 @@ import { BGEffect } from "./component/bgEffect"
 import { Invitation } from "./component/invitation"
 import { Calendar } from "./component/calendar"
 import { Gallery } from "./component/gallery"
-import { Donation } from "./component/donation"
+import { Information } from "./component/information"
 import { GuestBook } from "./component/guestbook"
 import { LazyDiv } from "./component/lazyDiv"
 
@@ -37,7 +37,7 @@ function App() {
 
         <LazyDiv className="card-group">
           {/* 마음 전하기 */}
-          <Donation />
+          <Information />
           {/* 방명록 */}
           <GuestBook />
         </LazyDiv>
