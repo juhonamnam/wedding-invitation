@@ -21,39 +21,32 @@ export const Invitation = () => {
     <LazyDiv className="card invitation">
       <h2 className="english">Invitation</h2>
 
-      <br />
+      <div className="break" />
 
-      <p className="letter-content">
-        서로 마주 보며 다져온 사랑이 이제 결실을 맺습니다.
-      </p>
-      <p className="letter-content">
-        함께 한곳을 바라보며 서로 돕는 배필이 되려 합니다.{" "}
-      </p>
-      <p className="letter-content"> 사랑이라는 이름의 가정을 이루고 </p>
-      <p className="letter-content">
-        예쁘게 키워갈 수 있도록 증인이 되어 주시고
-      </p>
-      <p className="letter-content">축복해 주시길 소망합니다.</p>
+      <div className="content">초록빛 싱그러운 여름</div>
+      <div className="content">새로이 시작하는 작은 사랑이</div>
+      <div className="content">보다 크고 깊은 사랑이 되려고 합니다.</div>
+      <div className="content">함께 자리하시어</div>
+      <div className="content">축복해 주시면 감사하겠습니다.</div>
 
-      <br />
+      <div className="break" />
 
-      <p>
+      <div className="name">
         {GROOM_FATHER} · {GROOM_MOTHER}
         <span className="relation">
           의 <span className="relation-name">아들</span>
         </span>{" "}
         {GROOM}
-      </p>
-      <p>
+      </div>
+      <div className="name">
         {BRIDE_FATHER} · {BRIDE_MOTHER}
         <span className="relation">
           의 <span className="relation-name">딸</span>
         </span>{" "}
         {BRIDE}
-      </p>
+      </div>
 
-      <br />
-      <br />
+      <div className="break" />
 
       <Button
         onClick={() => {

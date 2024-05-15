@@ -1,12 +1,12 @@
 .front {
-  .title {
-    font-size: 1.5rem;
-  }
-
   .title-group {
     display: flex;
     justify-content: right;
     align-items: center;
+
+    .title {
+      font-size: 1.5rem;
+    }
 
     .title-deco {
       font-size: 2rem;
@@ -14,9 +14,29 @@
       padding: 1rem;
     }
   }
+
+  .image-wrapper {
+    width: 100%;
+    height: 30rem;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
   .subtitle {
     font-size: 1.5rem;
     font-family: "Allura";
     color: var(--alt-color);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .content {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
   }
 }

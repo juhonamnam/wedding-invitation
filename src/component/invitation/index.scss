@@ -1,15 +1,21 @@
 .invitation {
-  .letter-content {
+  .content {
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
     font-size: 0.8rem;
   }
 
-  .relation {
-    font-size: 0.75rem;
-    opacity: 0.7;
+  .name {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    .relation {
+      font-size: 0.75rem;
+      opacity: 0.7;
 
-    .relation-name {
-      display: inline-block;
-      min-width: 2em;
+      .relation-name {
+        display: inline-block;
+        min-width: 2em;
+      }
     }
   }
 }

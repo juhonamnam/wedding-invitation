@@ -11,9 +11,8 @@ export const Donation = () => {
         분들을 위해 계좌번호를 기재하였습니다.
         <br />
         넓은 마음으로 양해 부탁드립니다.
-        <br />
-        <br />
       </div>
+      <div className="break" />
       <Button
         onClick={() => {
           //
@@ -21,7 +20,7 @@ export const Donation = () => {
       >
         신랑측 계좌번호 보기
       </Button>
-      <br />
+      <div className="break" />
       <Button
         onClick={() => {
           //

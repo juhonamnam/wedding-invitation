@@ -10,13 +10,10 @@ export const Location = () => {
         <h2 className="english">Location</h2>
         <div className="addr">
           서울대학교 연구공원 웨딩홀
-          <br />
-          <span className="detail">
+          <div className="detail">
             서울시 관악구 관악로 1, 연구공원 본관 1층
-          </span>
-          <br />
+          </div>
         </div>
-        <br />
         <Map className="map" />
       </LazyDiv>
       <LazyDiv className="card location">

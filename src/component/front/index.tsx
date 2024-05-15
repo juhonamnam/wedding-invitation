@@ -8,30 +8,22 @@ export const Front = () => {
       <div className="title-group">
         <div className="title">우리</div>
         <div className="title-deco">
-          {WEDDING_DATE.format("MM")}
-          <br />
-          {WEDDING_DATE.format("DD")}
+          <div>{WEDDING_DATE.format("MM")}</div>
+          <div>{WEDDING_DATE.format("DD")}</div>
         </div>
         <div className="title">결혼합니다</div>
       </div>
-      <img
-        src={sample}
-        alt="sample"
-        width="100%"
-        height="25rem"
-        style={{ width: "100%", height: "auto" }}
-      />
-      <br />
-      <span className="subtitle">Save the date for the wedding of</span>
-      <br />
-      <span>
+      <div className="image-wrapper">
+        <img src={sample} alt="sample" />
+      </div>
+      <div className="subtitle">Save the date for the wedding of</div>
+      <div className="content">
         {GROOM} & {BRIDE}
-      </span>
-      <br />
-      <span>{WEDDING_DATE.format("YYYY년 MMMM D일 dddd A h시")}</span>
-      <br />
-      <span>서울대 연구공원 웨딩홀</span>
-      <br />
+      </div>
+      <div className="content">
+        {WEDDING_DATE.format("YYYY년 MMMM D일 dddd A h시")}
+      </div>
+      <div className="content">서울대 연구공원 웨딩홀</div>
     </LazyDiv>
   )
 }

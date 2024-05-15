@@ -87,8 +87,12 @@
       }
     }
 
-    .d-day {
-      color: var(--theme-color);
+    .message {
+      margin-top: 2rem;
+      margin-bottom: 1.5rem;
+      .d-day {
+        color: var(--theme-color);
+      }
     }
   }
 }
