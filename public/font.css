@@ -1,0 +1,14 @@
+@font-face {
+  font-family: "MapoGoldenPier";
+  src: url("./MapoGoldenPierA.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Allura";
+  src: url("./AlluraRegular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
