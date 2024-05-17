@@ -31,10 +31,12 @@
 @keyframes lazy-fade-in {
   from {
     opacity: 0;
+    z-index: 3;
     transform: translateY(2rem);
   }
   to {
     opacity: 1;
+    z-index: 3;
     transform: translateY(0);
   }
 }
@@ -79,6 +81,7 @@ body {
     }
 
     .card-group {
+      position: relative;
       @media (width > 980px) {
         display: flex;
         flex-direction: row;
@@ -102,6 +105,7 @@ body {
         display: flex;
         flex-direction: column;
         justify-content: center;
+        position: relative;
 
         @media (max-width: 980px) {
           box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.2);
