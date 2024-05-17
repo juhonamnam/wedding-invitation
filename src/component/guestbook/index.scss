@@ -1,4 +1,5 @@
-.guestbook {
+.guestbook,
+.all-guestbook-modal {
   .post {
     text-align: left;
     box-shadow: 0.1rem 0.1rem 0.3rem 0 rgba(0, 0, 0, 0.1);
@@ -6,6 +7,7 @@
     border-radius: 0.5rem;
     border: 1px solid var(--light-grey-color);
     font-size: 0.9rem;
+    margin-top: 0.2rem;
 
     .heading {
       margin: 0.5rem;
@@ -91,6 +93,37 @@
         margin-bottom: 0.5rem;
         border: 1px solid var(--light-grey-color);
         border-radius: 0.3rem;
+      }
+    }
+  }
+}
+
+.all-guestbook-modal {
+  width: 24rem;
+
+  .content {
+    padding: 0 0.7rem 0.7rem 0.7rem;
+    > .title {
+      text-align: center;
+      font-size: 1.2rem;
+      color: var(--theme-color);
+      padding-bottom: 1rem;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+      .page {
+        padding: 0.3rem 0.5rem;
+        margin: 0 0.2rem;
+        border: 1px solid var(--dark-grey-color);
+        border-radius: 0.3rem;
+        &.current {
+          background-color: var(--theme-color);
+          color: var(--white-color);
+        }
       }
     }
   }
