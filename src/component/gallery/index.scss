@@ -122,15 +122,17 @@ $transition-duration: 0.3s;
 
 .all-photo-modal {
   width: 22rem;
-
-  .content {
-    padding: 0 0.7rem 0.7rem 0.7rem;
-    > .title {
+  .header {
+    .title {
       text-align: center;
       font-size: 1.2rem;
       color: var(--theme-color);
       padding-bottom: 1rem;
     }
+  }
+
+  .content {
+    padding: 0 0.7rem 0.7rem 0.7rem;
     .photo-list {
       display: grid;
       grid-template-columns: repeat(2, 1fr);

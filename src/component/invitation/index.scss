@@ -24,8 +24,7 @@
 .contact-modal {
   width: 22rem;
 
-  .content {
-    padding: 0.7rem;
+  .header {
     .title-group {
       text-align: center;
       .title {
@@ -36,9 +35,13 @@
       .subtitle {
         font-size: 0.9rem;
       }
-      padding-bottom: 1rem;
-      border-bottom: 1px solid var(--dark-grey-color);
     }
+  }
+
+  .content {
+    padding: 0.7rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--dark-grey-color);
 
     .contact-info {
       padding: 1rem 0.7rem;

@@ -50,15 +50,18 @@ export const Invitation = () => {
 
       <Button
         onClick={() => {
-          openModal(
-            <div className="contact-modal">
-              <div className="content">
-                <div className="title-group">
-                  <div className="title">축하 인사 전하기</div>
-                  <div className="subtitle">
-                    전화, 문자메세지로 축하 인사를 전해보세요.
-                  </div>
+          openModal({
+            className: "contact-modal",
+            header: (
+              <div className="title-group">
+                <div className="title">축하 인사 전하기</div>
+                <div className="subtitle">
+                  전화, 문자메세지로 축하 인사를 전해보세요.
                 </div>
+              </div>
+            ),
+            content: (
+              <>
                 <div className="contact-info">
                   {GROOM_INFO.map(({ relation, name, phone }) => (
                     <Fragment key={relation}>
@@ -103,9 +106,9 @@ export const Invitation = () => {
                     </Fragment>
                   ))}
                 </div>
-              </div>
-            </div>,
-          )
+              </>
+            ),
+          })
         }}
       >
         연락하기

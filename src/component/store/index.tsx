@@ -10,21 +10,27 @@ import {
 const NAVER_MAP_URL = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.REACT_APP_NAVER_MAP_CLIENT_ID}`
 const KAKAO_SDK_URL = `${process.env.PUBLIC_URL}/kakao.min.js`
 
+type ModalInfo = {
+  header?: ReactNode
+  className?: string
+  content: ReactNode
+}
+
 const GlobalContext = createContext({
   naver: null as any,
   setNaver: (_naver: any) => {},
   kakao: null as any,
   setKakao: (_kakao: any) => {},
-  modalComponent: null as ReactNode | null,
-  openModal: (_component: ReactNode) => {},
+  modalInfo: null as ModalInfo | null,
+  openModal: (_component: ModalInfo) => {},
   closeModal: () => {},
 })
 
 export const StoreProvider = ({ children }: PropsWithChildren) => {
   const [naver, setNaver] = useState<any>(null)
   const [kakao, setKakao] = useState<any>(null)
-  const [modalComponent, setModalComponent] = useState<ReactNode | null>(null)
-  const closeModal = () => setModalComponent(null)
+  const [modalInfo, setModalInfo] = useState<ModalInfo | null>(null)
+  const closeModal = () => setModalInfo(null)
 
   return (
     <GlobalContext.Provider
@@ -33,25 +39,28 @@ export const StoreProvider = ({ children }: PropsWithChildren) => {
         setNaver,
         kakao,
         setKakao,
-        modalComponent,
-        openModal: setModalComponent,
+        modalInfo,
+        openModal: setModalInfo,
         closeModal,
       }}
     >
       {children}
-      {modalComponent && (
+      {modalInfo && (
         <>
           <div className="modal-background" onClick={closeModal}>
             <div
-              className="modal"
+              className={`modal${modalInfo.className ? ` ${modalInfo.className}` : ""}`}
               onClick={(e) => {
                 e.stopPropagation()
               }}
             >
               <div className="header">
-                <div className="close-button" onClick={closeModal} />
+                <div className="close-button-wrapper">
+                  <div className="close-button" onClick={closeModal} />
+                </div>
+                {modalInfo.header}
               </div>
-              {modalComponent}
+              <div className="content">{modalInfo.content}</div>
             </div>
           </div>
         </>
@@ -96,6 +105,6 @@ export const useKakao = () => {
 }
 
 export const useModal = () => {
-  const { modalComponent, openModal, closeModal } = useContext(GlobalContext)
-  return { modalComponent, openModal, closeModal }
+  const { openModal, closeModal } = useContext(GlobalContext)
+  return { openModal, closeModal }
 }

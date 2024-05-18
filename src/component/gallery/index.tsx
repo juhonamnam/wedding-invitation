@@ -360,10 +360,11 @@ export const Gallery = () => {
 
       <Button
         onClick={() =>
-          openModal(
-            <div className="all-photo-modal">
-              <div className="content">
-                <div className="title">사진 전체보기</div>
+          openModal({
+            className: "all-photo-modal",
+            header: <div className="title">사진 전체보기</div>,
+            content: (
+              <>
                 <div className="photo-list">
                   {IMAGES.map((image, idx) => (
                     <img
@@ -383,9 +384,9 @@ export const Gallery = () => {
                   ))}
                 </div>
                 <div className="break" />
-              </div>
-            </div>,
-          )
+              </>
+            ),
+          })
         }
       >
         사진 전체보기

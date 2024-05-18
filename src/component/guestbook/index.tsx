@@ -73,14 +73,35 @@ export const GuestBook = () => {
       <div className="break" />
 
       <Button
-        onClick={() => openModal(<WriteGuestBookModal loadPosts={loadPosts} />)}
+        onClick={() =>
+          openModal({
+            className: "write-guestbook-modal",
+            header: (
+              <div className="title-group">
+                <div className="title">방명록 작성하기</div>
+                <div className="subtitle">
+                  신랑, 신부에게 축하의 마음을 전해주세요.
+                </div>
+              </div>
+            ),
+            content: <WriteGuestBookModal loadPosts={loadPosts} />,
+          })
+        }
       >
         방명록 작성하기
       </Button>
 
       <div className="break" />
 
-      <Button onClick={() => openModal(<AllGuestBookModal />)}>
+      <Button
+        onClick={() =>
+          openModal({
+            className: "all-guestbook-modal",
+            header: <div className="title">방명록 전체보기</div>,
+            content: <AllGuestBookModal />,
+          })
+        }
+      >
         방명록 전체보기
       </Button>
     </LazyDiv>
@@ -96,89 +117,66 @@ const WriteGuestBookModal = ({ loadPosts }: { loadPosts: () => void }) => {
   const { closeModal } = useModal()
 
   return (
-    <div className="write-guestbook-modal">
-      <div className="content">
-        <div className="title-group">
-          <div className="title">방명록 작성하기</div>
-          <div className="subtitle">
-            신랑, 신부에게 축하의 마음을 전해주세요.
-          </div>
-        </div>
+    <form
+      className="form"
+      onSubmit={(e) => {
+        e.preventDefault()
+        if (!inputRef.current.name.value) {
+          alert("이름을 입력해주세요.")
+          return
+        }
+        if (inputRef.current.name.value.length > RULES.name.maxLength) {
+          alert(`이름을 ${RULES.name.maxLength}자 이하로 입력해주세요.`)
+          return
+        }
+        if (!inputRef.current.content.value) {
+          alert("내용을 입력해주세요.")
+          return
+        }
+        if (inputRef.current.content.value.length > RULES.content.maxLength) {
+          alert(`내용을 ${RULES.content.maxLength}자 이하로 입력해주세요.`)
+          return
+        }
+        if (inputRef.current.password.value.length < RULES.password.minLength) {
+          alert(`비밀번호를 ${RULES.password.minLength}자 이상 입력해주세요.`)
+          return
+        }
+        if (inputRef.current.password.value.length > RULES.password.maxLength) {
+          alert(`비밀번호를 ${RULES.password.maxLength}자 이하로 입력해주세요.`)
+          return
+        }
 
-        <form
-          className="form"
-          onSubmit={(e) => {
-            e.preventDefault()
-            if (!inputRef.current.name.value) {
-              alert("이름을 입력해주세요.")
-              return
-            }
-            if (inputRef.current.name.value.length > RULES.name.maxLength) {
-              alert(`이름을 ${RULES.name.maxLength}자 이하로 입력해주세요.`)
-              return
-            }
-            if (!inputRef.current.content.value) {
-              alert("내용을 입력해주세요.")
-              return
-            }
-            if (
-              inputRef.current.content.value.length > RULES.content.maxLength
-            ) {
-              alert(`내용을 ${RULES.content.maxLength}자 이하로 입력해주세요.`)
-              return
-            }
-            if (
-              inputRef.current.password.value.length < RULES.password.minLength
-            ) {
-              alert(
-                `비밀번호를 ${RULES.password.minLength}자 이상 입력해주세요.`,
-              )
-              return
-            }
-            if (
-              inputRef.current.password.value.length > RULES.password.maxLength
-            ) {
-              alert(
-                `비밀번호를 ${RULES.password.maxLength}자 이하로 입력해주세요.`,
-              )
-              return
-            }
+        // TODO: Implement writeGuestBook
 
-            // TODO: Implement writeGuestBook
-
-            closeModal()
-            loadPosts()
-          }}
-        >
-          이름
-          <input
-            type="text"
-            placeholder="이름을 입력해주세요."
-            className="name"
-            ref={(ref) => (inputRef.current.name = ref as HTMLInputElement)}
-            maxLength={RULES.name.maxLength}
-          />
-          내용
-          <textarea
-            placeholder="축하 메세지를 100자 이내로 입력해주세요."
-            className="content"
-            ref={(ref) =>
-              (inputRef.current.content = ref as HTMLTextAreaElement)
-            }
-            maxLength={RULES.content.maxLength}
-          />
-          비밀번호
-          <input
-            type="password"
-            placeholder="비밀번호를 입력해주세요."
-            className="password"
-            ref={(ref) => (inputRef.current.password = ref as HTMLInputElement)}
-            maxLength={RULES.password.maxLength}
-          />
-          <Button type="submit">저장하기</Button>
-        </form>
-      </div>
-    </div>
+        closeModal()
+        loadPosts()
+      }}
+    >
+      이름
+      <input
+        type="text"
+        placeholder="이름을 입력해주세요."
+        className="name"
+        ref={(ref) => (inputRef.current.name = ref as HTMLInputElement)}
+        maxLength={RULES.name.maxLength}
+      />
+      내용
+      <textarea
+        placeholder="축하 메세지를 100자 이내로 입력해주세요."
+        className="content"
+        ref={(ref) => (inputRef.current.content = ref as HTMLTextAreaElement)}
+        maxLength={RULES.content.maxLength}
+      />
+      비밀번호
+      <input
+        type="password"
+        placeholder="비밀번호를 입력해주세요."
+        className="password"
+        ref={(ref) => (inputRef.current.password = ref as HTMLInputElement)}
+        maxLength={RULES.password.maxLength}
+      />
+      <Button type="submit">저장하기</Button>
+    </form>
   )
 }
 
@@ -207,64 +205,60 @@ const AllGuestBookModal = () => {
   }, [currentPage, totalPages])
 
   return (
-    <div className="all-guestbook-modal">
-      <div className="content">
-        <div className="title">방명록 전체보기</div>
-
-        {posts.map((post) => (
-          <div key={post.id} className="post">
-            <div className="heading">
-              <div className="close-button" />
-            </div>
-            <div className="body">
-              <div className="title">
-                <div className="name">{post.name}</div>
-                <div className="date">
-                  {dayjs.unix(post.timestamp).format("YYYY-MM-DD")}
-                </div>
+    <>
+      {posts.map((post) => (
+        <div key={post.id} className="post">
+          <div className="heading">
+            <div className="close-button" />
+          </div>
+          <div className="body">
+            <div className="title">
+              <div className="name">{post.name}</div>
+              <div className="date">
+                {dayjs.unix(post.timestamp).format("YYYY-MM-DD")}
               </div>
-              <div className="content">{post.content}</div>
             </div>
+            <div className="content">{post.content}</div>
+          </div>
+        </div>
+      ))}
+
+      <div className="break" />
+
+      <div className="pagination">
+        {pages[0] > 0 && (
+          <div
+            className="page"
+            onClick={() => {
+              loadPage(pages[0] - 1)
+            }}
+          >
+            이전
+          </div>
+        )}
+        {pages.map((page) => (
+          <div
+            className={`page${page === currentPage ? " current" : ""}`}
+            key={page}
+            onClick={() => {
+              if (page === currentPage) return
+              loadPage(page)
+            }}
+          >
+            {page + 1}
           </div>
         ))}
-
-        <div className="break" />
-
-        <div className="pagination">
-          {pages[0] > 0 && (
-            <div
-              className="page"
-              onClick={() => {
-                loadPage(pages[0] - 1)
-              }}
-            >
-              이전
-            </div>
-          )}
-          {pages.map((page) => (
-            <div
-              className={`page${page === currentPage ? " current" : ""}`}
-              key={page}
-              onClick={() => {
-                if (page === currentPage) return
-                loadPage(page)
-              }}
-            >
-              {page + 1}
-            </div>
-          ))}
-          {pages[pages.length - 1] < totalPages - 1 && (
-            <div
-              className="page"
-              onClick={() => {
-                loadPage(pages[pages.length - 1] + 1)
-              }}
-            >
-              다음
-            </div>
-          )}
-        </div>
+        {pages[pages.length - 1] < totalPages - 1 && (
+          <div
+            className="page"
+            onClick={() => {
+              loadPage(pages[pages.length - 1] + 1)
+            }}
+          >
+            다음
+          </div>
+        )}
       </div>
-    </div>
+    </>
   )
 }

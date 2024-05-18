@@ -32,10 +32,11 @@ export const Information = () => {
         <Button
           style={{ width: "100%" }}
           onClick={() => {
-            openModal(
-              <div className="donation-modal">
-                <div className="content">
-                  <div className="title">신랑측 계좌번호</div>
+            openModal({
+              className: "donation-modal",
+              header: <div className="title">신랑측 계좌번호</div>,
+              content: (
+                <>
                   {GROOM_INFO.filter(({ account }) => !!account).map(
                     ({ relation, name, account }) => (
                       <div className="account-info" key={relation}>
@@ -63,9 +64,9 @@ export const Information = () => {
                       </div>
                     ),
                   )}
-                </div>
-              </div>,
-            )
+                </>
+              ),
+            })
           }}
         >
           신랑측 계좌번호 보기
@@ -74,10 +75,11 @@ export const Information = () => {
         <Button
           style={{ width: "100%" }}
           onClick={() => {
-            openModal(
-              <div className="donation-modal">
-                <div className="content">
-                  <div className="title">신부측 계좌번호</div>
+            openModal({
+              className: "donation-modal",
+              header: <div className="title">신부측 계좌번호</div>,
+              content: (
+                <>
                   {BRIDE_INFO.filter(({ account }) => !!account).map(
                     ({ relation, name, account }) => (
                       <div className="account-info" key={relation}>
@@ -105,9 +107,9 @@ export const Information = () => {
                       </div>
                     ),
                   )}
-                </div>
-              </div>,
-            )
+                </>
+              ),
+            })
           }}
         >
           신부측 계좌번호 보기

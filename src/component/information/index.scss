@@ -26,14 +26,17 @@
 
 .donation-modal {
   width: 22rem;
-  .content {
-    padding: 0 0.7rem 0.7rem 0.7rem;
+
+  .header {
     .title {
       text-align: center;
       font-size: 1.2rem;
       color: var(--theme-color);
       padding: 0.5rem;
     }
+  }
+  .content {
+    padding: 0 0.7rem 0.7rem 0.7rem;
 
     .account-info {
       margin-top: 1rem;

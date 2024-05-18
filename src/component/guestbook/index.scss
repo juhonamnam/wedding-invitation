@@ -60,8 +60,7 @@
 .write-guestbook-modal {
   width: 22rem;
 
-  .content {
-    padding: 0 0.7rem 0.7rem 0.7rem;
+  .header {
     .title-group {
       text-align: center;
       .title {
@@ -75,6 +74,10 @@
       padding-bottom: 1rem;
       border-bottom: 1px solid var(--dark-grey-color);
     }
+  }
+
+  .content {
+    padding: 0 0.7rem 0.7rem 0.7rem;
 
     .form {
       display: flex;
@@ -86,6 +89,8 @@
         margin-bottom: 0.5rem;
         border: 1px solid var(--light-grey-color);
         border-radius: 0.3rem;
+        font-family: "MapoGoldenPier";
+        font-size: 0.8rem;
       }
 
       textarea {
@@ -93,6 +98,8 @@
         margin-bottom: 0.5rem;
         border: 1px solid var(--light-grey-color);
         border-radius: 0.3rem;
+        font-family: "MapoGoldenPier";
+        font-size: 0.8rem;
       }
     }
   }
@@ -101,14 +108,17 @@
 .all-guestbook-modal {
   width: 24rem;
 
-  .content {
-    padding: 0 0.7rem 0.7rem 0.7rem;
+  .header {
     > .title {
       text-align: center;
       font-size: 1.2rem;
       color: var(--theme-color);
       padding-bottom: 1rem;
     }
+  }
+
+  .content {
+    padding: 0 0.7rem 0.7rem 0.7rem;
 
     .pagination {
       display: flex;
