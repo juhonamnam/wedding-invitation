@@ -7,17 +7,14 @@ import image4 from "../../image/sample4.png"
 import image5 from "../../image/sample5.png"
 import image6 from "../../image/sample6.png"
 import { LazyDiv } from "../lazyDiv"
+import { Button } from "../button"
+import { useModal } from "../store"
 
-const ITEMS = [
-  <img src={image1} draggable={false} alt="image1" />,
-  <img src={image2} draggable={false} alt="image2" />,
-  <img src={image3} draggable={false} alt="image3" />,
-  <img src={image4} draggable={false} alt="image4" />,
-  <img src={image5} draggable={false} alt="image5" />,
-  <img src={image6} draggable={false} alt="image6" />,
-].map((item, idx) => (
+const IMAGES = [image1, image2, image3, image4, image5, image6]
+
+const CAROUSEL_ITEMS = IMAGES.map((item, idx) => (
   <div className="carousel-item" key={idx}>
-    {item}
+    <img src={item} draggable={false} alt={`${idx}`} />
   </div>
 ))
 
@@ -41,6 +38,7 @@ type DragOption = {
 type ClickMove = "left" | "right" | null
 
 export const Gallery = () => {
+  const { openModal, closeModal } = useModal()
   const carouselRef = useRef<HTMLDivElement>(
     null,
   ) as React.MutableRefObject<HTMLDivElement>
@@ -144,30 +142,27 @@ export const Gallery = () => {
           currentTranslateX: -carouselWidth,
         })
         setStatus("stationary")
-        setSlide((slide + move + ITEMS.length) % ITEMS.length)
+        setSlide((slide + move + CAROUSEL_ITEMS.length) % CAROUSEL_ITEMS.length)
       }, 300)
     },
     [],
   )
 
-  const move = useCallback(
-    (srcIdx: number, dstIdx: number, carouselWidth: number) => {
-      setSlide(dstIdx)
-      if (srcIdx < dstIdx) {
-        setStatus("moving-right")
-      } else {
-        setStatus("moving-left")
-      }
+  const move = useCallback((srcIdx: number, dstIdx: number) => {
+    setSlide(dstIdx)
+    if (srcIdx < dstIdx) {
+      setStatus("moving-right")
+    } else {
+      setStatus("moving-left")
+    }
 
-      setMoveOption({ srcIdx, dstIdx })
+    setMoveOption({ srcIdx, dstIdx })
 
-      setTimeout(() => {
-        setClickMove(null)
-        setStatus("stationary")
-      }, 300)
-    },
-    [],
-  )
+    setTimeout(() => {
+      setClickMove(null)
+      setStatus("stationary")
+    }, 300)
+  }, [])
 
   /* Events */
   const onMouseMove = useCallback(
@@ -222,13 +217,9 @@ export const Gallery = () => {
 
     if (status === "clicked") {
       if (clickMove === "left") {
-        move(
-          slide,
-          (slide + ITEMS.length - 1) % ITEMS.length,
-          carouselRef.current.clientWidth,
-        )
+        move(slide, (slide + CAROUSEL_ITEMS.length - 1) % CAROUSEL_ITEMS.length)
       } else if (clickMove === "right") {
-        move(slide, (slide + 1) % ITEMS.length, carouselRef.current.clientWidth)
+        move(slide, (slide + 1) % CAROUSEL_ITEMS.length)
       } else {
         setStatus("stationary")
       }
@@ -257,7 +248,7 @@ export const Gallery = () => {
   const onIndicatorClick = useCallback(
     (status: Status, srcIdx: number, dstIdx: number) => {
       if (status !== "stationary" || srcIdx === dstIdx) return
-      move(srcIdx, dstIdx, carouselRef.current.clientWidth)
+      move(srcIdx, dstIdx)
     },
     [move],
   )
@@ -312,16 +303,20 @@ export const Gallery = () => {
         >
           <div className={transformClass} style={transformStyle}>
             {["dragging", "dragEnding"].includes(status) && [
-              ...(slide === 0 ? [ITEMS[ITEMS.length - 1]] : []),
-              ...ITEMS.slice(slide === 0 ? 0 : slide - 1, slide + 2),
-              ...(slide === ITEMS.length - 1 ? [ITEMS[0]] : []),
+              ...(slide === 0
+                ? [CAROUSEL_ITEMS[CAROUSEL_ITEMS.length - 1]]
+                : []),
+              ...CAROUSEL_ITEMS.slice(slide === 0 ? 0 : slide - 1, slide + 2),
+              ...(slide === CAROUSEL_ITEMS.length - 1
+                ? [CAROUSEL_ITEMS[0]]
+                : []),
             ]}
             {status === "moving-right" &&
-              ITEMS.slice(moveOption.srcIdx, moveOption.dstIdx + 1)}
+              CAROUSEL_ITEMS.slice(moveOption.srcIdx, moveOption.dstIdx + 1)}
             {status === "moving-left" &&
-              ITEMS.slice(moveOption.dstIdx, moveOption.srcIdx + 1)}
+              CAROUSEL_ITEMS.slice(moveOption.dstIdx, moveOption.srcIdx + 1)}
             {["stationary", "clicked", "clickCanceled"].includes(status) &&
-              ITEMS[slide]}
+              CAROUSEL_ITEMS[slide]}
           </div>
           <div className="carousel-control">
             <div
@@ -349,7 +344,7 @@ export const Gallery = () => {
           </div>
         </div>
         <div className="carousel-indicator">
-          {ITEMS.map((_, idx) => (
+          {CAROUSEL_ITEMS.map((_, idx) => (
             <div
               key={idx}
               className={`indicator${idx === slide ? " active" : ""}`}
@@ -360,6 +355,41 @@ export const Gallery = () => {
           ))}
         </div>
       </div>
+
+      <div className="break" />
+
+      <Button
+        onClick={() =>
+          openModal(
+            <div className="all-photo-modal">
+              <div className="content">
+                <div className="title">사진 전체보기</div>
+                <div className="photo-list">
+                  {IMAGES.map((image, idx) => (
+                    <img
+                      key={idx}
+                      src={image}
+                      alt={`${idx}`}
+                      draggable={false}
+                      onClick={() => {
+                        if (statusRef.current === "stationary") {
+                          if (idx !== slideRef.current) {
+                            move(slideRef.current, idx)
+                          }
+                          closeModal()
+                        }
+                      }}
+                    />
+                  ))}
+                </div>
+                <div className="break" />
+              </div>
+            </div>,
+          )
+        }
+      >
+        사진 전체보기
+      </Button>
     </LazyDiv>
   )
 }

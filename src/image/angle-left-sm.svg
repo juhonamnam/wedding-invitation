@@ -6,7 +6,7 @@
       }
 
       .cls-2 {
-        fill: #1d1d1d;
+        fill: var(--dark-grey-color);
       }
     </style>
   </defs>

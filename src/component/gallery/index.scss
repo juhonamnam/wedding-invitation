@@ -1,4 +1,4 @@
-$gallery-width: 21rem;
+$gallery-width: 20rem;
 $gallery-height: 24rem;
 $transition-duration: 0.3s;
 
@@ -17,7 +17,7 @@ $transition-duration: 0.3s;
     flex-direction: column;
     align-items: center;
     .carousel {
-      width: 21rem;
+      width: $gallery-width;
       overflow: hidden;
       position: relative;
       z-index: 3;
@@ -82,7 +82,6 @@ $transition-duration: 0.3s;
 
           .arrow {
             width: 2rem;
-            opacity: 0.2;
             &.right {
               transform: rotate(180deg);
             }
@@ -116,6 +115,31 @@ $transition-duration: 0.3s;
             background-color: var(--dark-color);
           }
         }
+      }
+    }
+  }
+}
+
+.all-photo-modal {
+  width: 22rem;
+
+  .content {
+    padding: 0 0.7rem 0.7rem 0.7rem;
+    > .title {
+      text-align: center;
+      font-size: 1.2rem;
+      color: var(--theme-color);
+      padding-bottom: 1rem;
+    }
+    .photo-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: 12rem;
+      gap: 0.5rem;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
     }
   }
