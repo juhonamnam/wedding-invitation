@@ -68,13 +68,13 @@ export const Invitation = () => {
                         <PhoneIcon
                           className="flip icon"
                           onClick={() => {
-                            window.open(`tel:${phone}`)
+                            window.open(`tel:${phone}`, "_self")
                           }}
                         />
                         <EnvelopeIcon
                           className="icon"
                           onClick={() => {
-                            window.open(`sms:${phone}`)
+                            window.open(`sms:${phone}`, "_self")
                           }}
                         />
                       </div>
@@ -90,13 +90,13 @@ export const Invitation = () => {
                         <PhoneIcon
                           className="flip icon"
                           onClick={() => {
-                            window.open(`tel:${phone}`)
+                            window.open(`tel:${phone}`, "_self")
                           }}
                         />
                         <EnvelopeIcon
                           className="icon"
                           onClick={() => {
-                            window.open(`sms:${phone}`)
+                            window.open(`sms:${phone}`, "_self")
                           }}
                         />
                       </div>
