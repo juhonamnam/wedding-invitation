@@ -65,8 +65,18 @@ export const Invitation = () => {
                       <div className="relation">{relation}</div>
                       <div>{name}</div>
                       <div>
-                        <PhoneIcon className="flip icon" />
-                        <EnvelopeIcon className="icon" />
+                        <PhoneIcon
+                          className="flip icon"
+                          onClick={() => {
+                            window.open(`tel:${phone}`)
+                          }}
+                        />
+                        <EnvelopeIcon
+                          className="icon"
+                          onClick={() => {
+                            window.open(`sms:${phone}`)
+                          }}
+                        />
                       </div>
                     </Fragment>
                   ))}
@@ -77,8 +87,18 @@ export const Invitation = () => {
                       <div className="relation">{relation}</div>
                       <div>{name}</div>
                       <div>
-                        <PhoneIcon className="flip icon" />
-                        <EnvelopeIcon className="icon" />
+                        <PhoneIcon
+                          className="flip icon"
+                          onClick={() => {
+                            window.open(`tel:${phone}`)
+                          }}
+                        />
+                        <EnvelopeIcon
+                          className="icon"
+                          onClick={() => {
+                            window.open(`sms:${phone}`)
+                          }}
+                        />
                       </div>
                     </Fragment>
                   ))}

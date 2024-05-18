@@ -36,18 +36,30 @@ export const Information = () => {
               <div className="donation-modal">
                 <div className="content">
                   <div className="title">신랑측 계좌번호</div>
-                  {GROOM_INFO.filter(({ accountNo }) => !!accountNo).map(
-                    ({ relation, name, bank, accountNo }) => (
+                  {GROOM_INFO.filter(({ account }) => !!account).map(
+                    ({ relation, name, account }) => (
                       <div className="account-info" key={relation}>
                         <div>
                           <div className="name">
                             <span className="relation">{relation}</span> {name}
                           </div>
-                          <div>
-                            {bank} {accountNo}
-                          </div>
+                          <div>{account}</div>
                         </div>
-                        <Button className="copy-button">복사하기</Button>
+                        <Button
+                          className="copy-button"
+                          onClick={async () => {
+                            if (account) {
+                              try {
+                                navigator.clipboard.writeText(account)
+                                alert(account + "\n복사되었습니다.")
+                              } catch {
+                                alert("복사에 실패했습니다.")
+                              }
+                            }
+                          }}
+                        >
+                          복사하기
+                        </Button>
                       </div>
                     ),
                   )}
@@ -66,18 +78,30 @@ export const Information = () => {
               <div className="donation-modal">
                 <div className="content">
                   <div className="title">신부측 계좌번호</div>
-                  {BRIDE_INFO.filter(({ accountNo }) => !!accountNo).map(
-                    ({ relation, name, bank, accountNo }) => (
+                  {BRIDE_INFO.filter(({ account }) => !!account).map(
+                    ({ relation, name, account }) => (
                       <div className="account-info" key={relation}>
                         <div>
                           <div className="name">
                             <span className="relation">{relation}</span> {name}
                           </div>
-                          <div>
-                            {bank} {accountNo}
-                          </div>
+                          <div>{account}</div>
                         </div>
-                        <Button className="copy-button">복사하기</Button>
+                        <Button
+                          className="copy-button"
+                          onClick={async () => {
+                            if (account) {
+                              try {
+                                navigator.clipboard.writeText(account)
+                                alert(account + "\n복사되었습니다.")
+                              } catch {
+                                alert("복사에 실패했습니다.")
+                              }
+                            }
+                          }}
+                        >
+                          복사하기
+                        </Button>
                       </div>
                     ),
                   )}
