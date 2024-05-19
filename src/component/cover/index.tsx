@@ -2,9 +2,9 @@ import { BRIDE, GROOM, WEDDING_DATE } from "../../const"
 import sample from "../../image/sample5.png"
 import { LazyDiv } from "../lazyDiv"
 
-export const Front = () => {
+export const Cover = () => {
   return (
-    <LazyDiv className="card front">
+    <LazyDiv className="card cover">
       <div className="title-group">
         <div className="title">우리</div>
         <div className="title-deco">

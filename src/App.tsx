@@ -1,4 +1,4 @@
-import { Front } from "./component/front"
+import { Cover } from "./component/cover"
 import { Location } from "./component/location"
 import "./App.scss"
 import { BGEffect } from "./component/bgEffect"
@@ -16,7 +16,7 @@ function App() {
       <div className="card-view">
         <LazyDiv className="card-group">
           {/* 표지 */}
-          <Front />
+          <Cover />
 
           {/* 모시는 글 */}
           <Invitation />
