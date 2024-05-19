@@ -1,5 +1,5 @@
 import { BRIDE, GROOM, WEDDING_DATE } from "../../const"
-import sample from "../../image/sample5.png"
+import coverImage from "../../image/cover.jpg"
 import { LazyDiv } from "../lazyDiv"
 
 export const Cover = () => {
@@ -14,7 +14,7 @@ export const Cover = () => {
         <div className="title">결혼합니다</div>
       </div>
       <div className="image-wrapper">
-        <img src={sample} alt="sample" />
+        <img src={coverImage} alt="sample" />
       </div>
       <div className="subtitle">Save the date for the wedding of</div>
       <div className="content">
