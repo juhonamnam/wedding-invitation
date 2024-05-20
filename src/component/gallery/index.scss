@@ -1,4 +1,4 @@
-$gallery-width: 20rem;
+$gallery-width: 21rem;
 $gallery-height: 30rem;
 $transition-duration: 0.3s;
 
@@ -50,9 +50,11 @@ $transition-duration: 0.3s;
           align-items: center;
           width: $gallery-width;
           height: $gallery-height;
+          padding-left: 0.5rem;
+          padding-right: 0.5rem;
           img {
-            max-width: $gallery-width;
-            max-height: $gallery-height;
+            max-width: 100%;
+            max-height: 100%;
             width: auto;
             height: auto;
           }
