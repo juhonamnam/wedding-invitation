@@ -30,7 +30,14 @@ export const StoreProvider = ({ children }: PropsWithChildren) => {
   const [naver, setNaver] = useState<any>(null)
   const [kakao, setKakao] = useState<any>(null)
   const [modalInfo, setModalInfo] = useState<ModalInfo | null>(null)
-  const closeModal = () => setModalInfo(null)
+  const openModal = (component: ModalInfo) => {
+    document.body.classList.add("modal-open")
+    setModalInfo(component)
+  }
+  const closeModal = () => {
+    document.body.classList.remove("modal-open")
+    setModalInfo(null)
+  }
 
   return (
     <GlobalContext.Provider
@@ -40,7 +47,7 @@ export const StoreProvider = ({ children }: PropsWithChildren) => {
         kakao,
         setKakao,
         modalInfo,
-        openModal: setModalInfo,
+        openModal,
         closeModal,
       }}
     >

@@ -41,14 +41,16 @@
   }
 }
 
-html,
-body {
-  overflow-x: hidden;
-}
-
 body {
   margin: 0;
   color: #282c34;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100vh;
+  &.modal-open {
+    overflow-y: hidden;
+  }
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
