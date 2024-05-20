@@ -8,6 +8,7 @@ import { Gallery } from "./component/gallery"
 import { Information } from "./component/information"
 import { GuestBook } from "./component/guestbook"
 import { LazyDiv } from "./component/lazyDiv"
+import { ShareButton } from "./component/shareButton"
 
 function App() {
   return (
@@ -41,6 +42,8 @@ function App() {
           {/* 방명록 */}
           <GuestBook />
         </LazyDiv>
+
+        <ShareButton />
       </div>
     </div>
   )

@@ -8,6 +8,7 @@
 @use "./component/information";
 @use "./component/guestbook";
 @use "./component/store";
+@use "./component/shareButton";
 
 :root {
   --theme-color: #ff8585;
@@ -121,6 +122,21 @@ body {
             opacity: 1;
           }
         }
+      }
+    }
+
+    .footer {
+      background-color: var(--light-color);
+      box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.2);
+      margin: 0.5rem;
+      opacity: 0;
+      margin: 0.5rem;
+      padding: 1rem;
+      opacity: 0;
+      &.lazy-active {
+        animation-name: lazy-fade-in;
+        animation-duration: 3s;
+        opacity: 1;
       }
     }
   }
