@@ -24,20 +24,38 @@ export const ShareButton = () => {
                 WEDDING_DATE.format("YYYY년 MMMM D일 dddd A h시") +
                 "\n서울대학교 연구공원 웨딩홀",
               imageUrl:
+                window.location.protocol +
+                "//" +
                 window.location.host +
                 process.env.PUBLIC_URL +
                 "/preview_image.jpg",
               link: {
-                mobileWebUrl: window.location.host + process.env.PUBLIC_URL,
-                webUrl: window.location.host + process.env.PUBLIC_URL,
+                mobileWebUrl:
+                  window.location.protocol +
+                  "//" +
+                  window.location.host +
+                  process.env.PUBLIC_URL,
+                webUrl:
+                  window.location.protocol +
+                  "//" +
+                  window.location.host +
+                  process.env.PUBLIC_URL,
               },
             },
             buttons: [
               {
                 title: "초대장 바로가기",
                 link: {
-                  mobileWebUrl: window.location.host + process.env.PUBLIC_URL,
-                  webUrl: window.location.host + process.env.PUBLIC_URL,
+                  mobileWebUrl:
+                    window.location.protocol +
+                    "//" +
+                    window.location.host +
+                    process.env.PUBLIC_URL,
+                  webUrl:
+                    window.location.protocol +
+                    "//" +
+                    window.location.host +
+                    process.env.PUBLIC_URL,
                 },
               },
             ],
