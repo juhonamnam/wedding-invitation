@@ -79,6 +79,10 @@ export const StoreProvider = ({ children }: PropsWithChildren) => {
 export const useNaver = () => {
   const { naver, setNaver } = useContext(GlobalContext)
   useEffect(() => {
+    if (!process.env.REACT_APP_NAVER_MAP_CLIENT_ID) {
+      return
+    }
+
     if (!document.querySelector(`script[src="${NAVER_MAP_URL}"]`)) {
       const script = document.createElement("script")
       script.src = NAVER_MAP_URL
@@ -95,6 +99,10 @@ export const useNaver = () => {
 export const useKakao = () => {
   const { kakao, setKakao } = useContext(GlobalContext)
   useEffect(() => {
+    if (!process.env.REACT_APP_KAKAO_SDK_JS_KEY) {
+      return
+    }
+
     if (!document.querySelector(`script[src="${KAKAO_SDK_URL}"]`)) {
       const script = document.createElement("script")
       script.addEventListener("load", () => {
