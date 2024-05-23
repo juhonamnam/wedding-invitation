@@ -32,7 +32,13 @@ export const ShareButton = () => {
               },
             },
             buttons: [
-              { title: "초대장 바로가기", link: process.env.PUBLIC_URL },
+              {
+                title: "초대장 바로가기",
+                link: {
+                  mobileWebUrl: process.env.PUBLIC_URL,
+                  webUrl: process.env.PUBLIC_URL,
+                },
+              },
             ],
           })
         }}
