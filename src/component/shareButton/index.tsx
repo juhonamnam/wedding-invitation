@@ -10,6 +10,10 @@ export const ShareButton = () => {
       <div
         className="ktalk-share"
         onClick={() => {
+          if (!kakao) {
+            return
+          }
+
           kakao.Share.sendDefault({
             objectType: "location",
             address: "서울대학교 연구공원 웨딩홀",
@@ -25,7 +29,9 @@ export const ShareButton = () => {
                 webUrl: process.env.PUBLIC_URL,
               },
             },
-            buttons: [{ title: "초대장 바로가기" }],
+            buttons: [
+              { title: "초대장 바로가기", link: process.env.PUBLIC_URL },
+            ],
           })
         }}
       >
