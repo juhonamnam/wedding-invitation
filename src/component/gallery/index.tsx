@@ -18,6 +18,10 @@ import image11 from "../../image/image11.jpg"
 import image12 from "../../image/image12.jpg"
 import image13 from "../../image/image13.jpg"
 import image14 from "../../image/image14.jpg"
+import image15 from "../../image/image15.jpg"
+import image16 from "../../image/image16.jpg"
+import image17 from "../../image/image17.jpg"
+import image18 from "../../image/image18.jpg"
 
 const IMAGES = [
   image1,
@@ -34,6 +38,10 @@ const IMAGES = [
   image12,
   image13,
   image14,
+  image15,
+  image16,
+  image17,
+  image18,
 ]
 
 const CAROUSEL_ITEMS = IMAGES.map((item, idx) => (
@@ -66,6 +74,14 @@ export const Gallery = () => {
   const carouselRef = useRef<HTMLDivElement>(
     null,
   ) as React.MutableRefObject<HTMLDivElement>
+
+  useEffect(() => {
+    // preload images
+    IMAGES.forEach((image) => {
+      const img = new Image()
+      img.src = image
+    })
+  }, [])
 
   const [slide, _setSlide] = useState(0)
   const slideRef = useRef(0)
