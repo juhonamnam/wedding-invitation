@@ -53,6 +53,10 @@
         }
         margin-bottom: 0.8rem;
       }
+      .content {
+        word-wrap: break-word;
+        white-space: pre-wrap;
+      }
     }
   }
 }

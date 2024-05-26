@@ -71,7 +71,51 @@ export const GuestBook = () => {
       {posts.map((post) => (
         <div key={post.id} className="post">
           <div className="heading">
-            <div className="close-button" />
+            <div
+              className="close-button"
+              onClick={async () => {
+                if (process.env.REACT_APP_SERVER_URL) {
+                  try {
+                    // TODO: Implement password input
+                    const password = window.prompt("비밀번호를 입력해주세요.")
+                    if (
+                      !password ||
+                      password.length < RULES.password.minLength
+                    ) {
+                      alert(
+                        `비밀번호를 ${RULES.password.minLength}자 이상 입력해주세요.`,
+                      )
+                      return
+                    }
+
+                    if (password.length > RULES.password.maxLength) {
+                      alert(
+                        `비밀번호를 ${RULES.password.maxLength}자 이하로 입력해주세요.`,
+                      )
+                      return
+                    }
+
+                    const result = await fetch(
+                      `${process.env.REACT_APP_SERVER_URL}/posts`,
+                      {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ id: post.id, password }),
+                      },
+                    )
+
+                    if (!result.ok) {
+                      alert("방명록 삭제에 실패했습니다.")
+                      return
+                    }
+
+                    loadPosts()
+                  } catch {
+                    alert("방명록 삭제에 실패했습니다.")
+                  }
+                }
+              }}
+            />
           </div>
           <div className="body">
             <div className="title">
@@ -113,7 +157,7 @@ export const GuestBook = () => {
           openModal({
             className: "all-guestbook-modal",
             header: <div className="title">방명록 전체보기</div>,
-            content: <AllGuestBookModal />,
+            content: <AllGuestBookModal loadPosts={loadPosts} />,
           })
         }
       >
@@ -233,7 +277,11 @@ const WriteGuestBookModal = ({ loadPosts }: { loadPosts: () => void }) => {
   )
 }
 
-const AllGuestBookModal = () => {
+const AllGuestBookModal = ({
+  loadPosts,
+}: {
+  loadPosts: () => Promise<void>
+}) => {
   const [posts, setPosts] = useState<Post[]>([])
   const [currentPage, setCurrentPage] = useState(0)
   const [totalPages, setTotalPages] = useState(1)
@@ -242,15 +290,18 @@ const AllGuestBookModal = () => {
     setCurrentPage(page)
     if (process.env.REACT_APP_SERVER_URL) {
       try {
+        const offset = page * POSTS_PER_PAGE
         const res = await fetch(
-          `${process.env.REACT_APP_SERVER_URL}/posts?offset=${page * POSTS_PER_PAGE}&limit=${POSTS_PER_PAGE}`,
+          `${process.env.REACT_APP_SERVER_URL}/posts?offset=${offset}&limit=${POSTS_PER_PAGE}`,
         )
         if (res.ok) {
           const data = await res.json()
 
           setPosts(data.posts)
           setTotalPages(Math.ceil(data.total / POSTS_PER_PAGE))
-          setCurrentPage(Math.floor(data.offset / POSTS_PER_PAGE))
+          if (data.total < offset) {
+            setCurrentPage(Math.ceil(data.total / POSTS_PER_PAGE) - 1)
+          }
         }
       } catch {}
     } else {
@@ -277,7 +328,52 @@ const AllGuestBookModal = () => {
       {posts.map((post) => (
         <div key={post.id} className="post">
           <div className="heading">
-            <div className="close-button" />
+            <div
+              className="close-button"
+              onClick={async () => {
+                if (process.env.REACT_APP_SERVER_URL) {
+                  try {
+                    // TODO: Implement password input
+                    const password = window.prompt("비밀번호를 입력해주세요.")
+                    if (
+                      !password ||
+                      password.length < RULES.password.minLength
+                    ) {
+                      alert(
+                        `비밀번호를 ${RULES.password.minLength}자 이상 입력해주세요.`,
+                      )
+                      return
+                    }
+
+                    if (password.length > RULES.password.maxLength) {
+                      alert(
+                        `비밀번호를 ${RULES.password.maxLength}자 이하로 입력해주세요.`,
+                      )
+                      return
+                    }
+
+                    const result = await fetch(
+                      `${process.env.REACT_APP_SERVER_URL}/posts`,
+                      {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ id: post.id, password }),
+                      },
+                    )
+
+                    if (!result.ok) {
+                      alert("방명록 삭제에 실패했습니다.")
+                      return
+                    }
+
+                    loadPosts()
+                    loadPage(currentPage)
+                  } catch {
+                    alert("방명록 삭제에 실패했습니다.")
+                  }
+                }
+              }}
+            />
           </div>
           <div className="body">
             <div className="title">
