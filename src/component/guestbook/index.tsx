@@ -18,6 +18,7 @@ const RULES = {
 }
 
 const PAGES_PER_BLOCK = 5
+const POSTS_PER_PAGE = 5
 
 type Post = {
   id: number
@@ -40,9 +41,21 @@ export const GuestBook = () => {
 
   const [posts, setPosts] = useState<Post[]>([])
 
-  // TODO: Implement loadPosts
-  const loadPosts = () => {
-    setPosts(DUMMY_POSTS)
+  const loadPosts = async () => {
+    if (process.env.REACT_APP_SERVER_URL) {
+      try {
+        const res = await fetch(
+          `${process.env.REACT_APP_SERVER_URL}/posts?offset=${0}&limit=${3}`,
+        )
+        if (res.ok) {
+          const data = await res.json()
+
+          setPosts(data.posts)
+        }
+      } catch {}
+    } else {
+      setPosts(DUMMY_POSTS)
+    }
   }
 
   useEffect(() => {
@@ -117,45 +130,79 @@ const WriteGuestBookModal = ({ loadPosts }: { loadPosts: () => void }) => {
     password: HTMLInputElement
   }>
   const { closeModal } = useModal()
+  const [loading, setLoading] = useState(false)
 
   return (
     <form
       className="form"
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault()
-        if (!inputRef.current.name.value) {
-          alert("이름을 입력해주세요.")
-          return
-        }
-        if (inputRef.current.name.value.length > RULES.name.maxLength) {
-          alert(`이름을 ${RULES.name.maxLength}자 이하로 입력해주세요.`)
-          return
-        }
-        if (!inputRef.current.content.value) {
-          alert("내용을 입력해주세요.")
-          return
-        }
-        if (inputRef.current.content.value.length > RULES.content.maxLength) {
-          alert(`내용을 ${RULES.content.maxLength}자 이하로 입력해주세요.`)
-          return
-        }
-        if (inputRef.current.password.value.length < RULES.password.minLength) {
-          alert(`비밀번호를 ${RULES.password.minLength}자 이상 입력해주세요.`)
-          return
-        }
-        if (inputRef.current.password.value.length > RULES.password.maxLength) {
-          alert(`비밀번호를 ${RULES.password.maxLength}자 이하로 입력해주세요.`)
-          return
-        }
+        setLoading(true)
+        try {
+          if (!inputRef.current.name.value) {
+            alert("이름을 입력해주세요.")
+            return
+          }
+          if (inputRef.current.name.value.length > RULES.name.maxLength) {
+            alert(`이름을 ${RULES.name.maxLength}자 이하로 입력해주세요.`)
+            return
+          }
+          if (!inputRef.current.content.value) {
+            alert("내용을 입력해주세요.")
+            return
+          }
+          if (inputRef.current.content.value.length > RULES.content.maxLength) {
+            alert(`내용을 ${RULES.content.maxLength}자 이하로 입력해주세요.`)
+            return
+          }
+          if (
+            inputRef.current.password.value.length < RULES.password.minLength
+          ) {
+            alert(`비밀번호를 ${RULES.password.minLength}자 이상 입력해주세요.`)
+            return
+          }
+          if (
+            inputRef.current.password.value.length > RULES.password.maxLength
+          ) {
+            alert(
+              `비밀번호를 ${RULES.password.maxLength}자 이하로 입력해주세요.`,
+            )
+            return
+          }
 
-        // TODO: Implement writeGuestBook
+          if (process.env.REACT_APP_SERVER_URL) {
+            const res = await fetch(
+              `${process.env.REACT_APP_SERVER_URL}/posts`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  name: inputRef.current.name.value,
+                  content: inputRef.current.content.value,
+                  password: inputRef.current.password.value,
+                }),
+              },
+            )
+            if (!res.ok) {
+              alert("방명록 작성에 실패했습니다.")
+              return
+            }
+          }
 
-        closeModal()
-        loadPosts()
+          closeModal()
+          loadPosts()
+        } catch {
+          alert("방명록 작성에 실패했습니다.")
+        } finally {
+          setLoading(false)
+        }
       }}
     >
       이름
       <input
+        disabled={loading}
         type="text"
         placeholder="이름을 입력해주세요."
         className="name"
@@ -164,6 +211,7 @@ const WriteGuestBookModal = ({ loadPosts }: { loadPosts: () => void }) => {
       />
       내용
       <textarea
+        disabled={loading}
         placeholder="축하 메세지를 100자 이내로 입력해주세요."
         className="content"
         ref={(ref) => (inputRef.current.content = ref as HTMLTextAreaElement)}
@@ -171,13 +219,16 @@ const WriteGuestBookModal = ({ loadPosts }: { loadPosts: () => void }) => {
       />
       비밀번호
       <input
+        disabled={loading}
         type="password"
         placeholder="비밀번호를 입력해주세요."
         className="password"
         ref={(ref) => (inputRef.current.password = ref as HTMLInputElement)}
         maxLength={RULES.password.maxLength}
       />
-      <Button type="submit">저장하기</Button>
+      <Button disabled={loading} type="submit">
+        저장하기
+      </Button>
     </form>
   )
 }
@@ -185,14 +236,29 @@ const WriteGuestBookModal = ({ loadPosts }: { loadPosts: () => void }) => {
 const AllGuestBookModal = () => {
   const [posts, setPosts] = useState<Post[]>([])
   const [currentPage, setCurrentPage] = useState(0)
-  const [totalPages, setTotalPages] = useState(0)
+  const [totalPages, setTotalPages] = useState(1)
 
-  // TODO: Implement loadPage
-  const loadPage = (page: number) => {
+  const loadPage = async (page: number) => {
     setCurrentPage(page)
+    if (process.env.REACT_APP_SERVER_URL) {
+      try {
+        const res = await fetch(
+          `${process.env.REACT_APP_SERVER_URL}/posts?offset=${page * POSTS_PER_PAGE}&limit=${POSTS_PER_PAGE}`,
+        )
+        if (res.ok) {
+          const data = await res.json()
 
-    setPosts(DUMMY_POSTS)
-    setTotalPages(1)
+          setPosts(data.posts)
+          setTotalPages(Math.ceil(data.total / POSTS_PER_PAGE))
+          setCurrentPage(Math.floor(data.offset / POSTS_PER_PAGE))
+        }
+      } catch {}
+    } else {
+      setCurrentPage(page)
+
+      setPosts(DUMMY_POSTS)
+      setTotalPages(1)
+    }
   }
 
   useEffect(() => {
