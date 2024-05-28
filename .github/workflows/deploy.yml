@@ -35,6 +35,7 @@ jobs:
         env:
           REACT_APP_NAVER_MAP_CLIENT_ID: ${{ secrets.NAVER_MAP_CLIENT_ID }}
           REACT_APP_KAKAO_SDK_JS_KEY: ${{ secrets.KAKAO_SDK_JS_KEY }}
+          REACT_APP_SERVER_URL: ${{ vars.SERVER_URL }}
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
