@@ -131,26 +131,29 @@ export const GuestBook = () => {
 
       <div className="break" />
 
-      <Button
-        onClick={() =>
-          openModal({
-            className: "write-guestbook-modal",
-            header: (
-              <div className="title-group">
-                <div className="title">방명록 작성하기</div>
-                <div className="subtitle">
-                  신랑, 신부에게 축하의 마음을 전해주세요.
-                </div>
-              </div>
-            ),
-            content: <WriteGuestBookModal loadPosts={loadPosts} />,
-          })
-        }
-      >
-        방명록 작성하기
-      </Button>
-
-      <div className="break" />
+      {process.env.REACT_APP_SERVER_URL && (
+        <>
+          <Button
+            onClick={() =>
+              openModal({
+                className: "write-guestbook-modal",
+                header: (
+                  <div className="title-group">
+                    <div className="title">방명록 작성하기</div>
+                    <div className="subtitle">
+                      신랑, 신부에게 축하의 마음을 전해주세요.
+                    </div>
+                  </div>
+                ),
+                content: <WriteGuestBookModal loadPosts={loadPosts} />,
+              })
+            }
+          >
+            방명록 작성하기
+          </Button>
+          <div className="break" />
+        </>
+      )}
 
       <Button
         onClick={() =>

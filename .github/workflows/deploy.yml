@@ -48,7 +48,7 @@ jobs:
         run: yarn install
     
       - name: Build
-        run: yarn run build
+        run: yarn run build_archive
       
       - name: Setup Pages
         uses: actions/configure-pages@v5
