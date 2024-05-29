@@ -77,9 +77,8 @@ export const GuestBook = () => {
                 if (process.env.REACT_APP_SERVER_URL) {
                   openModal({
                     className: "delete-guestbook-modal",
-                    header: (
-                      <div className="title">비밀번호를 입력해주세요.</div>
-                    ),
+                    closeOnClickBackground: false,
+                    header: <div className="title">삭제하시겠습니까?</div>,
                     content: (
                       <DeleteGuestBookModal
                         postId={post.id}
@@ -113,6 +112,7 @@ export const GuestBook = () => {
             onClick={() =>
               openModal({
                 className: "write-guestbook-modal",
+                closeOnClickBackground: false,
                 header: (
                   <div className="title-group">
                     <div className="title">방명록 작성하기</div>
@@ -135,6 +135,7 @@ export const GuestBook = () => {
         onClick={() =>
           openModal({
             className: "all-guestbook-modal",
+            closeOnClickBackground: true,
             header: <div className="title">방명록 전체보기</div>,
             content: <AllGuestBookModal loadPosts={loadPosts} />,
           })
@@ -314,9 +315,8 @@ const AllGuestBookModal = ({
                 if (process.env.REACT_APP_SERVER_URL) {
                   openModal({
                     className: "delete-guestbook-modal",
-                    header: (
-                      <div className="title">비밀번호를 입력해주세요.</div>
-                    ),
+                    closeOnClickBackground: false,
+                    header: <div className="title">삭제하시겠습니까?</div>,
                     content: (
                       <DeleteGuestBookModal
                         postId={post.id}

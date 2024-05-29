@@ -402,6 +402,7 @@ export const Gallery = () => {
         onClick={() =>
           openModal({
             className: "all-photo-modal",
+            closeOnClickBackground: true,
             header: <div className="title">사진 전체보기</div>,
             content: (
               <>

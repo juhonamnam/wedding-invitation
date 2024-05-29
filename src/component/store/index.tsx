@@ -14,6 +14,7 @@ type ModalInfo = {
   header?: ReactNode
   className?: string
   content: ReactNode
+  closeOnClickBackground?: boolean
 }
 
 const GlobalContext = createContext({
@@ -66,7 +67,9 @@ export const StoreProvider = ({ children }: PropsWithChildren) => {
           key={idx}
           className="modal-background"
           style={{ zIndex: 4 + idx }}
-          onClick={closeModal}
+          onClick={() => {
+            if (modalInfo.closeOnClickBackground) closeModal()
+          }}
         >
           <div
             className={`modal${modalInfo.className ? ` ${modalInfo.className}` : ""}`}

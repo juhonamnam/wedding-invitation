@@ -52,6 +52,7 @@ export const Invitation = () => {
         onClick={() => {
           openModal({
             className: "contact-modal",
+            closeOnClickBackground: true,
             header: (
               <div className="title-group">
                 <div className="title">축하 인사 전하기</div>

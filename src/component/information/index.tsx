@@ -34,6 +34,7 @@ export const Information = () => {
           onClick={() => {
             openModal({
               className: "donation-modal",
+              closeOnClickBackground: true,
               header: <div className="title">신랑측 계좌번호</div>,
               content: (
                 <>
@@ -77,6 +78,7 @@ export const Information = () => {
           onClick={() => {
             openModal({
               className: "donation-modal",
+              closeOnClickBackground: true,
               header: <div className="title">신부측 계좌번호</div>,
               content: (
                 <>
