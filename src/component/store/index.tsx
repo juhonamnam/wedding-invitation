@@ -21,7 +21,7 @@ const GlobalContext = createContext({
   setNaver: (_naver: any) => {},
   kakao: null as any,
   setKakao: (_kakao: any) => {},
-  modalInfo: null as ModalInfo | null,
+  modalInfoList: [] as ModalInfo[],
   openModal: (_component: ModalInfo) => {},
   closeModal: () => {},
 })
@@ -29,14 +29,23 @@ const GlobalContext = createContext({
 export const StoreProvider = ({ children }: PropsWithChildren) => {
   const [naver, setNaver] = useState<any>(null)
   const [kakao, setKakao] = useState<any>(null)
-  const [modalInfo, setModalInfo] = useState<ModalInfo | null>(null)
-  const openModal = (component: ModalInfo) => {
-    document.body.classList.add("modal-open")
-    setModalInfo(component)
+  const [modalInfoList, setModalInfoList] = useState<ModalInfo[]>([])
+  const openModal = (modalInfo: ModalInfo) => {
+    setModalInfoList((modalInfoList) => {
+      if (modalInfoList.length === 0) {
+        document.body.classList.add("modal-open")
+      }
+      return [...modalInfoList, modalInfo]
+    })
   }
   const closeModal = () => {
-    document.body.classList.remove("modal-open")
-    setModalInfo(null)
+    setModalInfoList((modalInfoList) => {
+      const result = modalInfoList.slice(0, -1)
+      if (result.length === 0) {
+        document.body.classList.remove("modal-open")
+      }
+      return result
+    })
   }
 
   return (
@@ -46,32 +55,35 @@ export const StoreProvider = ({ children }: PropsWithChildren) => {
         setNaver,
         kakao,
         setKakao,
-        modalInfo,
+        modalInfoList,
         openModal,
         closeModal,
       }}
     >
       {children}
-      {modalInfo && (
-        <>
-          <div className="modal-background" onClick={closeModal}>
-            <div
-              className={`modal${modalInfo.className ? ` ${modalInfo.className}` : ""}`}
-              onClick={(e) => {
-                e.stopPropagation()
-              }}
-            >
-              <div className="header">
-                <div className="close-button-wrapper">
-                  <div className="close-button" onClick={closeModal} />
-                </div>
-                {modalInfo.header}
+      {modalInfoList.map((modalInfo, idx) => (
+        <div
+          key={idx}
+          className="modal-background"
+          style={{ zIndex: 4 + idx }}
+          onClick={closeModal}
+        >
+          <div
+            className={`modal${modalInfo.className ? ` ${modalInfo.className}` : ""}`}
+            onClick={(e) => {
+              e.stopPropagation()
+            }}
+          >
+            <div className="header">
+              <div className="close-button-wrapper">
+                <div className="close-button" onClick={closeModal} />
               </div>
-              <div className="content">{modalInfo.content}</div>
+              {modalInfo.header}
             </div>
+            <div className="content">{modalInfo.content}</div>
           </div>
-        </>
-      )}
+        </div>
+      ))}
     </GlobalContext.Provider>
   )
 }

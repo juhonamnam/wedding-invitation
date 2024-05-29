@@ -75,44 +75,20 @@ export const GuestBook = () => {
               className="close-button"
               onClick={async () => {
                 if (process.env.REACT_APP_SERVER_URL) {
-                  try {
-                    // TODO: Implement password input
-                    const password = window.prompt("비밀번호를 입력해주세요.")
-                    if (
-                      !password ||
-                      password.length < RULES.password.minLength
-                    ) {
-                      alert(
-                        `비밀번호를 ${RULES.password.minLength}자 이상 입력해주세요.`,
-                      )
-                      return
-                    }
-
-                    if (password.length > RULES.password.maxLength) {
-                      alert(
-                        `비밀번호를 ${RULES.password.maxLength}자 이하로 입력해주세요.`,
-                      )
-                      return
-                    }
-
-                    const result = await fetch(
-                      `${process.env.REACT_APP_SERVER_URL}/posts`,
-                      {
-                        method: "PUT",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ id: post.id, password }),
-                      },
-                    )
-
-                    if (!result.ok) {
-                      alert("방명록 삭제에 실패했습니다.")
-                      return
-                    }
-
-                    loadPosts()
-                  } catch {
-                    alert("방명록 삭제에 실패했습니다.")
-                  }
+                  openModal({
+                    className: "delete-guestbook-modal",
+                    header: (
+                      <div className="title">비밀번호를 입력해주세요.</div>
+                    ),
+                    content: (
+                      <DeleteGuestBookModal
+                        postId={post.id}
+                        onSuccess={() => {
+                          loadPosts()
+                        }}
+                      />
+                    ),
+                  })
                 }
               }}
             />
@@ -288,6 +264,7 @@ const AllGuestBookModal = ({
   const [posts, setPosts] = useState<Post[]>([])
   const [currentPage, setCurrentPage] = useState(0)
   const [totalPages, setTotalPages] = useState(1)
+  const { openModal } = useModal()
 
   const loadPage = async (page: number) => {
     setCurrentPage(page)
@@ -335,45 +312,21 @@ const AllGuestBookModal = ({
               className="close-button"
               onClick={async () => {
                 if (process.env.REACT_APP_SERVER_URL) {
-                  try {
-                    // TODO: Implement password input
-                    const password = window.prompt("비밀번호를 입력해주세요.")
-                    if (
-                      !password ||
-                      password.length < RULES.password.minLength
-                    ) {
-                      alert(
-                        `비밀번호를 ${RULES.password.minLength}자 이상 입력해주세요.`,
-                      )
-                      return
-                    }
-
-                    if (password.length > RULES.password.maxLength) {
-                      alert(
-                        `비밀번호를 ${RULES.password.maxLength}자 이하로 입력해주세요.`,
-                      )
-                      return
-                    }
-
-                    const result = await fetch(
-                      `${process.env.REACT_APP_SERVER_URL}/posts`,
-                      {
-                        method: "PUT",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ id: post.id, password }),
-                      },
-                    )
-
-                    if (!result.ok) {
-                      alert("방명록 삭제에 실패했습니다.")
-                      return
-                    }
-
-                    loadPosts()
-                    loadPage(currentPage)
-                  } catch {
-                    alert("방명록 삭제에 실패했습니다.")
-                  }
+                  openModal({
+                    className: "delete-guestbook-modal",
+                    header: (
+                      <div className="title">비밀번호를 입력해주세요.</div>
+                    ),
+                    content: (
+                      <DeleteGuestBookModal
+                        postId={post.id}
+                        onSuccess={() => {
+                          loadPosts()
+                          loadPage(currentPage)
+                        }}
+                      />
+                    ),
+                  })
                 }
               }}
             />
@@ -427,5 +380,68 @@ const AllGuestBookModal = ({
         )}
       </div>
     </>
+  )
+}
+
+const DeleteGuestBookModal = ({
+  postId,
+  onSuccess,
+}: {
+  postId: number
+  onSuccess: () => void
+}) => {
+  const inputRef = useRef() as React.MutableRefObject<HTMLInputElement>
+  const { closeModal } = useModal()
+
+  return (
+    <form
+      className="form"
+      onSubmit={async (e) => {
+        e.preventDefault()
+        try {
+          const password = inputRef.current.value
+          if (!password || password.length < RULES.password.minLength) {
+            alert(`비밀번호를 ${RULES.password.minLength}자 이상 입력해주세요.`)
+            return
+          }
+
+          if (password.length > RULES.password.maxLength) {
+            alert(
+              `비밀번호를 ${RULES.password.maxLength}자 이하로 입력해주세요.`,
+            )
+            return
+          }
+
+          const result = await fetch(
+            `${process.env.REACT_APP_SERVER_URL}/posts`,
+            {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ id: postId, password }),
+            },
+          )
+
+          if (!result.ok) {
+            alert("방명록 삭제에 실패했습니다.")
+            return
+          }
+
+          onSuccess()
+        } catch {
+          alert("방명록 삭제에 실패했습니다.")
+        } finally {
+          closeModal()
+        }
+      }}
+    >
+      <input
+        type="password"
+        placeholder="비밀번호를 입력해주세요."
+        className="password"
+        ref={inputRef}
+        maxLength={RULES.password.maxLength}
+      />
+      <Button type="submit">삭제하기</Button>
+    </form>
   )
 }
