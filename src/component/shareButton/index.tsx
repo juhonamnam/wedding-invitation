@@ -16,7 +16,7 @@ export const ShareButton = () => {
 
           kakao.Share.sendDefault({
             objectType: "location",
-            address: "서울대학교 연구공원웨딩홀",
+            address: "서울대학교 연구공원 웨딩홀",
             addressTitle: "서울대학교 연구공원 웨딩홀",
             content: {
               title: "남주호 ❤️ 정지원의 결혼식에 초대합니다.",
