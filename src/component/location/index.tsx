@@ -14,7 +14,7 @@ export const Location = () => {
             서울시 관악구 관악로 1, 연구공원 본관 1층
           </div>
         </div>
-        <Map className="map" />
+        <Map />
       </LazyDiv>
       <LazyDiv className="card location">
         <div className="location-info">

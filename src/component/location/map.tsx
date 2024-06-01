@@ -1,8 +1,10 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useState, useRef } from "react"
 import { useKakao, useNaver } from "../../component/store"
 import nmapIcon from "../../image/nmap-icon.png"
 import knaviIcon from "../../image/knavi-icon.png"
 import tmapIcon from "../../image/tmap-icon.png"
+import { ReactComponent as LockIcon } from "../../image/lock-icon.svg"
+import { ReactComponent as UnlockIcon } from "../../image/unlock-icon.svg"
 
 const WEDDING_HALL_POSITION = [126.9594982, 37.4657134]
 const BUS_STOP_POSITION = [126.957706, 37.465071]
@@ -11,21 +13,21 @@ const PARKING_LOT_POSITION = [126.960266, 37.465467]
 const NMAP_PLACE_ID = 13321741
 const KMAP_PLACE_ID = 8634826
 
-interface MapProps extends React.HTMLAttributes<HTMLDivElement> {}
-
-export const Map = (props: MapProps) => {
-  return process.env.REACT_APP_NAVER_MAP_CLIENT_ID &&
-    process.env.REACT_APP_KAKAO_SDK_JS_KEY ? (
-    <NaverMap {...props} />
+export const Map = () => {
+  return process.env.REACT_APP_NAVER_MAP_CLIENT_ID ? (
+    <NaverMap />
   ) : (
-    <div {...props}>Map is not available</div>
+    <div>Map is not available</div>
   )
 }
 
-const NaverMap = (props: MapProps) => {
+const NaverMap = () => {
   const naver = useNaver()
   const kakao = useKakao()
   const ref = useRef<HTMLDivElement>(null)
+  const [locked, setLocked] = useState(true)
+  const [showLockMessage, setShowLockMessage] = useState(false)
+  const lockMessageTimeout = useRef<NodeJS.Timeout>()
 
   const checkDevice = () => {
     const userAgent = window.navigator.userAgent
@@ -57,7 +59,48 @@ const NaverMap = (props: MapProps) => {
 
   return (
     <>
-      <div {...props} ref={ref}></div>
+      <div className="map-wrapper">
+        {locked && (
+          <div
+            className="lock"
+            onTouchStart={() => {
+              setShowLockMessage(true)
+              clearTimeout(lockMessageTimeout.current)
+              lockMessageTimeout.current = setTimeout(
+                () => setShowLockMessage(false),
+                3000,
+              )
+            }}
+            onMouseDown={() => {
+              setShowLockMessage(true)
+              clearTimeout(lockMessageTimeout.current)
+              lockMessageTimeout.current = setTimeout(
+                () => setShowLockMessage(false),
+                3000,
+              )
+            }}
+          >
+            {showLockMessage && (
+              <div className="lock-message">
+                <LockIcon /> 자물쇠 버튼을 눌러
+                <br />
+                터치 잠금 해제 후 확대 및 이동해 주세요.
+              </div>
+            )}
+          </div>
+        )}
+        <div
+          className={"lock-button" + (locked ? "" : " unlocked")}
+          onClick={() => {
+            clearTimeout(lockMessageTimeout.current)
+            setShowLockMessage(false)
+            setLocked((locked) => !locked)
+          }}
+        >
+          {locked ? <LockIcon /> : <UnlockIcon />}
+        </div>
+        <div className="map-inner" ref={ref}></div>
+      </div>
       <div className="navigation">
         <div
           onClick={() => {
@@ -83,12 +126,13 @@ const NaverMap = (props: MapProps) => {
             switch (checkDevice()) {
               case "ios":
               case "android":
-                kakao.Navi.start({
-                  name: "서울대학교 연구공원 웨딩홀",
-                  x: WEDDING_HALL_POSITION[0],
-                  y: WEDDING_HALL_POSITION[1],
-                  coordType: "wgs84",
-                })
+                if (kakao)
+                  kakao.Navi.start({
+                    name: "서울대학교 연구공원 웨딩홀",
+                    x: WEDDING_HALL_POSITION[0],
+                    y: WEDDING_HALL_POSITION[1],
+                    coordType: "wgs84",
+                  })
                 break
               default:
                 window.open(
