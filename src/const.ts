@@ -20,10 +20,20 @@ export const BRIDE_INFO = [
     relation: "신부",
     name: BRIDE,
     phone: "010-8024-2203",
-    account: "하나은행 123456789012345",
+    account: "우리은행 1002553000729",
   },
-  { relation: "신부 아버지", name: BRIDE_FATHER, phone: "010-8080-7980" },
-  { relation: "신부 어머니", name: BRIDE_MOTHER, phone: "010-5719-2203" },
+  {
+    relation: "신부 아버지",
+    name: BRIDE_FATHER,
+    phone: "010-8080-7980",
+    account: "하나은행 07719079916",
+  },
+  {
+    relation: "신부 어머니",
+    name: BRIDE_MOTHER,
+    phone: "010-5719-2203",
+    account: "하나은행 28091012542707",
+  },
 ]
 
 export const GROOM = "남주호"
