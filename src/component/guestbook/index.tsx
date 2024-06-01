@@ -163,58 +163,51 @@ const WriteGuestBookModal = ({ loadPosts }: { loadPosts: () => void }) => {
         e.preventDefault()
         setLoading(true)
         try {
-          if (!inputRef.current.name.value) {
+          const name = inputRef.current.name.value.trim()
+          const content = inputRef.current.content.value.trim()
+          const password = inputRef.current.password.value
+
+          if (!name) {
             alert("이름을 입력해주세요.")
             return
           }
-          if (inputRef.current.name.value.length > RULES.name.maxLength) {
+          if (name.length > RULES.name.maxLength) {
             alert(`이름을 ${RULES.name.maxLength}자 이하로 입력해주세요.`)
             return
           }
-          if (!inputRef.current.content.value) {
+
+          if (!content) {
             alert("내용을 입력해주세요.")
             return
           }
-          if (inputRef.current.content.value.length > RULES.content.maxLength) {
+          if (content.length > RULES.content.maxLength) {
             alert(`내용을 ${RULES.content.maxLength}자 이하로 입력해주세요.`)
             return
           }
-          if (
-            inputRef.current.password.value.length < RULES.password.minLength
-          ) {
+
+          if (password.length < RULES.password.minLength) {
             alert(`비밀번호를 ${RULES.password.minLength}자 이상 입력해주세요.`)
             return
           }
-          if (
-            inputRef.current.password.value.length > RULES.password.maxLength
-          ) {
+          if (password.length > RULES.password.maxLength) {
             alert(
               `비밀번호를 ${RULES.password.maxLength}자 이하로 입력해주세요.`,
             )
             return
           }
 
-          if (process.env.REACT_APP_SERVER_URL) {
-            const res = await fetch(
-              `${process.env.REACT_APP_SERVER_URL}/posts`,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  name: inputRef.current.name.value,
-                  content: inputRef.current.content.value,
-                  password: inputRef.current.password.value,
-                }),
-              },
-            )
-            if (!res.ok) {
-              alert("방명록 작성에 실패했습니다.")
-              return
-            }
+          const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/posts`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ name, content, password }),
+          })
+          if (!res.ok) {
+            throw new Error(res.statusText)
           }
 
+          alert("방명록 작성이 완료되었습니다.")
           closeModal()
           loadPosts()
         } catch {

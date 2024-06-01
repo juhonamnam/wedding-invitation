@@ -58,3 +58,77 @@
     }
   }
 }
+
+.attendance-modal {
+  width: 22rem;
+
+  .header {
+    .title {
+      text-align: center;
+      font-size: 1.2rem;
+      color: var(--theme-color);
+      padding: 0.5rem;
+    }
+  }
+
+  .content {
+    padding: 0 1rem 1rem 1rem;
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      margin-top: 1rem;
+      gap: 1.5rem;
+
+      .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+
+        .input {
+          display: flex;
+          flex-direction: column;
+        }
+        .select-input {
+          display: flex;
+          flex-direction: row;
+
+          label {
+            width: 100%;
+            span {
+              padding: 0.4rem;
+              display: inline-block;
+              text-align: center;
+              width: 100%;
+              background-color: var(--light-grey-color);
+            }
+            input {
+              &:checked + span {
+                border: 2px solid var(--alt-color);
+              }
+              & + span {
+                border: 2px solid var(--light-grey-color);
+              }
+            }
+          }
+        }
+
+        .radio-input {
+          display: flex;
+          flex-direction: row;
+          justify-content: left;
+          gap: 2rem;
+        }
+
+        input {
+          padding: 0.5rem;
+          margin-bottom: 0.5rem;
+          border: 1px solid var(--light-grey-color);
+          border-radius: 0.3rem;
+          font-family: "MapoGoldenPier";
+          font-size: 0.8rem;
+        }
+      }
+    }
+  }
+}
