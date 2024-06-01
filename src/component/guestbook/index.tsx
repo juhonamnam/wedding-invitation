@@ -385,12 +385,14 @@ const DeleteGuestBookModal = ({
 }) => {
   const inputRef = useRef() as React.MutableRefObject<HTMLInputElement>
   const { closeModal } = useModal()
+  const [loading, setLoading] = useState(false)
 
   return (
     <form
       className="form"
       onSubmit={async (e) => {
         e.preventDefault()
+        setLoading(true)
         try {
           const password = inputRef.current.value
           if (!password || password.length < RULES.password.minLength) {
@@ -415,26 +417,35 @@ const DeleteGuestBookModal = ({
           )
 
           if (!result.ok) {
-            alert("방명록 삭제에 실패했습니다.")
+            if (result.status === 403) {
+              alert("비밀번호가 일치하지 않습니다.")
+            } else {
+              alert("방명록 삭제에 실패했습니다.")
+            }
             return
           }
 
+          alert("삭제되었습니다.")
+          closeModal()
           onSuccess()
         } catch {
           alert("방명록 삭제에 실패했습니다.")
         } finally {
-          closeModal()
+          setLoading(false)
         }
       }}
     >
       <input
+        disabled={loading}
         type="password"
         placeholder="비밀번호를 입력해주세요."
         className="password"
         ref={inputRef}
         maxLength={RULES.password.maxLength}
       />
-      <Button type="submit">삭제하기</Button>
+      <Button disabled={loading} type="submit">
+        삭제하기
+      </Button>
     </form>
   )
 }
