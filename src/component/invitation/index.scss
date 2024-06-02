@@ -35,6 +35,8 @@
       .subtitle {
         font-size: 0.9rem;
       }
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--dark-grey-color);
     }
   }
 
@@ -60,10 +62,14 @@
         width: 1rem;
         height: 1rem;
         &.flip {
-          // transform: rotate(180deg);
           transform: scaleX(-1);
         }
       }
     }
+  }
+
+  .footer {
+    display: flex;
+    flex-direction: column;
   }
 }

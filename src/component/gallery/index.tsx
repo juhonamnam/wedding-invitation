@@ -427,6 +427,15 @@ export const Gallery = () => {
                 <div className="break" />
               </>
             ),
+            footer: (
+              <Button
+                buttonStyle="style2"
+                className="bg-dark-grey-color text-dark-color"
+                onClick={closeModal}
+              >
+                닫기
+              </Button>
+            ),
           })
         }
       >

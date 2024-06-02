@@ -13,6 +13,7 @@ const KAKAO_SDK_URL = `${process.env.PUBLIC_URL}/kakao.min.js`
 type ModalInfo = {
   header?: ReactNode
   className?: string
+  footer?: ReactNode
   content: ReactNode
   closeOnClickBackground?: boolean
 }
@@ -84,6 +85,7 @@ export const StoreProvider = ({ children }: PropsWithChildren) => {
               {modalInfo.header}
             </div>
             <div className="content">{modalInfo.content}</div>
+            <div className="footer">{modalInfo.footer}</div>
           </div>
         </div>
       ))}

@@ -29,6 +29,31 @@
   }
 }
 
+$colors: (
+  theme-color: var(--theme-color),
+  theme-bg-color: var(--theme-bg-color),
+  alt-color: var(--alt-color),
+  alt-bg-color: var(--alt-bg-color),
+  dark-color: var(--dark-color),
+  dark-grey-color: var(--dark-grey-color),
+  light-grey-color: var(--light-grey-color),
+  light-color: var(--light-color),
+  white-color: var(--white-color),
+  red-color: var(--red-color),
+);
+
+@each $name, $color in $colors {
+  .text-#{$name} {
+    color: $color !important;
+  }
+  .bg-#{$name} {
+    background-color: $color !important;
+  }
+  .border-#{$name} {
+    border-color: $color !important;
+  }
+}
+
 @keyframes lazy-fade-in {
   from {
     opacity: 0;

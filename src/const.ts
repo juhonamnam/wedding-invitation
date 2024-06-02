@@ -46,7 +46,12 @@ export const GROOM_INFO = [
     phone: "010-5065-6815",
     account: "하나은행 37891016958607",
   },
-  { relation: "신랑 아버지", name: GROOM_FATHER, phone: "010-4590-0313" },
+  {
+    relation: "신랑 아버지",
+    name: GROOM_FATHER,
+    phone: "010-4590-0313",
+    account: "신한은행 110016485908",
+  },
   {
     relation: "신랑 어머니",
     name: GROOM_MOTHER,

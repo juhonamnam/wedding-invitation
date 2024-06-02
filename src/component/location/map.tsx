@@ -7,8 +7,8 @@ import { ReactComponent as LockIcon } from "../../image/lock-icon.svg"
 import { ReactComponent as UnlockIcon } from "../../image/unlock-icon.svg"
 
 const WEDDING_HALL_POSITION = [126.9594982, 37.4657134]
-const BUS_STOP_POSITION = [126.957706, 37.465071]
-const PARKING_LOT_POSITION = [126.960266, 37.465467]
+// const BUS_STOP_POSITION = [126.957706, 37.465071]
+// const PARKING_LOT_POSITION = [126.960266, 37.465467]
 
 const NMAP_PLACE_ID = 13321741
 const KMAP_PLACE_ID = 8634826

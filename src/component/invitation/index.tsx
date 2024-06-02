@@ -16,7 +16,7 @@ import { ReactComponent as PhoneIcon } from "../../image/phone-flip-icon.svg"
 import { ReactComponent as EnvelopeIcon } from "../../image/envelope-icon.svg"
 
 export const Invitation = () => {
-  const { openModal } = useModal()
+  const { openModal, closeModal } = useModal()
   return (
     <LazyDiv className="card invitation">
       <h2 className="english">Invitation</h2>
@@ -113,6 +113,15 @@ export const Invitation = () => {
                   ))}
                 </div>
               </>
+            ),
+            footer: (
+              <Button
+                buttonStyle="style2"
+                className="bg-dark-grey-color text-dark-color"
+                onClick={closeModal}
+              >
+                닫기
+              </Button>
             ),
           })
         }}

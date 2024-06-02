@@ -15,7 +15,7 @@ const RULES = {
 }
 
 export const Information = () => {
-  const { openModal } = useModal()
+  const { openModal, closeModal } = useModal()
   return (
     <LazyDiv className="card information">
       <h2 className="english">Information</h2>
@@ -78,6 +78,15 @@ export const Information = () => {
                   )}
                 </>
               ),
+              footer: (
+                <Button
+                  buttonStyle="style2"
+                  className="bg-dark-grey-color text-dark-color"
+                  onClick={closeModal}
+                >
+                  닫기
+                </Button>
+              ),
             })
           }}
         >
@@ -122,6 +131,15 @@ export const Information = () => {
                   )}
                 </>
               ),
+              footer: (
+                <Button
+                  buttonStyle="style2"
+                  className="bg-dark-grey-color text-dark-color"
+                  onClick={closeModal}
+                >
+                  닫기
+                </Button>
+              ),
             })
           }}
         >
@@ -135,7 +153,7 @@ export const Information = () => {
 }
 
 const AttendanceInfo = () => {
-  const { openModal } = useModal()
+  const { openModal, closeModal } = useModal()
 
   return (
     <div className="info-card">
@@ -155,6 +173,24 @@ const AttendanceInfo = () => {
             className: "attendance-modal",
             header: <div className="title">참석의사 전달하기</div>,
             content: <AttendModal />,
+            footer: (
+              <>
+                <Button
+                  buttonStyle="style2"
+                  type="submit"
+                  form="attendance-form"
+                >
+                  전달하기
+                </Button>
+                <Button
+                  buttonStyle="style2"
+                  className="bg-dark-grey-color text-dark-color"
+                  onClick={closeModal}
+                >
+                  닫기
+                </Button>
+              </>
+            ),
           })
         }}
       >
@@ -183,6 +219,7 @@ const AttendModal = () => {
 
   return (
     <form
+      id="attendance-form"
       className="form"
       onSubmit={async (e) => {
         e.preventDefault()
@@ -358,10 +395,6 @@ const AttendModal = () => {
           명
         </div>
       </div>
-
-      <Button disabled={loading} type="submit">
-        전달하기
-      </Button>
     </form>
   )
 }
