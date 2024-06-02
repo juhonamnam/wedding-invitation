@@ -81,7 +81,7 @@ export const Information = () => {
               footer: (
                 <Button
                   buttonStyle="style2"
-                  className="bg-dark-grey-color text-dark-color"
+                  className="bg-light-grey-color text-dark-color"
                   onClick={closeModal}
                 >
                   닫기
@@ -134,7 +134,7 @@ export const Information = () => {
               footer: (
                 <Button
                   buttonStyle="style2"
-                  className="bg-dark-grey-color text-dark-color"
+                  className="bg-light-grey-color text-dark-color"
                   onClick={closeModal}
                 >
                   닫기
@@ -184,7 +184,7 @@ const AttendanceInfo = () => {
                 </Button>
                 <Button
                   buttonStyle="style2"
-                  className="bg-dark-grey-color text-dark-color"
+                  className="bg-light-grey-color text-dark-color"
                   onClick={closeModal}
                 >
                   닫기

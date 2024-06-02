@@ -430,7 +430,7 @@ export const Gallery = () => {
             footer: (
               <Button
                 buttonStyle="style2"
-                className="bg-dark-grey-color text-dark-color"
+                className="bg-light-grey-color text-dark-color"
                 onClick={closeModal}
               >
                 닫기

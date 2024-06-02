@@ -37,7 +37,7 @@ const DUMMY_POSTS = [
 ]
 
 export const GuestBook = () => {
-  const { openModal } = useModal()
+  const { openModal, closeModal } = useModal()
 
   const [posts, setPosts] = useState<Post[]>([])
 
@@ -87,6 +87,24 @@ export const GuestBook = () => {
                         }}
                       />
                     ),
+                    footer: (
+                      <>
+                        <Button
+                          buttonStyle="style2"
+                          type="submit"
+                          form="guestbook-delete-form"
+                        >
+                          삭제하기
+                        </Button>
+                        <Button
+                          buttonStyle="style2"
+                          className="bg-light-grey-color text-dark-color"
+                          onClick={closeModal}
+                        >
+                          닫기
+                        </Button>
+                      </>
+                    ),
                   })
                 }
               }}
@@ -122,6 +140,24 @@ export const GuestBook = () => {
                   </div>
                 ),
                 content: <WriteGuestBookModal loadPosts={loadPosts} />,
+                footer: (
+                  <>
+                    <Button
+                      buttonStyle="style2"
+                      type="submit"
+                      form="guestbook-write-form"
+                    >
+                      저장하기
+                    </Button>
+                    <Button
+                      buttonStyle="style2"
+                      className="bg-light-grey-color text-dark-color"
+                      onClick={closeModal}
+                    >
+                      닫기
+                    </Button>
+                  </>
+                ),
               })
             }
           >
@@ -138,6 +174,15 @@ export const GuestBook = () => {
             closeOnClickBackground: true,
             header: <div className="title">방명록 전체보기</div>,
             content: <AllGuestBookModal loadPosts={loadPosts} />,
+            footer: (
+              <Button
+                buttonStyle="style2"
+                className="bg-light-grey-color text-dark-color"
+                onClick={closeModal}
+              >
+                닫기
+              </Button>
+            ),
           })
         }
       >
@@ -158,6 +203,7 @@ const WriteGuestBookModal = ({ loadPosts }: { loadPosts: () => void }) => {
 
   return (
     <form
+      id="guestbook-write-form"
       className="form"
       onSubmit={async (e) => {
         e.preventDefault()
@@ -243,9 +289,6 @@ const WriteGuestBookModal = ({ loadPosts }: { loadPosts: () => void }) => {
         ref={(ref) => (inputRef.current.password = ref as HTMLInputElement)}
         maxLength={RULES.password.maxLength}
       />
-      <Button disabled={loading} type="submit">
-        저장하기
-      </Button>
     </form>
   )
 }
@@ -258,7 +301,7 @@ const AllGuestBookModal = ({
   const [posts, setPosts] = useState<Post[]>([])
   const [currentPage, setCurrentPage] = useState(0)
   const [totalPages, setTotalPages] = useState(1)
-  const { openModal } = useModal()
+  const { openModal, closeModal } = useModal()
 
   const loadPage = async (page: number) => {
     setCurrentPage(page)
@@ -318,6 +361,24 @@ const AllGuestBookModal = ({
                           loadPage(currentPage)
                         }}
                       />
+                    ),
+                    footer: (
+                      <>
+                        <Button
+                          buttonStyle="style2"
+                          type="submit"
+                          form="guestbook-delete-form"
+                        >
+                          삭제하기
+                        </Button>
+                        <Button
+                          buttonStyle="style2"
+                          className="bg-light-grey-color text-dark-color"
+                          onClick={closeModal}
+                        >
+                          닫기
+                        </Button>
+                      </>
                     ),
                   })
                 }
@@ -389,6 +450,7 @@ const DeleteGuestBookModal = ({
 
   return (
     <form
+      id="guestbook-delete-form"
       className="form"
       onSubmit={async (e) => {
         e.preventDefault()
@@ -443,9 +505,6 @@ const DeleteGuestBookModal = ({
         ref={inputRef}
         maxLength={RULES.password.maxLength}
       />
-      <Button disabled={loading} type="submit">
-        삭제하기
-      </Button>
     </form>
   )
 }

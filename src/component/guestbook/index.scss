@@ -107,6 +107,14 @@
       }
     }
   }
+
+  .footer {
+    display: flex;
+    flex-direction: row;
+    button {
+      width: 100%;
+    }
+  }
 }
 
 .all-guestbook-modal {
@@ -141,6 +149,11 @@
       }
     }
   }
+
+  .footer {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .delete-guestbook-modal {
@@ -170,6 +183,14 @@
         font-family: "MapoGoldenPier";
         font-size: 0.8rem;
       }
+    }
+  }
+
+  .footer {
+    display: flex;
+    flex-direction: row;
+    button {
+      width: 100%;
     }
   }
 }
