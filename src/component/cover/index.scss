@@ -1,18 +1,22 @@
 .cover {
-  .title-group {
+  .wedding-date {
+    margin-top: 2rem;
+    font-size: 1.5rem;
     display: flex;
-    justify-content: right;
+    justify-content: center;
     align-items: center;
-
-    .title {
-      font-size: 1.5rem;
+    gap: 1rem;
+    .divider {
+      background-color: var(--dark-color);
+      width: 1px;
+      height: 0.7rem;
     }
+  }
 
-    .title-deco {
-      font-size: 2rem;
-      opacity: 0.5;
-      padding: 1rem;
-    }
+  .wedding-day-of-week {
+    font-size: 1.2rem;
+    opacity: 0.7;
+    margin-bottom: 1rem;
   }
 
   .image-wrapper {
@@ -32,11 +36,23 @@
     font-family: "Allura";
     color: var(--alt-color);
     margin-top: 1rem;
-    margin-bottom: 1rem;
   }
 
-  .content {
+  .names {
     margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.7rem;
+    .divider {
+      background-color: var(--dark-color);
+      width: 1px;
+      height: 0.7rem;
+    }
+  }
+  .info {
+    margin-bottom: 0.3rem;
+    opacity: 0.7;
   }
 }
