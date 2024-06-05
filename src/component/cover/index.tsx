@@ -37,7 +37,7 @@ export const Cover = () => {
       <div className="info">
         {WEDDING_DATE.format("YYYY년 MMMM D일 dddd A h시")}
       </div>
-      <div className="info">서울대 연구공원 웨딩홀</div>
+      <div className="info">서울대학교 연구공원 웨딩홀</div>
     </LazyDiv>
   )
 }

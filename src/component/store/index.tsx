@@ -2,8 +2,10 @@ import {
   createContext,
   PropsWithChildren,
   ReactNode,
+  useCallback,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from "react"
 
@@ -18,6 +20,8 @@ type ModalInfo = {
   closeOnClickBackground?: boolean
 }
 
+type ModalInfoWithKey = ModalInfo & { key: number }
+
 const GlobalContext = createContext({
   naver: null as any,
   setNaver: (_naver: any) => {},
@@ -31,16 +35,18 @@ const GlobalContext = createContext({
 export const StoreProvider = ({ children }: PropsWithChildren) => {
   const [naver, setNaver] = useState<any>(null)
   const [kakao, setKakao] = useState<any>(null)
-  const [modalInfoList, setModalInfoList] = useState<ModalInfo[]>([])
-  const openModal = (modalInfo: ModalInfo) => {
+  const [modalInfoList, setModalInfoList] = useState<ModalInfoWithKey[]>([])
+
+  const modalKey = useRef(0)
+  const openModal = useCallback((modalInfo: ModalInfo) => {
     setModalInfoList((modalInfoList) => {
       if (modalInfoList.length === 0) {
         document.body.classList.add("modal-open")
       }
-      return [...modalInfoList, modalInfo]
+      return [...modalInfoList, { ...modalInfo, key: modalKey.current++ }]
     })
-  }
-  const closeModal = () => {
+  }, [])
+  const closeModal = useCallback(() => {
     setModalInfoList((modalInfoList) => {
       const result = modalInfoList.slice(0, -1)
       if (result.length === 0) {
@@ -48,7 +54,7 @@ export const StoreProvider = ({ children }: PropsWithChildren) => {
       }
       return result
     })
-  }
+  }, [])
 
   return (
     <GlobalContext.Provider
@@ -65,7 +71,7 @@ export const StoreProvider = ({ children }: PropsWithChildren) => {
       {children}
       {modalInfoList.map((modalInfo, idx) => (
         <div
-          key={idx}
+          key={modalInfo.key}
           className="modal-background"
           style={{ zIndex: 4 + idx }}
           onClick={() => {

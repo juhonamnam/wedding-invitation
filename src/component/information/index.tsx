@@ -1,8 +1,11 @@
-import { BRIDE_INFO, GROOM_INFO } from "../../const"
+import { BRIDE, BRIDE_INFO, GROOM, GROOM_INFO, WEDDING_DATE } from "../../const"
 import { Button } from "../button"
 import { LazyDiv } from "../lazyDiv"
 import { useModal } from "../store"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
+import { ReactComponent as HeartIcon } from "../../image/heart-icon.svg"
+import { ReactComponent as CalendarIcon } from "../../image/calendar-icon.svg"
+import { ReactComponent as MarkerIcon } from "../../image/marker-icon.svg"
 
 const RULES = {
   name: {
@@ -154,6 +157,81 @@ export const Information = () => {
 
 const AttendanceInfo = () => {
   const { openModal, closeModal } = useModal()
+
+  const initialized = useRef(false)
+
+  useEffect(() => {
+    if (initialized.current) return
+    initialized.current = true
+    openModal({
+      className: "attendance-info-modal",
+      header: <div className="title">참석의사 전달 안내</div>,
+      content: (
+        <>
+          <div className="info-message">
+            축하의 마음으로 참석해주시는
+            <br />
+            모든 분들을 귀하게 모실 수 있도록
+            <br />
+            참석 및 식사 여부를 미리 여쭙고자 합니다.
+            <div className="break" />
+            부담없이 알려주시면
+            <br />
+            정성껏 준비하겠습니다.
+          </div>
+          <div className="wedding-info">
+            <HeartIcon /> 신랑 {GROOM} & 신부 {BRIDE}
+            <br />
+            <CalendarIcon /> {WEDDING_DATE.format("YYYY년 MMMM D일 dddd A h시")}
+            <br />
+            <MarkerIcon /> 서울대학교 연구공원 웨딩홀
+          </div>
+        </>
+      ),
+      footer: (
+        <>
+          <Button
+            buttonStyle="style2"
+            onClick={() => {
+              closeModal()
+              openModal({
+                className: "attendance-modal",
+                header: <div className="title">참석의사 전달하기</div>,
+                content: <AttendModal />,
+                footer: (
+                  <>
+                    <Button
+                      buttonStyle="style2"
+                      type="submit"
+                      form="attendance-form"
+                    >
+                      전달하기
+                    </Button>
+                    <Button
+                      buttonStyle="style2"
+                      className="bg-light-grey-color text-dark-color"
+                      onClick={closeModal}
+                    >
+                      닫기
+                    </Button>
+                  </>
+                ),
+              })
+            }}
+          >
+            참석의사 전달하기
+          </Button>
+          <Button
+            buttonStyle="style2"
+            className="bg-light-grey-color text-dark-color"
+            onClick={closeModal}
+          >
+            닫기
+          </Button>
+        </>
+      ),
+    })
+  }, [openModal, closeModal])
 
   return (
     <div className="info-card">

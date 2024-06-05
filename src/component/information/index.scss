@@ -147,3 +147,44 @@
     }
   }
 }
+
+.attendance-info-modal {
+  width: 22rem;
+
+  .header {
+    .title {
+      text-align: center;
+      font-size: 1.2rem;
+      color: var(--theme-color);
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--dark-grey-color);
+    }
+  }
+
+  .content {
+    padding: 1.5rem 1rem 1.5rem 1rem;
+    .info-message {
+      text-align: center;
+      line-height: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px dotted var(--dark-grey-color);
+    }
+    .wedding-info {
+      padding-top: 1.5rem;
+      padding-left: 2rem;
+      line-height: 1.5rem;
+      svg {
+        width: 0.8rem;
+        height: 0.8rem;
+      }
+    }
+  }
+
+  .footer {
+    display: flex;
+    flex-direction: row;
+    button {
+      width: 100%;
+    }
+  }
+}
