@@ -45,7 +45,7 @@ export const GuestBook = () => {
     if (process.env.REACT_APP_SERVER_URL) {
       try {
         const res = await fetch(
-          `${process.env.REACT_APP_SERVER_URL}/posts?offset=${0}&limit=${3}`,
+          `${process.env.REACT_APP_SERVER_URL}/guestbook?offset=${0}&limit=${3}`,
         )
         if (res.ok) {
           const data = await res.json()
@@ -242,13 +242,16 @@ const WriteGuestBookModal = ({ loadPosts }: { loadPosts: () => void }) => {
             return
           }
 
-          const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/posts`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
+          const res = await fetch(
+            `${process.env.REACT_APP_SERVER_URL}/guestbook`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ name, content, password }),
             },
-            body: JSON.stringify({ name, content, password }),
-          })
+          )
           if (!res.ok) {
             throw new Error(res.statusText)
           }
@@ -309,7 +312,7 @@ const AllGuestBookModal = ({
       try {
         const offset = page * POSTS_PER_PAGE
         const res = await fetch(
-          `${process.env.REACT_APP_SERVER_URL}/posts?offset=${offset}&limit=${POSTS_PER_PAGE}`,
+          `${process.env.REACT_APP_SERVER_URL}/guestbook?offset=${offset}&limit=${POSTS_PER_PAGE}`,
         )
         if (res.ok) {
           const data = await res.json()
@@ -470,7 +473,7 @@ const DeleteGuestBookModal = ({
           }
 
           const result = await fetch(
-            `${process.env.REACT_APP_SERVER_URL}/posts`,
+            `${process.env.REACT_APP_SERVER_URL}/guestbook`,
             {
               method: "PUT",
               headers: { "Content-Type": "application/json" },
