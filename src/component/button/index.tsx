@@ -5,10 +5,11 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export const Button = (props: ButtonProps) => {
+  const { buttonStyle, ...rest } = props
   return (
     <button
       {...{
-        ...props,
+        ...rest,
         className: `button ${props.buttonStyle === "style2" ? "button-style-2" : "button-style-1"}${props.className ? " " + props.className : ""}`,
       }}
     />
