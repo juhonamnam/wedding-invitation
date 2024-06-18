@@ -25,6 +25,7 @@
           background-color: var(--dark-grey-color);
           position: absolute;
           transform: rotate(45deg);
+          top: 0;
           left: 50%;
         }
         &::after {
@@ -34,6 +35,7 @@
           background-color: var(--dark-grey-color);
           position: absolute;
           transform: rotate(135deg);
+          top: 0;
           left: 50%;
         }
       }

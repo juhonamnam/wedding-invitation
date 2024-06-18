@@ -71,7 +71,7 @@ export const GuestBook = () => {
       {posts.map((post) => (
         <div key={post.id} className="post">
           <div className="heading">
-            <div
+            <button
               className="close-button"
               onClick={async () => {
                 if (process.env.REACT_APP_SERVER_URL) {

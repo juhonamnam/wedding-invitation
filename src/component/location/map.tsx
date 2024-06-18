@@ -89,7 +89,7 @@ const NaverMap = () => {
             )}
           </div>
         )}
-        <div
+        <button
           className={"lock-button" + (locked ? "" : " unlocked")}
           onClick={() => {
             clearTimeout(lockMessageTimeout.current)
@@ -98,11 +98,11 @@ const NaverMap = () => {
           }}
         >
           {locked ? <LockIcon /> : <UnlockIcon />}
-        </div>
+        </button>
         <div className="map-inner" ref={ref}></div>
       </div>
       <div className="navigation">
-        <div
+        <button
           onClick={() => {
             switch (checkDevice()) {
               case "ios":
@@ -120,8 +120,8 @@ const NaverMap = () => {
         >
           <img src={nmapIcon} alt="naver-map-icon" />
           네이버 지도
-        </div>
-        <div
+        </button>
+        <button
           onClick={() => {
             switch (checkDevice()) {
               case "ios":
@@ -145,8 +145,8 @@ const NaverMap = () => {
         >
           <img src={knaviIcon} alt="kakao-navi-icon" />
           카카오 내비
-        </div>
-        <div
+        </button>
+        <button
           onClick={() => {
             switch (checkDevice()) {
               case "ios":
@@ -166,7 +166,7 @@ const NaverMap = () => {
         >
           <img src={tmapIcon} alt="t-map-icon" />
           티맵
-        </div>
+        </button>
       </div>
     </>
   )

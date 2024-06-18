@@ -385,7 +385,7 @@ export const Gallery = () => {
         </div>
         <div className="carousel-indicator">
           {CAROUSEL_ITEMS.map((_, idx) => (
-            <div
+            <button
               key={idx}
               className={`indicator${idx === slide ? " active" : ""}`}
               onClick={() =>

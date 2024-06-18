@@ -7,7 +7,7 @@ export const ShareButton = () => {
   const kakao = useKakao()
   return (
     <LazyDiv className="footer share-button">
-      <div
+      <button
         className="ktalk-share"
         onClick={() => {
           if (!kakao) {
@@ -63,7 +63,7 @@ export const ShareButton = () => {
         }}
       >
         <img src={ktalkIcon} alt="ktalk-icon" /> 카카오톡으로 공유하기
-      </div>
+      </button>
     </LazyDiv>
   )
 }
