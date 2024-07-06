@@ -131,8 +131,8 @@
     }
   }
 
-  .content {
-    padding: 0 0.7rem 0.7rem 0.7rem;
+  > .content {
+    padding: 0 1rem 0.7rem 1rem;
 
     .pagination {
       display: flex;
