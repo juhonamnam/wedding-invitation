@@ -8,6 +8,8 @@ import {
   GROOM_INFO,
   GROOM_FATHER,
   GROOM_MOTHER,
+  GROOM_TITLE,
+  BRIDE_TITLE,
 } from "../../const"
 import { useModal } from "../../component/store"
 import { Button } from "../button"
@@ -39,14 +41,14 @@ export const Invitation = () => {
       <div className="name">
         {GROOM_FATHER} · {GROOM_MOTHER}
         <span className="relation">
-          의 <span className="relation-name">아들</span>
+          의 <span className="relation-name">{GROOM_TITLE}</span>
         </span>{" "}
         {GROOM}
       </div>
       <div className="name">
         {BRIDE_FATHER} · {BRIDE_MOTHER}
         <span className="relation">
-          의 <span className="relation-name">딸</span>
+          의 <span className="relation-name">{BRIDE_TITLE}</span>
         </span>{" "}
         {BRIDE}
       </div>

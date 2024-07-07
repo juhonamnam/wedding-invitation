@@ -13,6 +13,7 @@ export const WEDDING_DATE = dayjs.tz("2024-08-24 13:00", "Asia/Seoul")
 export const HOLIDAYS = [15]
 
 export const BRIDE = "정지원"
+export const BRIDE_TITLE = "장녀"
 export const BRIDE_FATHER = "정상원"
 export const BRIDE_MOTHER = "박윤정"
 export const BRIDE_INFO = [
@@ -37,6 +38,7 @@ export const BRIDE_INFO = [
 ]
 
 export const GROOM = "남주호"
+export const GROOM_TITLE = "차남"
 export const GROOM_FATHER = "남현태"
 export const GROOM_MOTHER = "김현영"
 export const GROOM_INFO = [
