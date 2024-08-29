@@ -3,6 +3,7 @@ import { Button } from "../button"
 import { dayjs } from "../../const"
 import { LazyDiv } from "../lazyDiv"
 import { useModal } from "../store"
+import offlineGuestBook from "./offlineGuestBook.json"
 
 const RULES = {
   name: {
@@ -27,15 +28,6 @@ type Post = {
   content: string
 }
 
-const DUMMY_POSTS = [
-  {
-    id: 0,
-    timestamp: 1713795179,
-    name: "이재용",
-    content: "주호야 결혼 축하한다!! 행복하게 살아라~",
-  },
-]
-
 export const GuestBook = () => {
   const { openModal, closeModal } = useModal()
 
@@ -54,7 +46,7 @@ export const GuestBook = () => {
         }
       } catch {}
     } else {
-      setPosts(DUMMY_POSTS)
+      setPosts(offlineGuestBook.slice(0, 3))
     }
   }
 
@@ -327,8 +319,13 @@ const AllGuestBookModal = ({
     } else {
       setCurrentPage(page)
 
-      setPosts(DUMMY_POSTS)
-      setTotalPages(1)
+      setPosts(
+        offlineGuestBook.slice(
+          page * POSTS_PER_PAGE,
+          (page + 1) * POSTS_PER_PAGE,
+        ),
+      )
+      setTotalPages(Math.ceil(offlineGuestBook.length / POSTS_PER_PAGE))
     }
   }
 
