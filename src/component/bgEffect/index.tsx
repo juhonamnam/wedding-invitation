@@ -95,8 +95,12 @@ export const BGEffect = () => {
     const petalImg = new Image()
     petalImg.src = patelUrl
 
+    const getPetalNum = () => {
+      return Math.floor((window.innerWidth * window.innerHeight) / 30000)
+    }
+
     const initializePetals = () => {
-      const count = Math.floor((window.innerWidth * window.innerHeight) / 30000)
+      const count = getPetalNum()
       const petals = []
       for (let i = 0; i < count; i++) {
         petals.push(new Petal(canvas, ctx, petalImg))
@@ -119,7 +123,14 @@ export const BGEffect = () => {
       resizeTimeoutRef.current = window.setTimeout(() => {
         canvas.width = window.innerWidth
         canvas.height = window.innerHeight
-        initializePetals()
+        const newPetalNum = getPetalNum()
+        if (newPetalNum > petalsRef.current.length) {
+          for (let i = petalsRef.current.length; i < newPetalNum; i++) {
+            petalsRef.current.push(new Petal(canvas, ctx, petalImg))
+          }
+        } else if (newPetalNum < petalsRef.current.length) {
+          petalsRef.current.splice(newPetalNum)
+        }
       }, 100)
     }
 
