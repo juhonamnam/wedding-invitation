@@ -1,0 +1,126 @@
+.location {
+  .addr {
+    line-height: 2;
+    margin-bottom: 1rem;
+    .detail {
+      opacity: 0.6;
+    }
+  }
+
+  .map-wrapper {
+    height: 20rem;
+    position: relative;
+    z-index: 3;
+    .lock {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      .lock-message {
+        background-color: var(--dark-color);
+        color: var(--white-color);
+        padding: 0.5rem;
+        text-align: center;
+        font-size: 0.8rem;
+        svg {
+          display: inline;
+          width: 0.8rem;
+          height: 0.8rem;
+          fill: var(--white-color);
+        }
+      }
+    }
+    .lock-button {
+      position: absolute;
+      top: 3%;
+      left: 3%;
+      width: 10%;
+      height: 10%;
+      z-index: 201;
+      background-color: var(--white-color);
+      border: 1px solid var(--dark-grey-color);
+      border-radius: 10%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      svg {
+        width: 80%;
+        height: 80%;
+        fill: var(--dark-color);
+      }
+
+      &.unlocked {
+        opacity: 0.5;
+      }
+    }
+    .map-inner {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .navigation {
+    display: flex;
+    padding: 0.7rem;
+    background-color: var(--alt-bg-color);
+    > button {
+      flex: 1.5;
+      border-right: 1px solid var(--dark-grey-color);
+      position: relative;
+      z-index: 3;
+      font-size: 0.9rem;
+
+      &:last-child {
+        flex: 1;
+        border-right: none;
+      }
+
+      > img {
+        vertical-align: middle;
+        margin-right: 0.4rem;
+        width: 0.9rem;
+        height: 0.9rem;
+      }
+    }
+  }
+
+  .location-info {
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    text-align: left;
+    row-gap: 0.7rem;
+    margin: 1rem 0;
+
+    > * {
+      align-self: center;
+    }
+
+    .transportation-icon-wrapper {
+      display: flex;
+      justify-content: center;
+      .transportation-icon {
+        width: 1.3rem;
+        height: 1.3rem;
+        fill: var(--theme-color);
+        opacity: 0.5;
+      }
+    }
+
+    .heading {
+      font-size: 1rem;
+      opacity: 0.7;
+      color: var(--theme-color);
+    }
+
+    .content {
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+  }
+}
