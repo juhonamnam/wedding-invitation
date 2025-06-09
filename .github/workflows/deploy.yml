@@ -25,10 +25,12 @@ jobs:
       - name: Setup Environment Variables
         run: |
           echo "REACT_APP_NAVER_MAP_CLIENT_ID=$REACT_APP_NAVER_MAP_CLIENT_ID
-          REACT_APP_KAKAO_SDK_JS_KEY=$REACT_APP_KAKAO_SDK_JS_KEY" >> .env
+          REACT_APP_KAKAO_SDK_JS_KEY=$REACT_APP_KAKAO_SDK_JS_KEY
+          REACT_APP_SERVER_URL=$REACT_APP_SERVER_URL" >> .env
         env:
           REACT_APP_NAVER_MAP_CLIENT_ID: ${{ secrets.NAVER_MAP_CLIENT_ID }}
           REACT_APP_KAKAO_SDK_JS_KEY: ${{ secrets.KAKAO_SDK_JS_KEY }}
+          REACT_APP_SERVER_URL: ${{ secrets.SERVER_URL }}
 
       - name: Use Node.js 20.x
         uses: actions/setup-node@v3
@@ -40,7 +42,7 @@ jobs:
         run: yarn install
 
       - name: Build
-        run: yarn run build_archive
+        run: yarn run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
