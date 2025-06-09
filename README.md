@@ -50,7 +50,7 @@ yarn start
 
 ## 환경변수
 
-환겨변수는 `.env` 파일에 저장되어 있습니다. 이 파일은 개발 서버 실행 시 자동으로 로드됩니다.
+환겨변수는 `.env.example` 파일에 저장되어 있습니다. 이 파일을 복사하여 `.env` 파일을 생성하고 각 환경변수를 수정합니다.
 
 ```bash
 cp .env.example .env
@@ -78,7 +78,9 @@ cp .env.example .env
    - SASS를 사용한 스타일링
    - 각 컴포넌트 디렉토리에서 관련 스타일 파일 확인 가능
 
-## GitHub Pages 배포 방법
+## 배포하기
+
+### GitHub Pages 배포 방법
 
 1. 이 저장소를 본인의 GitHub 계정으로 Fork
 
@@ -95,7 +97,7 @@ cp .env.example .env
    - `REACT_APP_KAKAO_SDK_JS_KEY`
    - `REACT_APP_SERVER_URL`
 
-## 다른 호스팅 플랫폼
+### 다른 호스팅 플랫폼
 
 이 프로젝트는 정적 웹사이트이므로 정적 파일을 제공하는 모든 플랫폼에서 호스팅할 수 있습니다.
 
