@@ -1,0 +1,190 @@
+.information {
+  .info-card {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    padding: 2rem 1rem 1rem 1rem;
+
+    position: relative;
+    border: 1px solid var(--alt-color);
+    border-radius: 0.5rem;
+    .label {
+      position: absolute;
+      left: 50%;
+      top: -1rem;
+      transform: translateX(-50%);
+      padding: 0.5rem 2rem 0.5rem 2rem;
+      border-radius: 1rem;
+      background-color: var(--alt-bg-color);
+      border: 1px solid var(--alt-color);
+    }
+  }
+  .content {
+    line-height: 1.9;
+    font-size: 0.9rem;
+  }
+}
+
+.donation-modal {
+  width: 22rem;
+
+  .header {
+    .title {
+      text-align: center;
+      font-size: 1.2rem;
+      color: var(--theme-color);
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--dark-grey-color);
+    }
+  }
+  .content {
+    padding: 0 0.7rem 0.7rem 0.7rem;
+
+    .account-info {
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      .name {
+        margin-bottom: 0.3rem;
+        .relation {
+          opacity: 0.7;
+        }
+      }
+      .copy-button {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+      }
+    }
+  }
+
+  .footer {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.attendance-modal {
+  width: 22rem;
+
+  .header {
+    .title {
+      text-align: center;
+      font-size: 1.2rem;
+      color: var(--theme-color);
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--dark-grey-color);
+    }
+  }
+
+  .content {
+    padding: 0 1rem 1rem 1rem;
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      margin-top: 1rem;
+      gap: 1.5rem;
+
+      .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+
+        .input {
+          display: flex;
+          flex-direction: column;
+        }
+        .select-input {
+          display: flex;
+          flex-direction: row;
+
+          label {
+            width: 100%;
+            span {
+              padding: 0.4rem;
+              display: inline-block;
+              text-align: center;
+              width: 100%;
+              background-color: var(--light-grey-color);
+            }
+            input {
+              &:checked + span {
+                border: 2px solid var(--alt-color);
+              }
+              & + span {
+                border: 2px solid var(--light-grey-color);
+              }
+            }
+          }
+        }
+
+        .radio-input {
+          display: flex;
+          flex-direction: row;
+          justify-content: left;
+          gap: 2rem;
+        }
+
+        input {
+          padding: 0.5rem;
+          margin-bottom: 0.5rem;
+          border: 1px solid var(--light-grey-color);
+          border-radius: 0.3rem;
+          font-family: "MapoGoldenPier";
+          font-size: 0.8rem;
+        }
+      }
+    }
+  }
+
+  .footer {
+    display: flex;
+    flex-direction: row;
+    button {
+      width: 100%;
+    }
+  }
+}
+
+.attendance-info-modal {
+  width: 22rem;
+
+  .header {
+    .title {
+      text-align: center;
+      font-size: 1.2rem;
+      color: var(--theme-color);
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--dark-grey-color);
+    }
+  }
+
+  .content {
+    padding: 1.5rem 1rem 1.5rem 1rem;
+    .info-message {
+      text-align: center;
+      line-height: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px dotted var(--dark-grey-color);
+    }
+    .wedding-info {
+      padding-top: 1.5rem;
+      padding-left: 2rem;
+      line-height: 1.5rem;
+      svg {
+        width: 0.8rem;
+        height: 0.8rem;
+      }
+    }
+  }
+
+  .footer {
+    display: flex;
+    flex-direction: row;
+    button {
+      width: 100%;
+    }
+  }
+}

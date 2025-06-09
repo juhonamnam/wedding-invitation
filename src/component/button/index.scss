@@ -1,0 +1,22 @@
+button.button {
+  font-family: inherit;
+  background: none;
+  position: relative;
+  z-index: 3;
+  font-size: 1rem;
+
+  &.button-style-1 {
+    background-color: var(--white-color);
+    border: solid 0.05rem var(--alt-color);
+    color: var(--alt-color);
+    border-radius: 0.3rem;
+    padding: 0.5rem 1rem;
+  }
+
+  &.button-style-2 {
+    background-color: var(--alt-color);
+    color: var(--white-color);
+    border: none;
+    padding: 0.5rem 1rem;
+  }
+}

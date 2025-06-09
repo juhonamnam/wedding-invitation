@@ -1,0 +1,12 @@
+.share-button {
+  .ktalk-share {
+    position: relative;
+    z-index: 3;
+    font-size: 0.8rem;
+    display: inline-block;
+    img {
+      width: 0.7rem;
+      height: 0.7rem;
+    }
+  }
+}

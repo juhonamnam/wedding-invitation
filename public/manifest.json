@@ -1,0 +1,24 @@
+{
+  "short_name": "남주호 ❤️ 정지원 결혼합니다.",
+  "name": "남주호 ❤️ 정지원 결혼합니다.",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "display": "standalone",
+  "theme_color": "#f9f9f9",
+  "background_color": "#ffe7e7"
+}
