@@ -1,4 +1,4 @@
-# 웨딩 청첩장 템플릿 | Wedding Invitation Template
+# 모바일 청첩장 템플릿 | Wedding Invitation Template
 
 ## 원본 버전 | Original Version
 
@@ -10,7 +10,7 @@ https://juhonamnam.github.io/wedding-invitation
 
 ## 개요
 
-React로 제작된 모던한 웨딩 청첩장 웹사이트 템플릿입니다. 깔끔한 디자인을 특징으로 하며, 손쉽게 커스터마이징하여 자신만의 청첩장으로 만들 수 있습니다.
+React로 제작된 모던한 모바일 청첩장 웹사이트 템플릿입니다. 깔끔한 디자인을 특징으로 하며, 손쉽게 커스터마이징하여 자신만의 청첩장으로 만들 수 있습니다.
 
 ## 주요 기능
 
