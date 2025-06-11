@@ -40,25 +40,30 @@ cd wedding-invitation
 yarn install
 ```
 
-3. 개발 서버 실행:
+3. 환경변수 설정:
 
-```bash
-yarn start
-```
-
-웹사이트는 `http://localhost:3000`에서 확인할 수 있습니다.
-
-## 환경변수
-
-환겨변수는 `.env.example` 파일에 저장되어 있습니다. 이 파일을 복사하여 `.env` 파일을 생성하고 각 환경변수를 수정합니다.
+환경변수 샘플은 `.env.example` 파일에 저장되어 있습니다. 이 파일을 복사하여 `.env` 파일을 생성하고 각 환경변수를 수정합니다.
 
 ```bash
 cp .env.example .env
 ```
 
-- `REACT_APP_NAVER_MAP_CLIENT_ID`: 웨딩홀 위치를 표시하기 위한 네이버 지도 API 키 (Naver Cloud Platform에서 발급)
-- `REACT_APP_KAKAO_SDK_JS_KEY`: 카카오톡 공유하기 기능을 위한 KAKAO SDK 키 (Kakao Developers에서 발급)
-- `REACT_APP_SERVER_URL`: 방명록 서버 URL
+- `REACT_APP_NAVER_MAP_CLIENT_ID`
+  - 웨딩홀 위치를 표시하기 위한 네이버 지도 API 키
+  - Naver Cloud Platform에서 발급 가능
+- `REACT_APP_KAKAO_SDK_JS_KEY`
+  - 카카오톡 공유하기 기능을 위한 KAKAO SDK 키
+  - Kakao Developers에서 발급 가능
+- `REACT_APP_SERVER_URL`
+  - 방명록 서버, 참석 의사 전달 등을 위한 서버의 URL
+  - 서버 소스코드: https://github.com/juhonamnam/wedding-invitation-server
+  - 설정하지 않을 경우 소스코드상에 고정된 방명록만 보여줍니다. (결혼식 끝난 이후 archive 용으로 사용)
+
+4. 개발 서버 실행:
+
+```bash
+yarn start
+```
 
 ## 커스터마이징
 
@@ -91,7 +96,7 @@ cp .env.example .env
    - Settings > Actions > General에서 "Workflow permissions"를 "Read and write permissions"로 설정
    - Settings > Pages에서 "Build and deployment" 소스를 "GitHub Actions"로 설정
 
-4. Fork된 저장소의 Settings > Secrets and variables > Actions에서 환경변수 추가
+4. Fork된 저장소의 Settings > Secrets and variables > Actions에서 환경변수 추가 (각 환경변수에 대한 설명은 위 환경변수 설정 참고)
 
    - `REACT_APP_NAVER_MAP_CLIENT_ID`
    - `REACT_APP_KAKAO_SDK_JS_KEY`
@@ -101,10 +106,16 @@ cp .env.example .env
 
 이 프로젝트는 정적 웹사이트이므로 정적 파일을 제공하는 모든 플랫폼에서 호스팅할 수 있습니다.
 
-1. 프로젝트 빌드:
+1. `package.json`의 `homepage` 필드를 본인의 호스팅 플랫폼 URL로 수정
+
+2. 환경변수 설정:
+
+   - 환경변수 설정 방법은 위 환경변수 설정 참고
+
+3. 프로젝트 빌드:
 
 ```bash
 yarn build
 ```
 
-2. `build` 디렉토리의 내용을 호스팅 플랫폼에 배포
+4. `build` 디렉토리의 내용을 호스팅 플랫폼에 배포
