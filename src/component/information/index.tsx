@@ -2,6 +2,7 @@ import { BRIDE_INFO, GROOM_INFO } from "../../const"
 import { Button } from "../button"
 import { LazyDiv } from "../lazyDiv"
 import { useModal } from "../store"
+import { AttendanceInfo } from "./attendance"
 
 export const Information = () => {
   const { openModal, closeModal } = useModal()
@@ -135,6 +136,7 @@ export const Information = () => {
           신부측 계좌번호 보기
         </Button>
       </div>
+      <AttendanceInfo />
     </LazyDiv>
   )
 }

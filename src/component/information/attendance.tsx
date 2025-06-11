@@ -1,5 +1,6 @@
 import {
   BRIDE_FULLNAME,
+  dayjs,
   GROOM_FULLNAME,
   LOCATION,
   WEDDING_DATE,
@@ -26,12 +27,17 @@ export const AttendanceInfo = () => {
 
   const initialized = useRef(false)
 
+  const now = useRef(dayjs())
+
   useEffect(() => {
     if (initialized.current) return
     initialized.current = true
+
+    if (WEDDING_DATE.isBefore(now.current)) return
+
     openModal({
       className: "attendance-info-modal",
-      header: <div className="title">참석의사 전달 안내</div>,
+      header: <div className="title">참석 의사 전달 안내</div>,
       content: (
         <>
           <div className="info-message">
@@ -63,7 +69,7 @@ export const AttendanceInfo = () => {
               openModal(attendanceModalInfo)
             }}
           >
-            참석의사 전달하기
+            참석 의사 전달하기
           </Button>
           <Button
             buttonStyle="style2"
@@ -77,9 +83,11 @@ export const AttendanceInfo = () => {
     })
   }, [openModal, closeModal])
 
+  if (WEDDING_DATE.isBefore(now.current)) return null
+
   return (
     <div className="info-card">
-      <div className="label">참석의사</div>
+      <div className="label">참석 의사 전달</div>
       <div className="content">
         신랑, 신부에게 참석의사를
         <br />
@@ -94,13 +102,13 @@ export const AttendanceInfo = () => {
           openModal(attendanceModalInfo)
         }}
       >
-        참석의사 전달하기
+        참석 의사 전달하기
       </Button>
     </div>
   )
 }
 
-export const AttendanceModalContent = () => {
+const AttendanceModalContent = () => {
   const { closeModal } = useModal()
   const inputRef = useRef({ side: {}, meal: {} }) as React.MutableRefObject<{
     side: {
@@ -160,11 +168,11 @@ export const AttendanceModalContent = () => {
           }
 
           if (isNaN(count)) {
-            alert("참석인원을 입력해주세요.")
+            alert("참석 인원을 입력해주세요.")
             return
           }
           if (count < RULES.count.min) {
-            alert(`참석인원을 ${RULES.count.min}명 이상으로 입력해주세요.`)
+            alert(`참석 인원을 ${RULES.count.min}명 이상으로 입력해주세요.`)
             return
           }
 
@@ -182,10 +190,10 @@ export const AttendanceModalContent = () => {
             throw new Error(res.statusText)
           }
 
-          alert("참석의사가 성공적으로 전달되었습니다.")
+          alert("참석 의사가 성공적으로 전달되었습니다.")
           closeModal()
         } catch {
-          alert("참석의사 전달에 실패했습니다.")
+          alert("참석 의사 전달에 실패했습니다.")
         } finally {
           setLoading(false)
         }
@@ -283,7 +291,7 @@ export const AttendanceModalContent = () => {
       </div>
 
       <div className="input-group">
-        <div className="label">참석인원 (본인 포함)</div>
+        <div className="label">참석 인원 (본인 포함)</div>
         <div>
           <input
             disabled={loading}
@@ -298,7 +306,7 @@ export const AttendanceModalContent = () => {
     </form>
   )
 }
-export const AttendanceModalFooter = () => {
+const AttendanceModalFooter = () => {
   const { closeModal } = useModal()
   return (
     <>
@@ -316,9 +324,9 @@ export const AttendanceModalFooter = () => {
   )
 }
 
-export const attendanceModalInfo = {
+const attendanceModalInfo = {
   className: "attendance-modal",
-  header: <div className="title">참석의사 전달하기</div>,
+  header: <div className="title">참석 의사 전달하기</div>,
   content: <AttendanceModalContent />,
   footer: <AttendanceModalFooter />,
 }
