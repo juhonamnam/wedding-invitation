@@ -33,7 +33,8 @@ export const AttendanceInfo = () => {
     if (initialized.current) return
     initialized.current = true
 
-    if (WEDDING_DATE.isBefore(now.current)) return
+    if (!process.env.REACT_APP_SERVER_URL || WEDDING_DATE.isBefore(now.current))
+      return
 
     openModal({
       className: "attendance-info-modal",
@@ -83,7 +84,8 @@ export const AttendanceInfo = () => {
     })
   }, [openModal, closeModal])
 
-  if (WEDDING_DATE.isBefore(now.current)) return null
+  if (!process.env.REACT_APP_SERVER_URL || WEDDING_DATE.isBefore(now.current))
+    return null
 
   return (
     <div className="info-card">
