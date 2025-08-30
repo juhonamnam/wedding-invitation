@@ -4,10 +4,6 @@
   "private": true,
   "homepage": "https://juhonamnam.github.io/wedding-invitation",
   "dependencies": {
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^13.0.0",
-    "@testing-library/user-event": "^13.2.1",
-    "@types/jest": "^27.0.1",
     "@types/node": "^16.7.13",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
@@ -24,8 +20,6 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build_archive": "PUBLIC_URL=/wedding-invitation && react-scripts build",
-    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "browserslist": {
