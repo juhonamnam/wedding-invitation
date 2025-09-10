@@ -10,7 +10,7 @@ export const Button = (props: ButtonProps) => {
     <button
       {...{
         ...rest,
-        className: `button ${props.buttonStyle === "style2" ? "button-style-2" : "button-style-1"}${props.className ? " " + props.className : ""}`,
+        className: `button ${buttonStyle === "style2" ? "button-style-2" : "button-style-1"}${props.className ? " " + props.className : ""}`,
       }}
     />
   )

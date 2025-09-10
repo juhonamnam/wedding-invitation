@@ -1,7 +1,7 @@
 import { HTMLAttributes, useEffect, useRef } from "react"
 
 export const LazyDiv = (props: HTMLAttributes<HTMLDivElement>) => {
-  const ref = useRef() as React.MutableRefObject<HTMLDivElement>
+  const ref = useRef({} as HTMLDivElement)
 
   useEffect(() => {
     const divElement = ref.current

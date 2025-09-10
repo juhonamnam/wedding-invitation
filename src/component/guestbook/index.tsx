@@ -2,8 +2,9 @@ import { useEffect, useMemo, useRef, useState } from "react"
 import { Button } from "../button"
 import { dayjs } from "../../const"
 import { LazyDiv } from "../lazyDiv"
-import { useModal } from "../store"
+import { useModal } from "../modal"
 import offlineGuestBook from "./offlineGuestBook.json"
+import { SERVER_URL } from "../../env"
 
 const RULES = {
   name: {
@@ -34,17 +35,19 @@ export const GuestBook = () => {
   const [posts, setPosts] = useState<Post[]>([])
 
   const loadPosts = async () => {
-    if (process.env.REACT_APP_SERVER_URL) {
+    if (SERVER_URL) {
       try {
         const res = await fetch(
-          `${process.env.REACT_APP_SERVER_URL}/guestbook?offset=${0}&limit=${3}`,
+          `${SERVER_URL}/guestbook?offset=${0}&limit=${3}`,
         )
         if (res.ok) {
           const data = await res.json()
 
           setPosts(data.posts)
         }
-      } catch {}
+      } catch (error) {
+        console.error("Error loading posts:", error)
+      }
     } else {
       setPosts(offlineGuestBook.slice(0, 3))
     }
@@ -66,7 +69,7 @@ export const GuestBook = () => {
             <button
               className="close-button"
               onClick={async () => {
-                if (process.env.REACT_APP_SERVER_URL) {
+                if (SERVER_URL) {
                   openModal({
                     className: "delete-guestbook-modal",
                     closeOnClickBackground: false,
@@ -116,7 +119,7 @@ export const GuestBook = () => {
 
       <div className="break" />
 
-      {process.env.REACT_APP_SERVER_URL && (
+      {SERVER_URL && (
         <>
           <Button
             onClick={() =>
@@ -185,7 +188,7 @@ export const GuestBook = () => {
 }
 
 const WriteGuestBookModal = ({ loadPosts }: { loadPosts: () => void }) => {
-  const inputRef = useRef({}) as React.MutableRefObject<{
+  const inputRef = useRef({}) as React.RefObject<{
     name: HTMLInputElement
     content: HTMLTextAreaElement
     password: HTMLInputElement
@@ -234,16 +237,13 @@ const WriteGuestBookModal = ({ loadPosts }: { loadPosts: () => void }) => {
             return
           }
 
-          const res = await fetch(
-            `${process.env.REACT_APP_SERVER_URL}/guestbook`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ name, content, password }),
+          const res = await fetch(`${SERVER_URL}/guestbook`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
             },
-          )
+            body: JSON.stringify({ name, content, password }),
+          })
           if (!res.ok) {
             throw new Error(res.statusText)
           }
@@ -300,11 +300,11 @@ const AllGuestBookModal = ({
 
   const loadPage = async (page: number) => {
     setCurrentPage(page)
-    if (process.env.REACT_APP_SERVER_URL) {
+    if (SERVER_URL) {
       try {
         const offset = page * POSTS_PER_PAGE
         const res = await fetch(
-          `${process.env.REACT_APP_SERVER_URL}/guestbook?offset=${offset}&limit=${POSTS_PER_PAGE}`,
+          `${SERVER_URL}/guestbook?offset=${offset}&limit=${POSTS_PER_PAGE}`,
         )
         if (res.ok) {
           const data = await res.json()
@@ -315,7 +315,9 @@ const AllGuestBookModal = ({
             setCurrentPage(Math.ceil(data.total / POSTS_PER_PAGE) - 1)
           }
         }
-      } catch {}
+      } catch (error) {
+        console.error("Error loading posts:", error)
+      }
     } else {
       setCurrentPage(page)
 
@@ -348,7 +350,7 @@ const AllGuestBookModal = ({
             <div
               className="close-button"
               onClick={async () => {
-                if (process.env.REACT_APP_SERVER_URL) {
+                if (SERVER_URL) {
                   openModal({
                     className: "delete-guestbook-modal",
                     closeOnClickBackground: false,
@@ -444,7 +446,7 @@ const DeleteGuestBookModal = ({
   postId: number
   onSuccess: () => void
 }) => {
-  const inputRef = useRef() as React.MutableRefObject<HTMLInputElement>
+  const inputRef = useRef({} as HTMLInputElement)
   const { closeModal } = useModal()
   const [loading, setLoading] = useState(false)
 
@@ -469,14 +471,11 @@ const DeleteGuestBookModal = ({
             return
           }
 
-          const result = await fetch(
-            `${process.env.REACT_APP_SERVER_URL}/guestbook`,
-            {
-              method: "PUT",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ id: postId, password }),
-            },
-          )
+          const result = await fetch(`${SERVER_URL}/guestbook`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: postId, password }),
+          })
 
           if (!result.ok) {
             if (result.status === 403) {

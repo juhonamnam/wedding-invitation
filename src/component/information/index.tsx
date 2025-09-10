@@ -1,7 +1,7 @@
 import { BRIDE_INFO, GROOM_INFO } from "../../const"
 import { Button } from "../button"
 import { LazyDiv } from "../lazyDiv"
-import { useModal } from "../store"
+import { useModal } from "../modal"
 import { AttendanceInfo } from "./attendance"
 
 export const Information = () => {

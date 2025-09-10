@@ -1,23 +1,20 @@
 import { useEffect, useState, useRef } from "react"
-import { useKakao, useNaver } from "../../component/store"
+import { useKakao, useNaver } from "../store"
 import nmapIcon from "../../image/nmap-icon.png"
 import knaviIcon from "../../image/knavi-icon.png"
 import tmapIcon from "../../image/tmap-icon.png"
-import { ReactComponent as LockIcon } from "../../image/lock-icon.svg"
-import { ReactComponent as UnlockIcon } from "../../image/unlock-icon.svg"
+import LockIcon from "../../image/lock-icon.svg?react"
+import UnlockIcon from "../../image/unlock-icon.svg?react"
 import {
   KMAP_PLACE_ID,
   LOCATION,
   NMAP_PLACE_ID,
   WEDDING_HALL_POSITION,
 } from "../../const"
+import { NAVER_MAP_CLIENT_ID } from "../../env"
 
 export const Map = () => {
-  return process.env.REACT_APP_NAVER_MAP_CLIENT_ID ? (
-    <NaverMap />
-  ) : (
-    <div>Map is not available</div>
-  )
+  return NAVER_MAP_CLIENT_ID ? <NaverMap /> : <div>Map is not available</div>
 }
 
 const NaverMap = () => {
@@ -147,7 +144,7 @@ const NaverMap = () => {
           onClick={() => {
             switch (checkDevice()) {
               case "ios":
-              case "android":
+              case "android": {
                 const params = new URLSearchParams({
                   goalx: WEDDING_HALL_POSITION[0].toString(),
                   goaly: WEDDING_HALL_POSITION[1].toString(),
@@ -155,9 +152,11 @@ const NaverMap = () => {
                 })
                 window.open(`tmap://route?${params.toString()}`, "_self")
                 break
-              default:
+              }
+              default: {
                 alert("모바일에서 확인하실 수 있습니다.")
                 break
+              }
             }
           }}
         >

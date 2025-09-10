@@ -1,45 +1,20 @@
 import {
-  createContext,
   PropsWithChildren,
-  ReactNode,
   useCallback,
-  useContext,
   useEffect,
   useRef,
   useState,
 } from "react"
-
-const NAVER_MAP_URL = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.REACT_APP_NAVER_MAP_CLIENT_ID}`
-const KAKAO_SDK_URL = `${process.env.PUBLIC_URL}/kakao.min.js`
-
-type ModalInfo = {
-  header?: ReactNode
-  className?: string
-  footer?: ReactNode
-  content: ReactNode
-  closeOnClickBackground?: boolean
-}
+import { type ModalInfo, ModalContext } from "./context"
 
 type ModalInfoWithKey = ModalInfo & { key: number }
 
-const GlobalContext = createContext({
-  naver: null as any,
-  setNaver: (_naver: any) => {},
-  kakao: null as any,
-  setKakao: (_kakao: any) => {},
-  modalInfoList: [] as ModalInfo[],
-  openModal: (_component: ModalInfo) => {},
-  closeModal: () => {},
-})
-
-export const StoreProvider = ({ children }: PropsWithChildren) => {
-  const [naver, setNaver] = useState<any>(null)
-  const [kakao, setKakao] = useState<any>(null)
+export const ModalProvider = ({ children }: PropsWithChildren) => {
   const [modalInfoList, setModalInfoList] = useState<ModalInfoWithKey[]>([])
 
   const modalWrapperRef = useRef<HTMLDivElement>(
     null,
-  ) as React.MutableRefObject<HTMLDivElement>
+  ) as React.RefObject<HTMLDivElement>
   const modalFocusTrapInitialized = useRef(false)
   const modalKey = useRef(0)
 
@@ -116,17 +91,7 @@ export const StoreProvider = ({ children }: PropsWithChildren) => {
   }, [modalInfoList])
 
   return (
-    <GlobalContext.Provider
-      value={{
-        naver,
-        setNaver,
-        kakao,
-        setKakao,
-        modalInfoList,
-        openModal,
-        closeModal,
-      }}
-    >
+    <ModalContext.Provider value={{ modalInfoList, openModal, closeModal }}>
       {children}
       <div className="modals-wrappeer" ref={modalWrapperRef}>
         {modalInfoList.map((modalInfo, idx) => (
@@ -156,54 +121,6 @@ export const StoreProvider = ({ children }: PropsWithChildren) => {
           </div>
         ))}
       </div>
-    </GlobalContext.Provider>
+    </ModalContext.Provider>
   )
-}
-
-export const useNaver = () => {
-  const { naver, setNaver } = useContext(GlobalContext)
-  useEffect(() => {
-    if (!process.env.REACT_APP_NAVER_MAP_CLIENT_ID) {
-      return
-    }
-
-    if (!document.querySelector(`script[src="${NAVER_MAP_URL}"]`)) {
-      const script = document.createElement("script")
-      script.src = NAVER_MAP_URL
-      document.head.appendChild(script)
-      script.addEventListener("load", () => {
-        setNaver((window as any).naver)
-      })
-    }
-  }, [naver, setNaver])
-
-  return naver
-}
-
-export const useKakao = () => {
-  const { kakao, setKakao } = useContext(GlobalContext)
-  useEffect(() => {
-    if (!process.env.REACT_APP_KAKAO_SDK_JS_KEY) {
-      return
-    }
-
-    if (!document.querySelector(`script[src="${KAKAO_SDK_URL}"]`)) {
-      const script = document.createElement("script")
-      script.addEventListener("load", () => {
-        if (!(window as any).Kakao.isInitialized()) {
-          ;(window as any).Kakao.init(process.env.REACT_APP_KAKAO_SDK_JS_KEY)
-        }
-        setKakao((window as any).Kakao)
-      })
-      script.src = KAKAO_SDK_URL
-      document.head.appendChild(script)
-    }
-  }, [kakao, setKakao])
-
-  return kakao
-}
-
-export const useModal = () => {
-  const { openModal, closeModal } = useContext(GlobalContext)
-  return { openModal, closeModal }
 }

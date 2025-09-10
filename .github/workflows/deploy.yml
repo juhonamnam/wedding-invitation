@@ -24,18 +24,18 @@ jobs:
 
       - name: Setup Environment Variables
         run: |
-          echo "REACT_APP_NAVER_MAP_CLIENT_ID=$REACT_APP_NAVER_MAP_CLIENT_ID
-          REACT_APP_KAKAO_SDK_JS_KEY=$REACT_APP_KAKAO_SDK_JS_KEY
-          REACT_APP_SERVER_URL=$REACT_APP_SERVER_URL" >> .env
+          echo "VITE_NAVER_MAP_CLIENT_ID=$VITE_NAVER_MAP_CLIENT_ID
+          VITE_KAKAO_SDK_JS_KEY=$VITE_KAKAO_SDK_JS_KEY
+          VITE_SERVER_URL=$VITE_SERVER_URL" >> .env
         env:
-          REACT_APP_NAVER_MAP_CLIENT_ID: ${{ secrets.NAVER_MAP_CLIENT_ID }}
-          REACT_APP_KAKAO_SDK_JS_KEY: ${{ secrets.KAKAO_SDK_JS_KEY }}
-          REACT_APP_SERVER_URL: ${{ secrets.SERVER_URL }}
+          VITE_NAVER_MAP_CLIENT_ID: ${{ secrets.NAVER_MAP_CLIENT_ID }}
+          VITE_KAKAO_SDK_JS_KEY: ${{ secrets.KAKAO_SDK_JS_KEY }}
+          VITE_SERVER_URL: ${{ secrets.SERVER_URL }}
 
-      - name: Use Node.js 20.x
+      - name: Use Node.js 22.x
         uses: actions/setup-node@v4
         with:
-          node-version: 20.x
+          node-version: 22.x
 
       - name: Install dependencies
         run: npm install

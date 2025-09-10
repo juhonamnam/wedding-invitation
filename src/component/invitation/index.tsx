@@ -11,11 +11,11 @@ import {
   GROOM_TITLE,
   BRIDE_TITLE,
 } from "../../const"
-import { useModal } from "../../component/store"
+import { useModal } from "../modal"
 import { Button } from "../button"
 import { LazyDiv } from "../lazyDiv"
-import { ReactComponent as PhoneIcon } from "../../image/phone-flip-icon.svg"
-import { ReactComponent as EnvelopeIcon } from "../../image/envelope-icon.svg"
+import PhoneIcon from "../../image/phone-flip-icon.svg?react"
+import EnvelopeIcon from "../../image/envelope-icon.svg?react"
 
 export const Invitation = () => {
   const { openModal, closeModal } = useModal()

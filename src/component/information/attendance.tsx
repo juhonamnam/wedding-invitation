@@ -6,11 +6,12 @@ import {
   WEDDING_DATE,
 } from "../../const"
 import { Button } from "../button"
-import { useModal } from "../store"
+import { useModal } from "../modal"
 import { useEffect, useRef, useState } from "react"
-import { ReactComponent as HeartIcon } from "../../image/heart-icon.svg"
-import { ReactComponent as CalendarIcon } from "../../image/calendar-icon.svg"
-import { ReactComponent as MarkerIcon } from "../../image/marker-icon.svg"
+import HeartIcon from "../../image/heart-icon.svg?react"
+import CalendarIcon from "../../image/calendar-icon.svg?react"
+import MarkerIcon from "../../image/marker-icon.svg?react"
+import { SERVER_URL } from "../../env"
 
 const RULES = {
   name: {
@@ -33,7 +34,7 @@ export const AttendanceInfo = () => {
     if (initialized.current) return
     initialized.current = true
 
-    if (!process.env.REACT_APP_SERVER_URL || WEDDING_DATE.isBefore(now.current))
+    if (!SERVER_URL || WEDDING_DATE.isBefore(now.current))
       return
 
     openModal({
@@ -84,7 +85,7 @@ export const AttendanceInfo = () => {
     })
   }, [openModal, closeModal])
 
-  if (!process.env.REACT_APP_SERVER_URL || WEDDING_DATE.isBefore(now.current))
+  if (!SERVER_URL || WEDDING_DATE.isBefore(now.current))
     return null
 
   return (
@@ -112,7 +113,7 @@ export const AttendanceInfo = () => {
 
 const AttendanceModalContent = () => {
   const { closeModal } = useModal()
-  const inputRef = useRef({ side: {}, meal: {} }) as React.MutableRefObject<{
+  const inputRef = useRef({ side: {}, meal: {} }) as React.RefObject<{
     side: {
       groom: HTMLInputElement
       bride: HTMLInputElement
@@ -179,7 +180,7 @@ const AttendanceModalContent = () => {
           }
 
           const res = await fetch(
-            `${process.env.REACT_APP_SERVER_URL}/attendance`,
+            `${SERVER_URL}/attendance`,
             {
               method: "POST",
               headers: {

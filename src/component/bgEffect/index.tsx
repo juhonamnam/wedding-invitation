@@ -75,9 +75,7 @@ class Petal {
 }
 
 export const BGEffect = () => {
-  const ref = useRef<HTMLCanvasElement>(
-    null,
-  ) as React.MutableRefObject<HTMLCanvasElement>
+  const ref = useRef<HTMLCanvasElement>({} as HTMLCanvasElement)
 
   const petalsRef = useRef<Petal[]>([])
 

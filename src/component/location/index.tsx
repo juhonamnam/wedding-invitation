@@ -1,6 +1,6 @@
 import { Map } from "./map"
-import { ReactComponent as CarIcon } from "../../image/car-icon.svg"
-import { ReactComponent as BusIcon } from "../../image/bus-icon.svg"
+import CarIcon from "../../image/car-icon.svg?react"
+import BusIcon from "../../image/bus-icon.svg?react"
 import { LazyDiv } from "../lazyDiv"
 import { LOCATION, LOCATION_ADDRESS } from "../../const"
 
