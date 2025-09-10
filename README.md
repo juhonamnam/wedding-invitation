@@ -27,7 +27,6 @@ React로 제작된 모던한 모바일 청첩장 웹사이트 템플릿입니다
 ## 사전 요구사항
 
 - Node.js (버전은 `.nvmrc` 파일에 명시)
-- Yarn 패키지 매니저 (버전 4.1.0 이상)
 
 ## 시작하기
 
@@ -41,7 +40,7 @@ cd wedding-invitation
 2. 의존성 설치:
 
 ```bash
-yarn install
+npm install
 ```
 
 3. 환경변수 설정:
@@ -66,7 +65,7 @@ cp .env.example .env
 4. 개발 서버 실행:
 
 ```bash
-yarn start
+npm run start
 ```
 
 ## 커스터마이징
@@ -120,7 +119,7 @@ yarn start
 3. 프로젝트 빌드:
 
 ```bash
-yarn build
+npm run build
 ```
 
 4. `build` 디렉토리의 내용을 호스팅 플랫폼에 배포
