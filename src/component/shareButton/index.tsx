@@ -6,7 +6,7 @@ import {
   SHARE_ADDRESS_TITLE,
   WEDDING_DATE,
 } from "../../const"
-import ktalkIcon from "../../image/ktalk-icon.png"
+import ktalkIcon from "../../icons/ktalk-icon.png"
 import { LazyDiv } from "../lazyDiv"
 import { useKakao } from "../store"
 

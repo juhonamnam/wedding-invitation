@@ -8,9 +8,9 @@ import {
 import { Button } from "../button"
 import { useModal } from "../modal"
 import { useEffect, useRef, useState } from "react"
-import HeartIcon from "../../image/heart-icon.svg?react"
-import CalendarIcon from "../../image/calendar-icon.svg?react"
-import MarkerIcon from "../../image/marker-icon.svg?react"
+import HeartIcon from "../../icons/heart-icon.svg?react"
+import CalendarIcon from "../../icons/calendar-icon.svg?react"
+import MarkerIcon from "../../icons/marker-icon.svg?react"
 import { SERVER_URL } from "../../env"
 
 const RULES = {

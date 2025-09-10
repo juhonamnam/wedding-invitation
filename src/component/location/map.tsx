@@ -1,10 +1,10 @@
 import { useEffect, useState, useRef } from "react"
 import { useKakao, useNaver } from "../store"
-import nmapIcon from "../../image/nmap-icon.png"
-import knaviIcon from "../../image/knavi-icon.png"
-import tmapIcon from "../../image/tmap-icon.png"
-import LockIcon from "../../image/lock-icon.svg?react"
-import UnlockIcon from "../../image/unlock-icon.svg?react"
+import nmapIcon from "../../icons/nmap-icon.png"
+import knaviIcon from "../../icons/knavi-icon.png"
+import tmapIcon from "../../icons/tmap-icon.png"
+import LockIcon from "../../icons/lock-icon.svg?react"
+import UnlockIcon from "../../icons/unlock-icon.svg?react"
 import {
   KMAP_PLACE_ID,
   LOCATION,

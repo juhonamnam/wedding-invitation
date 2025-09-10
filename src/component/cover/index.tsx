@@ -4,7 +4,7 @@ import {
   LOCATION,
   WEDDING_DATE,
 } from "../../const"
-import coverImage from "../../image/cover.png"
+import { COVER_IMAGE } from "../../images"
 import { LazyDiv } from "../lazyDiv"
 
 const DAY_OF_WEEK = [
@@ -31,7 +31,7 @@ export const Cover = () => {
         {DAY_OF_WEEK[WEDDING_DATE.day()]}
       </div>
       <div className="image-wrapper">
-        <img src={coverImage} alt="sample" />
+        <img src={COVER_IMAGE} alt="sample" />
       </div>
       <div className="subtitle">Save the date for the wedding of</div>
       <div className="names">

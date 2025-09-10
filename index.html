@@ -7,19 +7,19 @@
       content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0"
     />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="남주호 ❤️ 정지원 결혼합니다." />
-    <meta property="og:image" content="/preview_image.png" />
-    <meta property="og:url" content="/" />
     <meta
-      property="og:description"
-      content="8월 24일 오후 1시 서울대 연구공원 웨딩홀"
+      property="og:title"
+      content="<%= GROOM_FULLNAME %> ❤️ <%= BRIDE_FULLNAME %> 결혼합니다."
     />
+    <meta property="og:image" content="/preview_image.png" />
+    <meta property="og:url" content="%BASE_URL%/" />
+    <meta property="og:description" content="<%= DESCRIPTION %>" />
     <link rel="preload" href="/MapoGoldenPierA.woff" as="font" crossorigin />
     <link rel="preload" href="/AlluraRegular.woff" as="font" crossorigin />
     <link rel="manifest" href="/manifest.json" />
     <link rel="icon" href="/favicon.ico" />
     <link rel="stylesheet" href="/font.css" />
-    <title>남주호 ❤️ 정지원 결혼합니다.</title>
+    <title><%= GROOM_FULLNAME %> ❤️ <%= BRIDE_FULLNAME %> 결혼합니다.</title>
   </head>
   <body>
     <div id="root"></div>

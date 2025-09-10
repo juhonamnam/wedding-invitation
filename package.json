@@ -23,6 +23,7 @@
     "sass": "^1.89.2",
     "typescript": "^4.4.2",
     "vite": "^7.0.4",
+    "vite-plugin-html": "^3.2.2",
     "vite-plugin-svgr": "^4.5.0"
   },
   "browserslist": {

@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import ArrowLeft from "../../image/angle-left-sm.svg?react"
+import ArrowLeft from "../../icons/angle-left-sm.svg?react"
 import { LazyDiv } from "../lazyDiv"
 import { Button } from "../button"
 import { useModal } from "../modal"
-import { GALLERY_IMAGES } from "../../const"
+import { GALLERY_IMAGES } from "../../images"
 
 const CAROUSEL_ITEMS = GALLERY_IMAGES.map((item, idx) => (
   <div className="carousel-item" key={idx}>
