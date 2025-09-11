@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { ReactComponent as ArrowLeft } from "../../image/angle-left-sm.svg"
+import ArrowLeft from "../../icons/angle-left-sm.svg?react"
 import { LazyDiv } from "../lazyDiv"
 import { Button } from "../button"
-import { useModal } from "../store"
-import { GALLERY_IMAGES } from "../../const"
+import { useModal } from "../modal"
+import { GALLERY_IMAGES } from "../../images"
 
 const CAROUSEL_ITEMS = GALLERY_IMAGES.map((item, idx) => (
   <div className="carousel-item" key={idx}>
@@ -32,9 +32,7 @@ type ClickMove = "left" | "right" | null
 
 export const Gallery = () => {
   const { openModal, closeModal } = useModal()
-  const carouselRef = useRef<HTMLDivElement>(
-    null,
-  ) as React.MutableRefObject<HTMLDivElement>
+  const carouselRef = useRef<HTMLDivElement>({} as HTMLDivElement)
 
   useEffect(() => {
     // preload images

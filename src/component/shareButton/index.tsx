@@ -6,9 +6,11 @@ import {
   SHARE_ADDRESS_TITLE,
   WEDDING_DATE,
 } from "../../const"
-import ktalkIcon from "../../image/ktalk-icon.png"
+import ktalkIcon from "../../icons/ktalk-icon.png"
 import { LazyDiv } from "../lazyDiv"
 import { useKakao } from "../store"
+
+const baseUrl = import.meta.env.BASE_URL
 
 export const ShareButton = () => {
   const kakao = useKakao()
@@ -35,19 +37,19 @@ export const ShareButton = () => {
                 window.location.protocol +
                 "//" +
                 window.location.host +
-                process.env.PUBLIC_URL +
+                baseUrl +
                 "/preview_image.png",
               link: {
                 mobileWebUrl:
                   window.location.protocol +
                   "//" +
                   window.location.host +
-                  process.env.PUBLIC_URL,
+                  baseUrl,
                 webUrl:
                   window.location.protocol +
                   "//" +
                   window.location.host +
-                  process.env.PUBLIC_URL,
+                  baseUrl,
               },
             },
             buttons: [
@@ -58,12 +60,12 @@ export const ShareButton = () => {
                     window.location.protocol +
                     "//" +
                     window.location.host +
-                    process.env.PUBLIC_URL,
+                    baseUrl,
                   webUrl:
                     window.location.protocol +
                     "//" +
                     window.location.host +
-                    process.env.PUBLIC_URL,
+                    baseUrl,
                 },
               },
             ],

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react"
-import patelUrl from "../../image/petal.png"
+import patelUrl from "../../icons/petal.png"
 
 const X_SPEED = 0.6
 const X_SPEED_VARIANCE = 0.8
@@ -75,9 +75,7 @@ class Petal {
 }
 
 export const BGEffect = () => {
-  const ref = useRef<HTMLCanvasElement>(
-    null,
-  ) as React.MutableRefObject<HTMLCanvasElement>
+  const ref = useRef<HTMLCanvasElement>({} as HTMLCanvasElement)
 
   const petalsRef = useRef<Petal[]>([])
 

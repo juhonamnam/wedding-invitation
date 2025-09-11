@@ -20,29 +20,30 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Environment Variables
         run: |
-          echo "REACT_APP_NAVER_MAP_CLIENT_ID=$REACT_APP_NAVER_MAP_CLIENT_ID
-          REACT_APP_KAKAO_SDK_JS_KEY=$REACT_APP_KAKAO_SDK_JS_KEY
-          REACT_APP_SERVER_URL=$REACT_APP_SERVER_URL" >> .env
+          echo "VITE_NAVER_MAP_CLIENT_ID=$VITE_NAVER_MAP_CLIENT_ID
+          VITE_KAKAO_SDK_JS_KEY=$VITE_KAKAO_SDK_JS_KEY
+          VITE_SERVER_URL=$VITE_SERVER_URL
+          VITE_STATIC_ONLY=$STATIC_ONLY" >> .env
         env:
-          REACT_APP_NAVER_MAP_CLIENT_ID: ${{ secrets.NAVER_MAP_CLIENT_ID }}
-          REACT_APP_KAKAO_SDK_JS_KEY: ${{ secrets.KAKAO_SDK_JS_KEY }}
-          REACT_APP_SERVER_URL: ${{ secrets.SERVER_URL }}
+          VITE_NAVER_MAP_CLIENT_ID: ${{ secrets.NAVER_MAP_CLIENT_ID }}
+          VITE_KAKAO_SDK_JS_KEY: ${{ secrets.KAKAO_SDK_JS_KEY }}
+          VITE_SERVER_URL: ${{ vars.SERVER_URL }}
+          STATIC_ONLY: ${{ vars.STATIC_ONLY }}
 
-      - name: Use Node.js 20.x
-        uses: actions/setup-node@v3
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v4
         with:
-          node-version: 20.x
-          cache: yarn
+          node-version: 22.x
 
       - name: Install dependencies
-        run: yarn install
+        run: npm install
 
       - name: Build
-        run: yarn run build
+        run: npm run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
