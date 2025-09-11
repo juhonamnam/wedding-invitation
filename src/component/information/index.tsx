@@ -1,13 +1,13 @@
 import { BRIDE_INFO, GROOM_INFO } from "../../const"
+import { STATIC_ONLY } from "../../env"
 import { Button } from "../button"
 import { LazyDiv } from "../lazyDiv"
 import { useModal } from "../modal"
 import { AttendanceInfo } from "./attendance"
 
-export const Information = () => {
-  const { openModal, closeModal } = useModal()
+export const Information1 = () => {
   return (
-    <LazyDiv className="card information">
+    <>
       <h2 className="english">Information</h2>
       <div className="info-card">
         <div className="label">식사 안내</div>
@@ -17,7 +17,15 @@ export const Information = () => {
           장소: 지하 1층 연회장
         </div>
       </div>
+    </>
+  )
+}
 
+export const Information2 = () => {
+  const { openModal, closeModal } = useModal()
+
+  return (
+    <>
       <div className="info-card">
         <div className="label">마음 전하기</div>
         <div className="content">
@@ -136,6 +144,28 @@ export const Information = () => {
           신부측 계좌번호 보기
         </Button>
       </div>
+    </>
+  )
+}
+
+export const Information = () => {
+  if (STATIC_ONLY) {
+    return (
+      <>
+        <LazyDiv className="card information">
+          <Information1 />
+        </LazyDiv>
+        <LazyDiv className="card information">
+          <Information2 />
+        </LazyDiv>
+      </>
+    )
+  }
+
+  return (
+    <LazyDiv className="card information">
+      <Information1 />
+      <Information2 />
       <AttendanceInfo />
     </LazyDiv>
   )
