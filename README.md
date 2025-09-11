@@ -60,7 +60,8 @@ cp .env.example .env
 - `VITE_SERVER_URL`
   - 방명록과 참석 의사 전달 등을 위한 서버의 URL
   - 서버 소스코드: https://github.com/juhonamnam/wedding-invitation-server
-  - 설정하지 않을 경우 소스코드상에 고정된 방명록만 보여줍니다. (결혼식 끝난 이후 archive 용으로 사용)
+  - 설정하지 않을 경우 소스코드상에 고정된 방명록만 보여줍니다.
+    - 결혼식 끝난 이후 archive 용으로 사용 가능합니다. 지금까지 올라왔던 모든 방명록을 `offlineGuestBook.json`에 소스코드로 저장하여 read only로 보관해보세요.
 - `VITE_STATIC_ONLY`
   - 방명록과 참석 의사 전달 기능은 별도의 서버를 호스팅해야 합니다.
   - 이 기능을 사용하지 않고 정적 웹사이트로만 운영하려면 이 환경변수를 `true`로 설정합니다.
@@ -126,3 +127,12 @@ npm run build
 ```
 
 4. `build` 디렉토리의 내용을 호스팅 플랫폼에 배포
+
+## 📋 업데이트 내역
+
+### 2025.09.11 - v0.1.0
+
+- CRA에서 Vite로 마이그레이션
+- `yarn` 대신 `npm` 사용
+- `src/const.ts`의 상수가 적용되지 않던 부분 (ex. `index.html`, `manifest.json`) 개선
+- `STATIC_ONLY` 환경변수 설정을 통해 별도의 서버를 필요로 하는 기능을 비활성화 가능
