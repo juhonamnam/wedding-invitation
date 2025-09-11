@@ -106,10 +106,12 @@ npm run dev
    - Settings > Pages에서 "Build and deployment" 소스를 "GitHub Actions"로 설정
 
 4. Fork된 저장소의 Settings > Secrets and variables > Actions에서 환경변수 추가 (각 환경변수에 대한 설명은 위 환경변수 설정 참고)
-   - `VITE_NAVER_MAP_CLIENT_ID`
-   - `VITE_KAKAO_SDK_JS_KEY`
-   - `VITE_SERVER_URL`
-   - `VITE_STATIC_ONLY`
+   - Secrets:
+     - `VITE_NAVER_MAP_CLIENT_ID`
+     - `VITE_KAKAO_SDK_JS_KEY`
+   - Variables:
+     - `VITE_SERVER_URL`
+     - `VITE_STATIC_ONLY`
 
 ### 다른 호스팅 플랫폼
 
