@@ -31,8 +31,8 @@ jobs:
         env:
           VITE_NAVER_MAP_CLIENT_ID: ${{ secrets.NAVER_MAP_CLIENT_ID }}
           VITE_KAKAO_SDK_JS_KEY: ${{ secrets.KAKAO_SDK_JS_KEY }}
-          VITE_SERVER_URL: ${{ secrets.SERVER_URL }}
-          STATIC_ONLY: "false"
+          VITE_SERVER_URL: ${{ vars.SERVER_URL }}
+          STATIC_ONLY: ${{ vars.STATIC_ONLY }}
 
       - name: Use Node.js 22.x
         uses: actions/setup-node@v4
