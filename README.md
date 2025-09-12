@@ -53,10 +53,10 @@ cp .env.example .env
 
 - `VITE_NAVER_MAP_CLIENT_ID`
   - 웨딩홀 위치를 표시하기 위한 네이버 지도 API 키
-  - Naver Cloud Platform에서 발급 가능
+  - Naver Cloud Platform에서 발급 가능 (Dynamic Map API)
 - `VITE_KAKAO_SDK_JS_KEY`
   - 카카오톡 공유하기 기능을 위한 KAKAO SDK 키
-  - Kakao Developers에서 발급 가능
+  - Kakao Developers에서 발급 가능 (JavaScript Key)
 - `VITE_SERVER_URL`
   - 방명록과 참석 의사 전달 등을 위한 서버의 URL
   - 서버 소스코드: https://github.com/juhonamnam/wedding-invitation-server
