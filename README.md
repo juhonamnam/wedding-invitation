@@ -138,5 +138,5 @@ npm run build
 - `yarn` 대신 `npm` 사용
 - `src/const.ts`의 상수가 적용되지 않던 부분 (ex. `index.html`, `manifest.json`) 개선
 - `STATIC_ONLY` 환경변수 설정을 통해 별도의 서버를 필요로 하는 기능을 비활성화 가능
-- ** [Hotfix] ** Github의 환경변수명에 `VITE_` 접두사가 붙지 않아 혼란이 있었던 문제 수정
-- ** [Hotfix] ** Naver Map API의 최신 업데이트 반영
+- [Hotfix] Github의 환경변수명에 `VITE_` 접두사가 붙지 않아 혼란이 있었던 문제 수정
+- [Hotfix] Naver Map API의 최신 업데이트 반영
