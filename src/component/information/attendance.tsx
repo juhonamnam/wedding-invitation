@@ -209,9 +209,9 @@ const AttendanceModalContent = () => {
               value="groom"
               hidden
               defaultChecked
-              ref={(ref) =>
-                (inputRef.current.side.groom = ref as HTMLInputElement)
-              }
+              ref={(ref) => {
+                inputRef.current.side.groom = ref as HTMLInputElement
+              }}
             />
             <span>신랑</span>
           </label>
@@ -223,9 +223,9 @@ const AttendanceModalContent = () => {
               name="side"
               value="bride"
               hidden
-              ref={(ref) =>
-                (inputRef.current.side.bride = ref as HTMLInputElement)
-              }
+              ref={(ref) => {
+                inputRef.current.side.bride = ref as HTMLInputElement
+              }}
             />
             <span>신부</span>
           </label>
@@ -240,7 +240,9 @@ const AttendanceModalContent = () => {
             type="text"
             placeholder="참석자 성함을 입력해주세요."
             maxLength={RULES.name.maxLength}
-            ref={(ref) => (inputRef.current.name = ref as HTMLInputElement)}
+            ref={(ref) => {
+              inputRef.current.name = ref as HTMLInputElement
+            }}
           />
         </div>
       </div>
@@ -254,9 +256,9 @@ const AttendanceModalContent = () => {
               type="radio"
               name="meal"
               value="yes"
-              ref={(ref) =>
-                (inputRef.current.meal.yes = ref as HTMLInputElement)
-              }
+              ref={(ref) => {
+                inputRef.current.meal.yes = ref as HTMLInputElement
+              }}
             />
             <span>예정</span>
           </label>
@@ -267,9 +269,9 @@ const AttendanceModalContent = () => {
               type="radio"
               name="meal"
               value="undecided"
-              ref={(ref) =>
-                (inputRef.current.meal.undecided = ref as HTMLInputElement)
-              }
+              ref={(ref) => {
+                inputRef.current.meal.undecided = ref as HTMLInputElement
+              }}
             />
             <span>미정</span>
           </label>
@@ -280,9 +282,9 @@ const AttendanceModalContent = () => {
               type="radio"
               name="meal"
               value="no"
-              ref={(ref) =>
-                (inputRef.current.meal.no = ref as HTMLInputElement)
-              }
+              ref={(ref) => {
+                inputRef.current.meal.no = ref as HTMLInputElement
+              }}
             />
             <span>불참</span>
           </label>
@@ -297,7 +299,9 @@ const AttendanceModalContent = () => {
             type="number"
             min={RULES.count.min}
             defaultValue={RULES.count.default}
-            ref={(ref) => (inputRef.current.count = ref as HTMLInputElement)}
+            ref={(ref) => {
+              inputRef.current.count = ref as HTMLInputElement
+            }}
           />
           명
         </div>
