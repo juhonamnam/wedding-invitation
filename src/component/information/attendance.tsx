@@ -4,6 +4,7 @@ import {
   GROOM_FULLNAME,
   LOCATION,
   WEDDING_DATE,
+  WEDDING_DATE_FORMAT,
 } from "../../const"
 import { Button } from "../button"
 import { useModal } from "../modal"
@@ -34,8 +35,7 @@ export const AttendanceInfo = () => {
     if (initialized.current) return
     initialized.current = true
 
-    if (!SERVER_URL || WEDDING_DATE.isBefore(now.current))
-      return
+    if (!SERVER_URL || WEDDING_DATE.isBefore(now.current)) return
 
     openModal({
       className: "attendance-info-modal",
@@ -56,7 +56,7 @@ export const AttendanceInfo = () => {
           <div className="wedding-info">
             <HeartIcon /> 신랑 {GROOM_FULLNAME} & 신부 {BRIDE_FULLNAME}
             <br />
-            <CalendarIcon /> {WEDDING_DATE.format("YYYY년 MMMM D일 dddd A h시")}
+            <CalendarIcon /> {WEDDING_DATE.format(WEDDING_DATE_FORMAT)}
             <br />
             <MarkerIcon /> {LOCATION}
           </div>
@@ -85,8 +85,7 @@ export const AttendanceInfo = () => {
     })
   }, [openModal, closeModal])
 
-  if (!SERVER_URL || WEDDING_DATE.isBefore(now.current))
-    return null
+  if (!SERVER_URL || WEDDING_DATE.isBefore(now.current)) return null
 
   return (
     <div className="info-card">
@@ -179,16 +178,13 @@ const AttendanceModalContent = () => {
             return
           }
 
-          const res = await fetch(
-            `${SERVER_URL}/attendance`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ side, name, meal, count }),
+          const res = await fetch(`${SERVER_URL}/attendance`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
             },
-          )
+            body: JSON.stringify({ side, name, meal, count }),
+          })
           if (!res.ok) {
             throw new Error(res.statusText)
           }

@@ -4,6 +4,7 @@ import {
   GROOM_FIRSTNAME,
   HOLIDAYS,
   WEDDING_DATE,
+  WEDDING_DATE_FORMAT,
 } from "../../const"
 import { LazyDiv } from "../lazyDiv"
 
@@ -43,7 +44,7 @@ export const Calendar = () => {
     <LazyDiv className="card calendar">
       <h2 className="english">The Wedding Day</h2>
       <div className="break" />
-      {WEDDING_DATE.format("YYYY년 MMMM D일 dddd A h시")}
+      {WEDDING_DATE.format(WEDDING_DATE_FORMAT)}
       <div className="calendar-wrapper">
         <div className="head holiday">
           <span>Su</span>
