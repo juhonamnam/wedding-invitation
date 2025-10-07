@@ -4,6 +4,7 @@ import {
   GROOM_FULLNAME,
   LOCATION,
   WEDDING_DATE,
+  WEDDING_DATE_FORMAT,
 } from "../../const"
 import { Button } from "../button"
 import { useModal } from "../modal"
@@ -34,8 +35,7 @@ export const AttendanceInfo = () => {
     if (initialized.current) return
     initialized.current = true
 
-    if (!SERVER_URL || WEDDING_DATE.isBefore(now.current))
-      return
+    if (!SERVER_URL || WEDDING_DATE.isBefore(now.current)) return
 
     openModal({
       className: "attendance-info-modal",
@@ -56,7 +56,7 @@ export const AttendanceInfo = () => {
           <div className="wedding-info">
             <HeartIcon /> 신랑 {GROOM_FULLNAME} & 신부 {BRIDE_FULLNAME}
             <br />
-            <CalendarIcon /> {WEDDING_DATE.format("YYYY년 MMMM D일 dddd A h시")}
+            <CalendarIcon /> {WEDDING_DATE.format(WEDDING_DATE_FORMAT)}
             <br />
             <MarkerIcon /> {LOCATION}
           </div>
@@ -85,8 +85,7 @@ export const AttendanceInfo = () => {
     })
   }, [openModal, closeModal])
 
-  if (!SERVER_URL || WEDDING_DATE.isBefore(now.current))
-    return null
+  if (!SERVER_URL || WEDDING_DATE.isBefore(now.current)) return null
 
   return (
     <div className="info-card">
@@ -179,16 +178,13 @@ const AttendanceModalContent = () => {
             return
           }
 
-          const res = await fetch(
-            `${SERVER_URL}/attendance`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ side, name, meal, count }),
+          const res = await fetch(`${SERVER_URL}/attendance`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
             },
-          )
+            body: JSON.stringify({ side, name, meal, count }),
+          })
           if (!res.ok) {
             throw new Error(res.statusText)
           }
@@ -213,9 +209,9 @@ const AttendanceModalContent = () => {
               value="groom"
               hidden
               defaultChecked
-              ref={(ref) =>
-                (inputRef.current.side.groom = ref as HTMLInputElement)
-              }
+              ref={(ref) => {
+                inputRef.current.side.groom = ref as HTMLInputElement
+              }}
             />
             <span>신랑</span>
           </label>
@@ -227,9 +223,9 @@ const AttendanceModalContent = () => {
               name="side"
               value="bride"
               hidden
-              ref={(ref) =>
-                (inputRef.current.side.bride = ref as HTMLInputElement)
-              }
+              ref={(ref) => {
+                inputRef.current.side.bride = ref as HTMLInputElement
+              }}
             />
             <span>신부</span>
           </label>
@@ -244,7 +240,9 @@ const AttendanceModalContent = () => {
             type="text"
             placeholder="참석자 성함을 입력해주세요."
             maxLength={RULES.name.maxLength}
-            ref={(ref) => (inputRef.current.name = ref as HTMLInputElement)}
+            ref={(ref) => {
+              inputRef.current.name = ref as HTMLInputElement
+            }}
           />
         </div>
       </div>
@@ -258,9 +256,9 @@ const AttendanceModalContent = () => {
               type="radio"
               name="meal"
               value="yes"
-              ref={(ref) =>
-                (inputRef.current.meal.yes = ref as HTMLInputElement)
-              }
+              ref={(ref) => {
+                inputRef.current.meal.yes = ref as HTMLInputElement
+              }}
             />
             <span>예정</span>
           </label>
@@ -271,9 +269,9 @@ const AttendanceModalContent = () => {
               type="radio"
               name="meal"
               value="undecided"
-              ref={(ref) =>
-                (inputRef.current.meal.undecided = ref as HTMLInputElement)
-              }
+              ref={(ref) => {
+                inputRef.current.meal.undecided = ref as HTMLInputElement
+              }}
             />
             <span>미정</span>
           </label>
@@ -284,9 +282,9 @@ const AttendanceModalContent = () => {
               type="radio"
               name="meal"
               value="no"
-              ref={(ref) =>
-                (inputRef.current.meal.no = ref as HTMLInputElement)
-              }
+              ref={(ref) => {
+                inputRef.current.meal.no = ref as HTMLInputElement
+              }}
             />
             <span>불참</span>
           </label>
@@ -301,7 +299,9 @@ const AttendanceModalContent = () => {
             type="number"
             min={RULES.count.min}
             defaultValue={RULES.count.default}
-            ref={(ref) => (inputRef.current.count = ref as HTMLInputElement)}
+            ref={(ref) => {
+              inputRef.current.count = ref as HTMLInputElement
+            }}
           />
           명
         </div>

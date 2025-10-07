@@ -3,6 +3,7 @@ import {
   GROOM_FULLNAME,
   LOCATION,
   WEDDING_DATE,
+  WEDDING_DATE_FORMAT,
 } from "../../const"
 import { COVER_IMAGE } from "../../images"
 import { LazyDiv } from "../lazyDiv"
@@ -39,9 +40,7 @@ export const Cover = () => {
         <div className="divider" />
         {BRIDE_FULLNAME}
       </div>
-      <div className="info">
-        {WEDDING_DATE.format("YYYY년 MMMM D일 dddd A h시")}
-      </div>
+      <div className="info">{WEDDING_DATE.format(WEDDING_DATE_FORMAT)}</div>
       <div className="info">{LOCATION}</div>
     </LazyDiv>
   )

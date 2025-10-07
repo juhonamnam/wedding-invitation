@@ -264,7 +264,9 @@ const WriteGuestBookModal = ({ loadPosts }: { loadPosts: () => void }) => {
         type="text"
         placeholder="이름을 입력해주세요."
         className="name"
-        ref={(ref) => (inputRef.current.name = ref as HTMLInputElement)}
+        ref={(ref) => {
+          inputRef.current.name = ref as HTMLInputElement
+        }}
         maxLength={RULES.name.maxLength}
       />
       내용
@@ -272,7 +274,9 @@ const WriteGuestBookModal = ({ loadPosts }: { loadPosts: () => void }) => {
         disabled={loading}
         placeholder="축하 메세지를 100자 이내로 입력해주세요."
         className="content"
-        ref={(ref) => (inputRef.current.content = ref as HTMLTextAreaElement)}
+        ref={(ref) => {
+          inputRef.current.content = ref as HTMLTextAreaElement
+        }}
         maxLength={RULES.content.maxLength}
       />
       비밀번호
@@ -281,7 +285,9 @@ const WriteGuestBookModal = ({ loadPosts }: { loadPosts: () => void }) => {
         type="password"
         placeholder="비밀번호를 입력해주세요."
         className="password"
-        ref={(ref) => (inputRef.current.password = ref as HTMLInputElement)}
+        ref={(ref) => {
+          inputRef.current.password = ref as HTMLInputElement
+        }}
         maxLength={RULES.password.maxLength}
       />
     </form>

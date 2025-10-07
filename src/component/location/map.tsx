@@ -23,7 +23,7 @@ const NaverMap = () => {
   const ref = useRef<HTMLDivElement>(null)
   const [locked, setLocked] = useState(true)
   const [showLockMessage, setShowLockMessage] = useState(false)
-  const lockMessageTimeout = useRef<NodeJS.Timeout>()
+  const lockMessageTimeout = useRef<number | null>(null)
 
   const checkDevice = () => {
     const userAgent = window.navigator.userAgent
@@ -59,7 +59,9 @@ const NaverMap = () => {
             className="lock"
             onTouchStart={() => {
               setShowLockMessage(true)
-              clearTimeout(lockMessageTimeout.current)
+              if (lockMessageTimeout.current !== null) {
+                clearTimeout(lockMessageTimeout.current)
+              }
               lockMessageTimeout.current = setTimeout(
                 () => setShowLockMessage(false),
                 3000,
@@ -67,7 +69,9 @@ const NaverMap = () => {
             }}
             onMouseDown={() => {
               setShowLockMessage(true)
-              clearTimeout(lockMessageTimeout.current)
+              if (lockMessageTimeout.current !== null) {
+                clearTimeout(lockMessageTimeout.current)
+              }
               lockMessageTimeout.current = setTimeout(
                 () => setShowLockMessage(false),
                 3000,
@@ -86,7 +90,9 @@ const NaverMap = () => {
         <button
           className={"lock-button" + (locked ? "" : " unlocked")}
           onClick={() => {
-            clearTimeout(lockMessageTimeout.current)
+            if (lockMessageTimeout.current !== null) {
+              clearTimeout(lockMessageTimeout.current)
+            }
             setShowLockMessage(false)
             setLocked((locked) => !locked)
           }}
