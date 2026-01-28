@@ -17,7 +17,7 @@ export const WEDDING_DATE_FORMAT = `YYYY년 MMMM D일 dddd A h시${WEDDING_DATE.
 export const HOLIDAYS = [15]
 
 export const LOCATION = "까사그랑데"
-export const LOCATION_ADDRESS = "서울시 관악구 관악로 1, 연구공원 본관 1층"
+export const LOCATION_ADDRESS = "서울 광진구 능동로 87 건대입구역자이엘라 6층"
 
 // 카카오톡 공유 시 위치 정보로 사용할 주소.
 // LOCATION 과 동일하게 설정해도 무방하나, 필요에 따라 좀 더 상세히 작성 가능.
@@ -30,7 +30,7 @@ export const WEDDING_HALL_POSITION = [126.9594982, 37.4657134]
 // 네이버 지도의 웨딩홀 장소 ID
 // 네이버 지도 웹페이지에서 웨딩홀 검색 후 URL에서 확인 가능.
 // 예: https://map.naver.com/p/entry/place/13321741 -> 13321741
-export const NMAP_PLACE_ID = 13321741
+export const NMAP_PLACE_ID = 1396499968
 
 // 카카오 지도의 웨딩홀 장소 ID
 // 카카오 지도 웹페이지에서 웨딩홀 검색 후 해당 장소에서 상세보기 클릭 시 URL에서 확인 가능.
