@@ -58,7 +58,7 @@ export const Location = () => {
           <div className="content">
             네이버 지도, 카카오 네비, 티맵 등 이용
             <br />
-            <b>서울대학교 연구공원 웨딩홀</b> 검색
+            <b>까사그랑데</b> 검색
             <br />
             - 주차 요금은 무료입니다.
             <br />

@@ -2,7 +2,7 @@
 
 ## 원본 버전 | Original Version
 
-남주호 ❤️ 정지원 청첩장입니다.
+이욱 ❤️ 이채은 청첩장입니다.
 
 https://juhonamnam.github.io/wedding-invitation
 
