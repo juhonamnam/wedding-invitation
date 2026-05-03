@@ -1,5 +1,5 @@
 .guestbook,
-.all-guestbook-modal {
+.guestbook-list-modal {
   .post {
     text-align: left;
     box-shadow: 0.1rem 0.1rem 0.3rem 0 rgba(0, 0, 0, 0.1);
@@ -66,29 +66,29 @@
 .write-guestbook-modal {
   width: 22rem;
 
-  .header {
-    .title-group {
-      text-align: center;
-      .title {
-        font-size: 1.2rem;
-        color: var(--theme-color);
-        padding: 0.5rem;
+  .form {
+    .header {
+      .title-group {
+        text-align: center;
+        .title {
+          font-size: 1.2rem;
+          color: var(--theme-color);
+          padding: 0.5rem;
+        }
+        .subtitle {
+          font-size: 0.9rem;
+        }
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--dark-grey-color);
       }
-      .subtitle {
-        font-size: 0.9rem;
-      }
-      padding-bottom: 1rem;
-      border-bottom: 1px solid var(--dark-grey-color);
     }
-  }
 
-  .content {
-    padding: 0 0.7rem 0.7rem 0.7rem;
-
-    .form {
+    .content {
       display: flex;
       flex-direction: column;
       margin-top: 1rem;
+
+      padding: 0 0.7rem 0.7rem 0.7rem;
 
       input {
         padding: 0.5rem;
@@ -108,18 +108,18 @@
         font-size: 0.8rem;
       }
     }
-  }
 
-  .footer {
-    display: flex;
-    flex-direction: row;
-    button {
-      width: 100%;
+    .footer {
+      display: flex;
+      flex-direction: row;
+      button {
+        width: 100%;
+      }
     }
   }
 }
 
-.all-guestbook-modal {
+.guestbook-list-modal {
   width: 24rem;
 
   .header {
@@ -161,18 +161,16 @@
 .delete-guestbook-modal {
   width: 22rem;
 
-  .header {
-    .title {
-      text-align: center;
-      font-size: 1.2rem;
-      color: var(--theme-color);
+  .form {
+    .header {
+      .title {
+        text-align: center;
+        font-size: 1.2rem;
+        color: var(--theme-color);
+      }
     }
-  }
-
-  .content {
-    padding: 0 0.7rem 0.7rem 0.7rem;
-
-    .form {
+    .content {
+      padding: 0 0.7rem 0.7rem 0.7rem;
       display: flex;
       flex-direction: column;
       margin-top: 1rem;
@@ -186,13 +184,13 @@
         font-size: 0.8rem;
       }
     }
-  }
 
-  .footer {
-    display: flex;
-    flex-direction: row;
-    button {
-      width: 100%;
+    .footer {
+      display: flex;
+      flex-direction: row;
+      button {
+        width: 100%;
+      }
     }
   }
 }

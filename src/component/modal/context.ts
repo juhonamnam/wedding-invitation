@@ -1,15 +1,5 @@
-import { createContext, ReactNode } from "react"
-
-export type ModalInfo = {
-  header?: ReactNode
-  className?: string
-  footer?: ReactNode
-  content: ReactNode
-  closeOnClickBackground?: boolean
-}
+import { createContext } from "react"
 
 export const ModalContext = createContext({
-  modalInfoList: [] as ModalInfo[],
-  openModal: (() => {}) as (component: ModalInfo) => void,
-  closeModal: () => {},
+  wrapperRef: {} as React.RefObject<HTMLElement>,
 })

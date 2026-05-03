@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react"
 import { Button } from "../button"
 import { dayjs } from "../../const"
 import { LazyDiv } from "../lazyDiv"
-import { useModal } from "../modal"
+import { Modal } from "../modal"
 import offlineGuestBook from "./offlineGuestBook.json"
 import { SERVER_URL } from "../../env"
 
@@ -30,9 +30,14 @@ type Post = {
 }
 
 export const GuestBook = () => {
-  const { openModal, closeModal } = useModal()
-
   const [posts, setPosts] = useState<Post[]>([])
+
+  const guestbookListModalState = useState(false)
+
+  const deleteGuestBookModalState = useState(false)
+  const [deletePostId, setDeletePostId] = useState<number | null>(null)
+
+  const writeGuestBookModalState = useState(false)
 
   const loadPosts = async () => {
     if (SERVER_URL) {
@@ -58,147 +63,108 @@ export const GuestBook = () => {
   }, [])
 
   return (
-    <LazyDiv className="card guestbook">
-      <h2 className="english">Guest Book</h2>
+    <>
+      <LazyDiv className="card guestbook">
+        <h2 className="english">Guest Book</h2>
 
-      <div className="break" />
+        <div className="break" />
 
-      {posts.map((post) => (
-        <div key={post.id} className="post">
-          <div className="heading">
-            <button
-              className="close-button"
-              onClick={async () => {
-                if (SERVER_URL) {
-                  openModal({
-                    className: "delete-guestbook-modal",
-                    closeOnClickBackground: false,
-                    header: <div className="title">삭제하시겠습니까?</div>,
-                    content: (
-                      <DeleteGuestBookModal
-                        postId={post.id}
-                        onSuccess={() => {
-                          loadPosts()
-                        }}
-                      />
-                    ),
-                    footer: (
-                      <>
-                        <Button
-                          buttonStyle="style2"
-                          type="submit"
-                          form="guestbook-delete-form"
-                        >
-                          삭제하기
-                        </Button>
-                        <Button
-                          buttonStyle="style2"
-                          className="bg-light-grey-color text-dark-color"
-                          onClick={closeModal}
-                        >
-                          닫기
-                        </Button>
-                      </>
-                    ),
-                  })
-                }
-              }}
-            />
-          </div>
-          <div className="body">
-            <div className="title">
-              <div className="name">{post.name}</div>
-              <div className="date">
-                {dayjs.unix(post.timestamp).format("YYYY-MM-DD")}
-              </div>
+        {posts.map((post) => (
+          <div key={post.id} className="post">
+            <div className="heading">
+              <button
+                className="close-button"
+                onClick={async () => {
+                  if (SERVER_URL) {
+                    setDeletePostId(post.id)
+                    deleteGuestBookModalState[1](true)
+                  }
+                }}
+              />
             </div>
-            <div className="content">{post.content}</div>
+            <div className="body">
+              <div className="title">
+                <div className="name">{post.name}</div>
+                <div className="date">
+                  {dayjs.unix(post.timestamp).format("YYYY-MM-DD")}
+                </div>
+              </div>
+              <div className="content">{post.content}</div>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
 
-      <div className="break" />
+        <div className="break" />
 
-      {SERVER_URL && (
-        <>
-          <Button
-            onClick={() =>
-              openModal({
-                className: "write-guestbook-modal",
-                closeOnClickBackground: false,
-                header: (
-                  <div className="title-group">
-                    <div className="title">방명록 작성하기</div>
-                    <div className="subtitle">
-                      신랑, 신부에게 축하의 마음을 전해주세요.
-                    </div>
-                  </div>
-                ),
-                content: <WriteGuestBookModal loadPosts={loadPosts} />,
-                footer: (
-                  <>
-                    <Button
-                      buttonStyle="style2"
-                      type="submit"
-                      form="guestbook-write-form"
-                    >
-                      저장하기
-                    </Button>
-                    <Button
-                      buttonStyle="style2"
-                      className="bg-light-grey-color text-dark-color"
-                      onClick={closeModal}
-                    >
-                      닫기
-                    </Button>
-                  </>
-                ),
-              })
-            }
-          >
-            방명록 작성하기
-          </Button>
-          <div className="break" />
-        </>
-      )}
+        {SERVER_URL && (
+          <>
+            <Button onClick={() => writeGuestBookModalState[1](true)}>
+              방명록 작성하기
+            </Button>
+            <div className="break" />
+          </>
+        )}
 
-      <Button
-        onClick={() =>
-          openModal({
-            className: "all-guestbook-modal",
-            closeOnClickBackground: true,
-            header: <div className="title">방명록 전체보기</div>,
-            content: <AllGuestBookModal loadPosts={loadPosts} />,
-            footer: (
-              <Button
-                buttonStyle="style2"
-                className="bg-light-grey-color text-dark-color"
-                onClick={closeModal}
-              >
-                닫기
-              </Button>
-            ),
-          })
-        }
+        <Button onClick={() => guestbookListModalState[1](true)}>
+          방명록 전체보기
+        </Button>
+      </LazyDiv>
+      <Modal
+        modalState={guestbookListModalState}
+        className="guestbook-list-modal"
+        closeOnClickBackground={true}
       >
-        방명록 전체보기
-      </Button>
-    </LazyDiv>
+        <GuestBookListModal
+          loadPosts={loadPosts}
+          onClose={() => guestbookListModalState[1](false)}
+        />
+      </Modal>
+      <Modal
+        modalState={deleteGuestBookModalState}
+        className="delete-guestbook-modal"
+        closeOnClickBackground={false}
+      >
+        <DeleteGuestBookModal
+          postId={deletePostId}
+          onSuccess={() => {
+            deleteGuestBookModalState[1](false)
+            loadPosts()
+          }}
+          onCancel={() => {
+            deleteGuestBookModalState[1](false)
+          }}
+        />
+      </Modal>
+      <Modal
+        modalState={writeGuestBookModalState}
+        className="write-guestbook-modal"
+        closeOnClickBackground={false}
+      >
+        <WriteGuestBookModal
+          loadPosts={loadPosts}
+          onClose={() => writeGuestBookModalState[1](false)}
+        />
+      </Modal>
+    </>
   )
 }
 
-const WriteGuestBookModal = ({ loadPosts }: { loadPosts: () => void }) => {
+const WriteGuestBookModal = ({
+  loadPosts,
+  onClose,
+}: {
+  loadPosts: () => void
+  onClose: () => void
+}) => {
   const inputRef = useRef({}) as React.RefObject<{
     name: HTMLInputElement
     content: HTMLTextAreaElement
     password: HTMLInputElement
   }>
-  const { closeModal } = useModal()
   const [loading, setLoading] = useState(false)
 
   return (
     <form
-      id="guestbook-write-form"
       className="form"
       onSubmit={async (e) => {
         e.preventDefault()
@@ -249,7 +215,7 @@ const WriteGuestBookModal = ({ loadPosts }: { loadPosts: () => void }) => {
           }
 
           alert("방명록 작성이 완료되었습니다.")
-          closeModal()
+          onClose()
           loadPosts()
         } catch {
           alert("방명록 작성에 실패했습니다.")
@@ -258,51 +224,75 @@ const WriteGuestBookModal = ({ loadPosts }: { loadPosts: () => void }) => {
         }
       }}
     >
-      이름
-      <input
-        disabled={loading}
-        type="text"
-        placeholder="이름을 입력해주세요."
-        className="name"
-        ref={(ref) => {
-          inputRef.current.name = ref as HTMLInputElement
-        }}
-        maxLength={RULES.name.maxLength}
-      />
-      내용
-      <textarea
-        disabled={loading}
-        placeholder="축하 메세지를 100자 이내로 입력해주세요."
-        className="content"
-        ref={(ref) => {
-          inputRef.current.content = ref as HTMLTextAreaElement
-        }}
-        maxLength={RULES.content.maxLength}
-      />
-      비밀번호
-      <input
-        disabled={loading}
-        type="password"
-        placeholder="비밀번호를 입력해주세요."
-        className="password"
-        ref={(ref) => {
-          inputRef.current.password = ref as HTMLInputElement
-        }}
-        maxLength={RULES.password.maxLength}
-      />
+      <div className="header">
+        <div className="title-group">
+          <div className="title">방명록 작성하기</div>
+          <div className="subtitle">
+            신랑, 신부에게 축하의 마음을 전해주세요.
+          </div>
+        </div>
+      </div>
+      <div className="content">
+        이름
+        <input
+          disabled={loading}
+          type="text"
+          placeholder="이름을 입력해주세요."
+          ref={(ref) => {
+            inputRef.current.name = ref as HTMLInputElement
+          }}
+          maxLength={RULES.name.maxLength}
+        />
+        내용
+        <textarea
+          disabled={loading}
+          placeholder="축하 메세지를 100자 이내로 입력해주세요."
+          ref={(ref) => {
+            inputRef.current.content = ref as HTMLTextAreaElement
+          }}
+          maxLength={RULES.content.maxLength}
+        />
+        비밀번호
+        <input
+          disabled={loading}
+          type="password"
+          placeholder="비밀번호를 입력해주세요."
+          ref={(ref) => {
+            inputRef.current.password = ref as HTMLInputElement
+          }}
+          maxLength={RULES.password.maxLength}
+        />
+      </div>
+      <div className="footer">
+        <Button buttonStyle="style2" type="submit">
+          저장하기
+        </Button>
+        <Button
+          buttonStyle="style2"
+          type="button"
+          className="bg-light-grey-color text-dark-color"
+          onClick={onClose}
+        >
+          닫기
+        </Button>
+      </div>
     </form>
   )
 }
 
-const AllGuestBookModal = ({
+const GuestBookListModal = ({
   loadPosts,
+  onClose,
 }: {
   loadPosts: () => Promise<void>
+  onClose: () => void
 }) => {
   const [posts, setPosts] = useState<Post[]>([])
   const [currentPage, setCurrentPage] = useState(0)
   const [totalPages, setTotalPages] = useState(1)
-  const { openModal, closeModal } = useModal()
+
+  const deleteGuestBookModalState = useState(false)
+  const [deletePostId, setDeletePostId] = useState<number | null>(null)
 
   const loadPage = async (page: number) => {
     setCurrentPage(page)
@@ -315,11 +305,13 @@ const AllGuestBookModal = ({
         if (res.ok) {
           const data = await res.json()
 
+          const totalPages = Math.ceil(data.total / POSTS_PER_PAGE)
+          if (page !== 0 && page >= totalPages) {
+            loadPage(totalPages - 1)
+            return
+          }
           setPosts(data.posts)
           setTotalPages(Math.ceil(data.total / POSTS_PER_PAGE))
-          if (data.total < offset) {
-            setCurrentPage(Math.ceil(data.total / POSTS_PER_PAGE) - 1)
-          }
         }
       } catch (error) {
         console.error("Error loading posts:", error)
@@ -350,97 +342,100 @@ const AllGuestBookModal = ({
 
   return (
     <>
-      {posts.map((post) => (
-        <div key={post.id} className="post">
-          <div className="heading">
-            <div
-              className="close-button"
-              onClick={async () => {
-                if (SERVER_URL) {
-                  openModal({
-                    className: "delete-guestbook-modal",
-                    closeOnClickBackground: false,
-                    header: <div className="title">삭제하시겠습니까?</div>,
-                    content: (
-                      <DeleteGuestBookModal
-                        postId={post.id}
-                        onSuccess={() => {
-                          loadPosts()
-                          loadPage(currentPage)
-                        }}
-                      />
-                    ),
-                    footer: (
-                      <>
-                        <Button
-                          buttonStyle="style2"
-                          type="submit"
-                          form="guestbook-delete-form"
-                        >
-                          삭제하기
-                        </Button>
-                        <Button
-                          buttonStyle="style2"
-                          className="bg-light-grey-color text-dark-color"
-                          onClick={closeModal}
-                        >
-                          닫기
-                        </Button>
-                      </>
-                    ),
-                  })
-                }
-              }}
-            />
-          </div>
-          <div className="body">
-            <div className="title">
-              <div className="name">{post.name}</div>
-              <div className="date">
-                {dayjs.unix(post.timestamp).format("YYYY-MM-DD")}
-              </div>
+      <div className="header">
+        <div className="title">방명록 전체보기</div>
+      </div>
+      <div className="content">
+        {posts.map((post) => (
+          <div key={post.id} className="post">
+            <div className="heading">
+              <div
+                className="close-button"
+                onClick={async () => {
+                  if (SERVER_URL) {
+                    setDeletePostId(post.id)
+                    deleteGuestBookModalState[1](true)
+                  }
+                }}
+              />
             </div>
-            <div className="content">{post.content}</div>
-          </div>
-        </div>
-      ))}
-
-      <div className="break" />
-
-      <div className="pagination">
-        {pages[0] > 0 && (
-          <div
-            className="page"
-            onClick={() => {
-              loadPage(pages[0] - 1)
-            }}
-          >
-            이전
-          </div>
-        )}
-        {pages.map((page) => (
-          <div
-            className={`page${page === currentPage ? " current" : ""}`}
-            key={page}
-            onClick={() => {
-              if (page === currentPage) return
-              loadPage(page)
-            }}
-          >
-            {page + 1}
+            <div className="body">
+              <div className="title">
+                <div className="name">{post.name}</div>
+                <div className="date">
+                  {dayjs.unix(post.timestamp).format("YYYY-MM-DD")}
+                </div>
+              </div>
+              <div className="content">{post.content}</div>
+            </div>
           </div>
         ))}
-        {pages[pages.length - 1] < totalPages - 1 && (
-          <div
-            className="page"
-            onClick={() => {
-              loadPage(pages[pages.length - 1] + 1)
-            }}
-          >
-            다음
-          </div>
-        )}
+
+        <div className="break" />
+
+        <div className="pagination">
+          {pages[0] > 0 && (
+            <div
+              className="page"
+              onClick={() => {
+                loadPage(pages[0] - 1)
+              }}
+            >
+              이전
+            </div>
+          )}
+          {pages.map((page) => (
+            <div
+              className={`page${page === currentPage ? " current" : ""}`}
+              key={page}
+              onClick={() => {
+                if (page === currentPage) return
+                loadPage(page)
+              }}
+            >
+              {page + 1}
+            </div>
+          ))}
+          {pages[pages.length - 1] < totalPages - 1 && (
+            <div
+              className="page"
+              onClick={() => {
+                loadPage(pages[pages.length - 1] + 1)
+              }}
+            >
+              다음
+            </div>
+          )}
+        </div>
       </div>
+      <div className="footer">
+        <Button
+          buttonStyle="style2"
+          className="bg-light-grey-color text-dark-color"
+          onClick={() => {
+            onClose()
+          }}
+        >
+          닫기
+        </Button>
+      </div>
+      <Modal
+        modalState={deleteGuestBookModalState}
+        className="delete-guestbook-modal"
+        closeOnClickBackground={false}
+      >
+        <DeleteGuestBookModal
+          postId={deletePostId}
+          onSuccess={() => {
+            deleteGuestBookModalState[1](false)
+            loadPosts()
+            loadPage(currentPage)
+          }}
+          onCancel={() => {
+            deleteGuestBookModalState[1](false)
+          }}
+        />
+      </Modal>
     </>
   )
 }
@@ -448,17 +443,19 @@ const AllGuestBookModal = ({
 const DeleteGuestBookModal = ({
   postId,
   onSuccess,
+  onCancel,
 }: {
-  postId: number
+  postId: number | null
   onSuccess: () => void
+  onCancel: () => void
 }) => {
   const inputRef = useRef({} as HTMLInputElement)
-  const { closeModal } = useModal()
   const [loading, setLoading] = useState(false)
+
+  if (postId === null) return null
 
   return (
     <form
-      id="guestbook-delete-form"
       className="form"
       onSubmit={async (e) => {
         e.preventDefault()
@@ -493,7 +490,6 @@ const DeleteGuestBookModal = ({
           }
 
           alert("삭제되었습니다.")
-          closeModal()
           onSuccess()
         } catch {
           alert("방명록 삭제에 실패했습니다.")
@@ -502,14 +498,31 @@ const DeleteGuestBookModal = ({
         }
       }}
     >
-      <input
-        disabled={loading}
-        type="password"
-        placeholder="비밀번호를 입력해주세요."
-        className="password"
-        ref={inputRef}
-        maxLength={RULES.password.maxLength}
-      />
+      <div className="header">
+        <div className="title">삭제하시겠습니까?</div>
+      </div>
+      <div className="content">
+        <input
+          disabled={loading}
+          type="password"
+          placeholder="비밀번호를 입력해주세요."
+          ref={inputRef}
+          maxLength={RULES.password.maxLength}
+        />
+      </div>
+      <div className="footer">
+        <Button buttonStyle="style2" type="submit">
+          삭제하기
+        </Button>
+        <Button
+          buttonStyle="style2"
+          type="button"
+          className="bg-light-grey-color text-dark-color"
+          onClick={onCancel}
+        >
+          닫기
+        </Button>
+      </div>
     </form>
   )
 }

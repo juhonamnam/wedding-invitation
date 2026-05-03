@@ -1,8 +1,9 @@
+import { useState } from "react"
 import { BRIDE_INFO, GROOM_INFO } from "../../const"
 import { STATIC_ONLY } from "../../env"
 import { Button } from "../button"
 import { LazyDiv } from "../lazyDiv"
-import { useModal } from "../modal"
+import { Modal } from "../modal"
 import { AttendanceInfo } from "./attendance"
 
 export const Information1 = () => {
@@ -22,7 +23,8 @@ export const Information1 = () => {
 }
 
 export const Information2 = () => {
-  const { openModal, closeModal } = useModal()
+  const donationModalState = useState(false)
+  const [isGroom, setIsGroom] = useState(true)
 
   return (
     <>
@@ -41,51 +43,8 @@ export const Information2 = () => {
         <Button
           style={{ width: "100%" }}
           onClick={() => {
-            openModal({
-              className: "donation-modal",
-              closeOnClickBackground: true,
-              header: <div className="title">신랑측 계좌번호</div>,
-              content: (
-                <>
-                  {GROOM_INFO.filter(({ account }) => !!account).map(
-                    ({ relation, name, account }) => (
-                      <div className="account-info" key={relation}>
-                        <div>
-                          <div className="name">
-                            <span className="relation">{relation}</span> {name}
-                          </div>
-                          <div>{account}</div>
-                        </div>
-                        <Button
-                          className="copy-button"
-                          onClick={async () => {
-                            if (account) {
-                              try {
-                                navigator.clipboard.writeText(account)
-                                alert(account + "\n복사되었습니다.")
-                              } catch {
-                                alert("복사에 실패했습니다.")
-                              }
-                            }
-                          }}
-                        >
-                          복사하기
-                        </Button>
-                      </div>
-                    ),
-                  )}
-                </>
-              ),
-              footer: (
-                <Button
-                  buttonStyle="style2"
-                  className="bg-light-grey-color text-dark-color"
-                  onClick={closeModal}
-                >
-                  닫기
-                </Button>
-              ),
-            })
+            donationModalState[1](true)
+            setIsGroom(true)
           }}
         >
           신랑측 계좌번호 보기
@@ -94,56 +53,62 @@ export const Information2 = () => {
         <Button
           style={{ width: "100%" }}
           onClick={() => {
-            openModal({
-              className: "donation-modal",
-              closeOnClickBackground: true,
-              header: <div className="title">신부측 계좌번호</div>,
-              content: (
-                <>
-                  {BRIDE_INFO.filter(({ account }) => !!account).map(
-                    ({ relation, name, account }) => (
-                      <div className="account-info" key={relation}>
-                        <div>
-                          <div className="name">
-                            <span className="relation">{relation}</span> {name}
-                          </div>
-                          <div>{account}</div>
-                        </div>
-                        <Button
-                          className="copy-button"
-                          onClick={async () => {
-                            if (account) {
-                              try {
-                                navigator.clipboard.writeText(account)
-                                alert(account + "\n복사되었습니다.")
-                              } catch {
-                                alert("복사에 실패했습니다.")
-                              }
-                            }
-                          }}
-                        >
-                          복사하기
-                        </Button>
-                      </div>
-                    ),
-                  )}
-                </>
-              ),
-              footer: (
-                <Button
-                  buttonStyle="style2"
-                  className="bg-light-grey-color text-dark-color"
-                  onClick={closeModal}
-                >
-                  닫기
-                </Button>
-              ),
-            })
+            donationModalState[1](true)
+            setIsGroom(false)
           }}
         >
           신부측 계좌번호 보기
         </Button>
       </div>
+      <Modal
+        modalState={donationModalState}
+        className="donation-modal"
+        closeOnClickBackground={true}
+      >
+        <div className="header">
+          <div className="title">
+            {isGroom ? "신랑측 계좌번호" : "신부측 계좌번호"}
+          </div>
+        </div>
+        <div className="content">
+          {(isGroom ? GROOM_INFO : BRIDE_INFO)
+            .filter(({ account }) => !!account)
+            .map(({ relation, name, account }) => (
+              <div className="account-info" key={relation}>
+                <div>
+                  <div className="name">
+                    <span className="relation">{relation}</span> {name}
+                  </div>
+                  <div>{account}</div>
+                </div>
+                <Button
+                  className="copy-button"
+                  onClick={async () => {
+                    if (account) {
+                      try {
+                        navigator.clipboard.writeText(account)
+                        alert(account + "\n복사되었습니다.")
+                      } catch {
+                        alert("복사에 실패했습니다.")
+                      }
+                    }
+                  }}
+                >
+                  복사하기
+                </Button>
+              </div>
+            ))}
+        </div>
+        <div className="footer">
+          <Button
+            buttonStyle="style2"
+            className="bg-light-grey-color text-dark-color"
+            onClick={() => donationModalState[1](false)}
+          >
+            닫기
+          </Button>
+        </div>
+      </Modal>
     </>
   )
 }

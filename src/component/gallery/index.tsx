@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import ArrowLeft from "../../icons/angle-left-sm.svg?react"
 import { LazyDiv } from "../lazyDiv"
 import { Button } from "../button"
-import { useModal } from "../modal"
+import { Modal } from "../modal"
 import { GALLERY_IMAGES } from "../../images"
 
 const CAROUSEL_ITEMS = GALLERY_IMAGES.map((item, idx) => (
@@ -31,7 +31,7 @@ type DragOption = {
 type ClickMove = "left" | "right" | null
 
 export const Gallery = () => {
-  const { openModal, closeModal } = useModal()
+  const modalState = useState(false)
   const carouselRef = useRef<HTMLDivElement>({} as HTMLDivElement)
 
   useEffect(() => {
@@ -277,129 +277,129 @@ export const Gallery = () => {
   }, [status])
 
   return (
-    <LazyDiv className="card gallery">
-      <h2 className="english">Gallery</h2>
-      <div className="carousel-wrapper">
-        <div
-          className="carousel"
-          ref={carouselRef}
-          onMouseDown={(e) =>
-            click(
-              statusRef.current,
-              e.clientX,
-              e.clientY,
-              e.currentTarget.clientWidth,
-            )
-          }
-          onTouchStart={(e) =>
-            click(
-              statusRef.current,
-              e.targetTouches[0].clientX,
-              e.targetTouches[0].clientY,
-              e.currentTarget.clientWidth,
-            )
-          }
-        >
-          <div className={transformClass} style={transformStyle}>
-            {["dragging", "dragEnding"].includes(status) && [
-              ...(slide === 0
-                ? [CAROUSEL_ITEMS[CAROUSEL_ITEMS.length - 1]]
-                : []),
-              ...CAROUSEL_ITEMS.slice(slide === 0 ? 0 : slide - 1, slide + 2),
-              ...(slide === CAROUSEL_ITEMS.length - 1
-                ? [CAROUSEL_ITEMS[0]]
-                : []),
-            ]}
-            {status === "moving-right" &&
-              CAROUSEL_ITEMS.slice(moveOption.srcIdx, moveOption.dstIdx + 1)}
-            {status === "moving-left" &&
-              CAROUSEL_ITEMS.slice(moveOption.dstIdx, moveOption.srcIdx + 1)}
-            {["stationary", "clicked", "clickCanceled"].includes(status) &&
-              CAROUSEL_ITEMS[slide]}
-          </div>
-          <div className="carousel-control">
-            <div
-              className="control left"
-              onMouseDown={() => {
-                if (statusRef.current === "stationary") setClickMove("left")
-              }}
-              onTouchStart={() => {
-                if (statusRef.current === "stationary") setClickMove("left")
-              }}
-            >
-              <ArrowLeft className="arrow" />
+    <>
+      <LazyDiv className="card gallery">
+        <h2 className="english">Gallery</h2>
+        <div className="carousel-wrapper">
+          <div
+            className="carousel"
+            ref={carouselRef}
+            onMouseDown={(e) =>
+              click(
+                statusRef.current,
+                e.clientX,
+                e.clientY,
+                e.currentTarget.clientWidth,
+              )
+            }
+            onTouchStart={(e) =>
+              click(
+                statusRef.current,
+                e.targetTouches[0].clientX,
+                e.targetTouches[0].clientY,
+                e.currentTarget.clientWidth,
+              )
+            }
+          >
+            <div className={transformClass} style={transformStyle}>
+              {["dragging", "dragEnding"].includes(status) && [
+                ...(slide === 0
+                  ? [CAROUSEL_ITEMS[CAROUSEL_ITEMS.length - 1]]
+                  : []),
+                ...CAROUSEL_ITEMS.slice(slide === 0 ? 0 : slide - 1, slide + 2),
+                ...(slide === CAROUSEL_ITEMS.length - 1
+                  ? [CAROUSEL_ITEMS[0]]
+                  : []),
+              ]}
+              {status === "moving-right" &&
+                CAROUSEL_ITEMS.slice(moveOption.srcIdx, moveOption.dstIdx + 1)}
+              {status === "moving-left" &&
+                CAROUSEL_ITEMS.slice(moveOption.dstIdx, moveOption.srcIdx + 1)}
+              {["stationary", "clicked", "clickCanceled"].includes(status) &&
+                CAROUSEL_ITEMS[slide]}
             </div>
-            <div
-              className="control right"
-              onMouseDown={() => {
-                if (statusRef.current === "stationary") setClickMove("right")
-              }}
-              onTouchStart={() => {
-                if (statusRef.current === "stationary") setClickMove("right")
-              }}
-            >
-              <ArrowLeft className="arrow right" />
-            </div>
-          </div>
-        </div>
-        <div className="carousel-indicator">
-          {CAROUSEL_ITEMS.map((_, idx) => (
-            <button
-              key={idx}
-              className={`indicator${idx === slide ? " active" : ""}`}
-              onClick={() =>
-                onIndicatorClick(statusRef.current, slideRef.current, idx)
-              }
-            />
-          ))}
-        </div>
-      </div>
-
-      <div className="break" />
-
-      <Button
-        onClick={() =>
-          openModal({
-            className: "all-photo-modal",
-            closeOnClickBackground: true,
-            header: <div className="title">사진 전체보기</div>,
-            content: (
-              <>
-                <div className="photo-list">
-                  {GALLERY_IMAGES.map((image, idx) => (
-                    <img
-                      key={idx}
-                      src={image}
-                      alt={`${idx}`}
-                      draggable={false}
-                      onClick={() => {
-                        if (statusRef.current === "stationary") {
-                          if (idx !== slideRef.current) {
-                            move(slideRef.current, idx)
-                          }
-                          closeModal()
-                        }
-                      }}
-                    />
-                  ))}
-                </div>
-                <div className="break" />
-              </>
-            ),
-            footer: (
-              <Button
-                buttonStyle="style2"
-                className="bg-light-grey-color text-dark-color"
-                onClick={closeModal}
+            <div className="carousel-control">
+              <div
+                className="control left"
+                onMouseDown={() => {
+                  if (statusRef.current === "stationary") setClickMove("left")
+                }}
+                onTouchStart={() => {
+                  if (statusRef.current === "stationary") setClickMove("left")
+                }}
               >
-                닫기
-              </Button>
-            ),
-          })
-        }
+                <ArrowLeft className="arrow" />
+              </div>
+              <div
+                className="control right"
+                onMouseDown={() => {
+                  if (statusRef.current === "stationary") setClickMove("right")
+                }}
+                onTouchStart={() => {
+                  if (statusRef.current === "stationary") setClickMove("right")
+                }}
+              >
+                <ArrowLeft className="arrow right" />
+              </div>
+            </div>
+          </div>
+          <div className="carousel-indicator">
+            {CAROUSEL_ITEMS.map((_, idx) => (
+              <button
+                key={idx}
+                className={`indicator${idx === slide ? " active" : ""}`}
+                onClick={() =>
+                  onIndicatorClick(statusRef.current, slideRef.current, idx)
+                }
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="break" />
+
+        <Button onClick={() => modalState[1](true)}>사진 전체보기</Button>
+      </LazyDiv>
+      <Modal
+        modalState={modalState}
+        className="all-photo-modal"
+        closeOnClickBackground={true}
       >
-        사진 전체보기
-      </Button>
-    </LazyDiv>
+        <div className="header">
+          <div className="title">사진 전체보기</div>
+        </div>
+
+        <div className="content">
+          <div className="photo-list">
+            {GALLERY_IMAGES.map((image, idx) => (
+              <img
+                key={idx}
+                src={image}
+                alt={`${idx}`}
+                draggable={false}
+                onClick={() => {
+                  if (statusRef.current === "stationary") {
+                    if (idx !== slideRef.current) {
+                      move(slideRef.current, idx)
+                    }
+                    modalState[1](false)
+                  }
+                }}
+              />
+            ))}
+          </div>
+          <div className="break" />
+        </div>
+        <div className="footer">
+          <Button
+            buttonStyle="style2"
+            className="bg-light-grey-color text-dark-color"
+            onClick={() => modalState[1](false)}
+          >
+            닫기
+          </Button>
+        </div>
+      </Modal>
+    </>
   )
 }

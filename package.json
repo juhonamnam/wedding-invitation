@@ -6,6 +6,7 @@
   "license": "MIT",
   "private": true,
   "homepage": "https://juhonamnam.github.io/wedding-invitation",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

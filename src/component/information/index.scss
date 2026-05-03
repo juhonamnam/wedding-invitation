@@ -65,23 +65,23 @@
   }
 }
 
-.attendance-modal {
+.attendance-form-modal {
   width: 22rem;
 
-  .header {
-    .title {
-      text-align: center;
-      font-size: 1.2rem;
-      color: var(--theme-color);
-      padding-bottom: 1rem;
-      border-bottom: 1px solid var(--dark-grey-color);
+  .form {
+    .header {
+      .title {
+        text-align: center;
+        font-size: 1.2rem;
+        color: var(--theme-color);
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--dark-grey-color);
+      }
     }
-  }
 
-  .content {
-    padding: 0 1rem 1rem 1rem;
+    .content {
+      padding: 0 1rem 1rem 1rem;
 
-    .form {
       display: flex;
       flex-direction: column;
       margin-top: 1rem;
@@ -137,13 +137,13 @@
         }
       }
     }
-  }
 
-  .footer {
-    display: flex;
-    flex-direction: row;
-    button {
-      width: 100%;
+    .footer {
+      display: flex;
+      flex-direction: row;
+      button {
+        width: 100%;
+      }
     }
   }
 }
