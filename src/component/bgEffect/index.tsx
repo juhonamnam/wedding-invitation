@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react"
 import patelUrl from "../../icons/petal.png"
 
+// 꽃잎의 이동 및 회전 속도 설정
 const X_SPEED = 0.6
 const X_SPEED_VARIANCE = 0.8
 
@@ -9,7 +10,9 @@ const Y_SPEED_VARIANCE = 0.4
 
 const FLIP_SPEED_VARIANCE = 0.02
 
-// Petal class
+/**
+ * 개별 꽃잎 객체를 관리하는 클래스입니다.
+ */
 class Petal {
   x: number
   y: number
@@ -26,12 +29,16 @@ class Petal {
     private ctx: CanvasRenderingContext2D,
     private petalImg: HTMLImageElement,
   ) {
+    // 초기 위치 무작위 설정
     this.x = Math.random() * canvas.width
     this.y = Math.random() * canvas.height * 2 - canvas.height
 
     this.initialize()
   }
 
+  /**
+   * 꽃잎의 크기, 투명도, 속도 등을 무작위로 초기화합니다.
+   */
   initialize() {
     this.w = 25 + Math.random() * 15
     this.h = 20 + Math.random() * 10
@@ -43,7 +50,11 @@ class Petal {
     this.flipSpeed = Math.random() * FLIP_SPEED_VARIANCE
   }
 
+  /**
+   * 화면에 꽃잎을 그립니다.
+   */
   draw() {
+    // 화면 밖으로 나갔을 경우 초기화 및 재배치
     if (this.y > this.canvas.height || this.x > this.canvas.width) {
       this.initialize()
 
@@ -66,6 +77,9 @@ class Petal {
     )
   }
 
+  /**
+   * 꽃잎의 위치를 업데이트하고 다시 그립니다.
+   */
   animate() {
     this.x += this.xSpeed
     this.y += this.ySpeed
@@ -74,29 +88,36 @@ class Petal {
   }
 }
 
+/**
+ * 배경에 꽃잎이 내리는 애니메이션 효과를 주는 컴포넌트입니다.
+ *
+ * @returns {JSX.Element} 배경 효과 컴포넌트
+ */
 export const BGEffect = () => {
   const ref = useRef<HTMLCanvasElement>({} as HTMLCanvasElement)
-
   const petalsRef = useRef<Petal[]>([])
-
   const resizeTimeoutRef = useRef(0)
   const animationFrameIdRef = useRef(0)
 
   useEffect(() => {
     const canvas = ref.current
-
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
 
     const ctx = canvas.getContext("2d") as CanvasRenderingContext2D
-
     const petalImg = new Image()
     petalImg.src = patelUrl
 
+    /**
+     * 화면 크기에 따른 적절한 꽃잎 개수를 계산합니다.
+     */
     const getPetalNum = () => {
       return Math.floor((window.innerWidth * window.innerHeight) / 30000)
     }
 
+    /**
+     * 꽃잎들을 생성하고 초기화합니다.
+     */
     const initializePetals = () => {
       const count = getPetalNum()
       const petals = []
@@ -108,6 +129,9 @@ export const BGEffect = () => {
 
     initializePetals()
 
+    /**
+     * 매 프레임마다 꽃잎을 렌더링합니다.
+     */
     const render = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       petalsRef.current.forEach((petal) => petal.animate())
@@ -116,6 +140,9 @@ export const BGEffect = () => {
 
     render()
 
+    /**
+     * 화면 크기 변경 시 캔버스 크기를 조정하고 꽃잎 개수를 조절합니다.
+     */
     const onResize = () => {
       clearTimeout(resizeTimeoutRef.current)
       resizeTimeoutRef.current = window.setTimeout(() => {

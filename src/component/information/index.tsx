@@ -6,6 +6,9 @@ import { LazyDiv } from "../lazyDiv"
 import { Modal } from "../modal"
 import { AttendanceInfo } from "./attendance"
 
+/**
+ * 식사 정보 안내 컴포넌트입니다.
+ */
 export const Information1 = () => {
   return (
     <>
@@ -22,6 +25,10 @@ export const Information1 = () => {
   )
 }
 
+/**
+ * 축의금 계좌번호 안내 컴포넌트입니다.
+ * 신랑측, 신부측 계좌번호를 모달로 보여줍니다.
+ */
 export const Information2 = () => {
   const donationModalState = useState(false)
   const [isGroom, setIsGroom] = useState(true)
@@ -60,6 +67,8 @@ export const Information2 = () => {
           신부측 계좌번호 보기
         </Button>
       </div>
+
+      {/* 계좌 정보 모달 */}
       <Modal
         modalState={donationModalState}
         className="donation-modal"
@@ -86,7 +95,8 @@ export const Information2 = () => {
                   onClick={async () => {
                     if (account) {
                       try {
-                        navigator.clipboard.writeText(account)
+                        // 계좌번호 복사 기능
+                        await navigator.clipboard.writeText(account)
                         alert(account + "\n복사되었습니다.")
                       } catch {
                         alert("복사에 실패했습니다.")
@@ -113,7 +123,13 @@ export const Information2 = () => {
   )
 }
 
+/**
+ * 정보 안내(식사, 축의금, 참석의사)를 통합하여 표시하는 컴포넌트입니다.
+ *
+ * @returns {JSX.Element} 정보 안내 섹션
+ */
 export const Information = () => {
+  // 정적 모드일 경우 참석 의사 전달 기능을 제외합니다.
   if (STATIC_ONLY) {
     return (
       <>

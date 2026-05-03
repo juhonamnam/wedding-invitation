@@ -14,6 +14,9 @@ import CalendarIcon from "../../icons/calendar-icon.svg?react"
 import MarkerIcon from "../../icons/marker-icon.svg?react"
 import { SERVER_URL } from "../../env"
 
+/**
+ * 입력 데이터 제한 규칙
+ */
 const RULES = {
   name: {
     maxLength: 10,
@@ -24,23 +27,29 @@ const RULES = {
   },
 }
 
+/**
+ * 참석 의사를 전달할 수 있는 카드와 폼 모달을 관리하는 컴포넌트입니다.
+ *
+ * @returns {JSX.Element | null} 참석 의사 전달 섹션
+ */
 export const AttendanceInfo = () => {
   const attendanceInfoModalState = useState(false)
   const attendanceFormModalState = useState(false)
 
   const initialized = useRef(false)
-
   const now = useRef(dayjs())
 
   useEffect(() => {
     if (initialized.current) return
     initialized.current = true
 
+    // 서버 URL이 없거나 예식일이 지났으면 안내 모달을 띄우지 않음
     if (!SERVER_URL || WEDDING_DATE.isBefore(now.current)) return
 
     attendanceInfoModalState[1](true)
   }, [attendanceInfoModalState])
 
+  // 서버 연동 기능이 비활성화되어 있거나 이미 예식이 종료된 경우 섹션을 렌더링하지 않음
   if (!SERVER_URL || WEDDING_DATE.isBefore(now.current)) return null
 
   return (
@@ -64,6 +73,8 @@ export const AttendanceInfo = () => {
           참석 의사 전달하기
         </Button>
       </div>
+
+      {/* 참석 안내 모달 */}
       <Modal
         className="attendance-info-modal"
         modalState={attendanceInfoModalState}
@@ -113,6 +124,8 @@ export const AttendanceInfo = () => {
           </Button>
         </div>
       </Modal>
+
+      {/* 참석 의사 입력 폼 모달 */}
       <Modal
         className="attendance-form-modal"
         modalState={attendanceFormModalState}
@@ -128,6 +141,9 @@ export const AttendanceInfo = () => {
   )
 }
 
+/**
+ * 참석 의사를 입력받아 서버로 전송하는 폼 컴포넌트입니다.
+ */
 const AttendanceFormModal = ({ onClose }: { onClose: () => void }) => {
   const inputRef = useRef({ side: {}, meal: {} }) as React.RefObject<{
     side: {
@@ -153,7 +169,7 @@ const AttendanceFormModal = ({ onClose }: { onClose: () => void }) => {
         try {
           const side = inputRef.current.side.groom.checked
             ? "groom"
-            : inputRef.current.side.bride
+            : inputRef.current.side.bride.checked
               ? "bride"
               : null
           const name = inputRef.current.name.value
@@ -166,11 +182,11 @@ const AttendanceFormModal = ({ onClose }: { onClose: () => void }) => {
                 : null
           const count = Number(inputRef.current.count.value)
 
+          // 유효성 검사
           if (!side) {
             alert("신랑 또는 신부를 선택해주세요.")
             return
           }
-
           if (!name) {
             alert("성함을 입력해주세요.")
             return
@@ -179,12 +195,10 @@ const AttendanceFormModal = ({ onClose }: { onClose: () => void }) => {
             alert(`성함을 ${RULES.name.maxLength}자 이하로 입력해주세요.`)
             return
           }
-
           if (!meal) {
             alert("식사 여부를 선택해주세요.")
             return
           }
-
           if (isNaN(count)) {
             alert("참석 인원을 입력해주세요.")
             return
@@ -194,6 +208,7 @@ const AttendanceFormModal = ({ onClose }: { onClose: () => void }) => {
             return
           }
 
+          // 서버에 데이터 전송
           const res = await fetch(`${SERVER_URL}/attendance`, {
             method: "POST",
             headers: {
@@ -328,7 +343,7 @@ const AttendanceFormModal = ({ onClose }: { onClose: () => void }) => {
         </div>
       </div>
       <div className="footer">
-        <Button buttonStyle="style2" type="submit">
+        <Button buttonStyle="style2" disabled={loading} type="submit">
           전달하기
         </Button>
         <Button

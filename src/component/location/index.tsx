@@ -4,9 +4,16 @@ import BusIcon from "../../icons/bus-icon.svg?react"
 import { LazyDiv } from "../lazyDiv"
 import { LOCATION, LOCATION_ADDRESS } from "../../const"
 
+/**
+ * 오시는 길 정보를 표시하는 컴포넌트입니다.
+ * 지도와 대중교통, 자가용 이용 방법을 안내합니다.
+ *
+ * @returns {JSX.Element} 오시는 길 섹션
+ */
 export const Location = () => {
   return (
     <>
+      {/* 지도 및 주소 섹션 */}
       <LazyDiv className="card location">
         <h2 className="english">Location</h2>
         <div className="addr">
@@ -15,7 +22,10 @@ export const Location = () => {
         </div>
         <Map />
       </LazyDiv>
+
+      {/* 대중교통 및 자가용 안내 섹션 */}
       <LazyDiv className="card location">
+        {/* 대중교통 안내 */}
         <div className="location-info">
           <div className="transportation-icon-wrapper">
             <BusIcon className="transportation-icon" />
@@ -49,6 +59,8 @@ export const Location = () => {
             이하 위와 동일합니다.
           </div>
         </div>
+
+        {/* 자가용 안내 */}
         <div className="location-info">
           <div className="transportation-icon-wrapper">
             <CarIcon className="transportation-icon" />

@@ -5,14 +5,21 @@ import { Button } from "../button"
 import { Modal } from "../modal"
 import { GALLERY_IMAGES } from "../../images"
 
+/**
+ * 캐러셀 아이템 요소 생성
+ */
 const CAROUSEL_ITEMS = GALLERY_IMAGES.map((item, idx) => (
   <div className="carousel-item" key={idx}>
     <img src={item} draggable={false} alt={`${idx}`} />
   </div>
 ))
 
+// 드래그 감도 설정
 const DRAG_SENSITIVITY = 15
 
+/**
+ * 캐러셀 상태 타입 정의
+ */
 type Status =
   | "stationary"
   | "clicked"
@@ -22,6 +29,9 @@ type Status =
   | "moving-left"
   | "moving-right"
 
+/**
+ * 드래그 옵션 타입 정의
+ */
 type DragOption = {
   startingClientX: number
   startingClientY: number
@@ -30,18 +40,26 @@ type DragOption = {
 
 type ClickMove = "left" | "right" | null
 
+/**
+ * 갤러리 컴포넌트입니다.
+ * 사진 캐러셀 기능과 전체 사진 보기 모달 기능을 제공합니다.
+ * 터치 및 마우스 드래그를 지원합니다.
+ *
+ * @returns {JSX.Element} 갤러리 섹션
+ */
 export const Gallery = () => {
   const modalState = useState(false)
   const carouselRef = useRef<HTMLDivElement>({} as HTMLDivElement)
 
   useEffect(() => {
-    // preload images
+    // 이미지 프리로드 (Preload)
     GALLERY_IMAGES.forEach((image) => {
       const img = new Image()
       img.src = image
     })
   }, [])
 
+  // 슬라이드 인덱스 상태
   const [slide, _setSlide] = useState(0)
   const slideRef = useRef(0)
   const setSlide = (slide: number) => {
@@ -49,6 +67,7 @@ export const Gallery = () => {
     slideRef.current = slide
   }
 
+  // 캐러셀 동작 상태
   const [status, _setStatus] = useState<Status>("stationary")
   const statusRef = useRef<Status>("stationary")
   const setStatus = (status: Status) => {
@@ -56,6 +75,7 @@ export const Gallery = () => {
     statusRef.current = status
   }
 
+  // 드래그 정보 상태
   const [dragOption, _setDragOption] = useState<DragOption>({
     startingClientX: 0,
     startingClientY: 0,
@@ -81,11 +101,9 @@ export const Gallery = () => {
     clickMoveRef.current = clickMove
   }
 
-  // For debugging
-  // useEffect(() => {
-  //   console.log(status)
-  // }, [status])
-
+  /**
+   * 마우스/터치 다운 이벤트 처리
+   */
   const click = (
     status: Status,
     clientX: number,
@@ -101,10 +119,14 @@ export const Gallery = () => {
     setStatus("clicked")
   }
 
+  /**
+   * 드래그 중 처리
+   */
   const dragging = useCallback(
     (dragOption: DragOption, clientX: number, carouselWidth: number) => {
       let moveTranslateX = clientX - dragOption.startingClientX
 
+      // 드래그 범위 제한
       if (moveTranslateX > carouselWidth) {
         moveTranslateX = carouselWidth
       } else if (moveTranslateX < -carouselWidth) {
@@ -119,9 +141,13 @@ export const Gallery = () => {
     [],
   )
 
+  /**
+   * 드래그 종료 시 슬라이드 이동 결정 및 애니메이션 처리
+   */
   const dragEnd = useCallback(
     (slide: number, dragOption: DragOption, carouselWidth: number) => {
       let move = 0
+      // 10% 이상 드래그했을 때 다음/이전 슬라이드로 이동
       if (dragOption.currentTranslateX < -carouselWidth * 1.1) {
         move = 1
       } else if (dragOption.currentTranslateX > -carouselWidth * 0.9) {
@@ -147,6 +173,9 @@ export const Gallery = () => {
     [],
   )
 
+  /**
+   * 버튼 클릭 등에 의한 슬라이드 이동 처리
+   */
   const move = useCallback((srcIdx: number, dstIdx: number) => {
     setSlide(dstIdx)
     if (srcIdx < dstIdx) {
@@ -163,7 +192,7 @@ export const Gallery = () => {
     }, 300)
   }, [])
 
-  /* Events */
+  /* 이벤트 핸들러 */
   const onMouseMove = useCallback(
     (e: MouseEvent) => {
       const status = statusRef.current
@@ -192,6 +221,7 @@ export const Gallery = () => {
           e.targetTouches[0].clientX - dragOptionRef.current.startingClientX
         const yMove =
           e.targetTouches[0].clientY - dragOptionRef.current.startingClientY
+        // 일정 거리 이상 움직였을 때만 드래그로 간주
         if (Math.abs(xMove) > DRAG_SENSITIVITY) {
           setStatus("dragging")
         } else if (Math.abs(yMove) > DRAG_SENSITIVITY) {
@@ -244,6 +274,9 @@ export const Gallery = () => {
     }
   }, [onMouseMove, onTouchMove, onMouseTouchUp])
 
+  /**
+   * 인디케이터 클릭 시 해당 슬라이드로 이동
+   */
   const onIndicatorClick = useCallback(
     (status: Status, srcIdx: number, dstIdx: number) => {
       if (status !== "stationary" || srcIdx === dstIdx) return
@@ -302,6 +335,7 @@ export const Gallery = () => {
             }
           >
             <div className={transformClass} style={transformStyle}>
+              {/* 무한 캐러셀을 위한 슬라이드 구성 */}
               {["dragging", "dragEnding"].includes(status) && [
                 ...(slide === 0
                   ? [CAROUSEL_ITEMS[CAROUSEL_ITEMS.length - 1]]
@@ -318,6 +352,8 @@ export const Gallery = () => {
               {["stationary", "clicked", "clickCanceled"].includes(status) &&
                 CAROUSEL_ITEMS[slide]}
             </div>
+
+            {/* 좌우 화살표 컨트롤 */}
             <div className="carousel-control">
               <div
                 className="control left"
@@ -343,6 +379,8 @@ export const Gallery = () => {
               </div>
             </div>
           </div>
+
+          {/* 하단 인디케이터 (점) */}
           <div className="carousel-indicator">
             {CAROUSEL_ITEMS.map((_, idx) => (
               <button
@@ -360,6 +398,8 @@ export const Gallery = () => {
 
         <Button onClick={() => modalState[1](true)}>사진 전체보기</Button>
       </LazyDiv>
+
+      {/* 사진 전체보기 모달 */}
       <Modal
         modalState={modalState}
         className="all-photo-modal"

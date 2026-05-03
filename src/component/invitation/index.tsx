@@ -18,6 +18,11 @@ import PhoneIcon from "../../icons/phone-flip-icon.svg?react"
 import EnvelopeIcon from "../../icons/envelope-icon.svg?react"
 import { useState } from "react"
 
+/**
+ * 초대 메시지와 혼주 정보, 연락하기 기능을 제공하는 컴포넌트입니다.
+ *
+ * @returns {JSX.Element} 모시는 글 섹션
+ */
 export const Invitation = () => {
   const contactModalState = useState(false)
   return (
@@ -27,6 +32,7 @@ export const Invitation = () => {
 
         <div className="break" />
 
+        {/* 초대 문구 */}
         <div className="content">싱그러운 여름 향기 가득한 날</div>
         <div className="content">소중한 분들을 모시고</div>
         <div className="content">사랑의 약속을 하려고 합니다.</div>
@@ -40,6 +46,7 @@ export const Invitation = () => {
 
         <div className="break" />
 
+        {/* 혼주 및 신랑 정보 */}
         <div className="name">
           {GROOM_FATHER} · {GROOM_MOTHER}
           <span className="relation">
@@ -47,6 +54,7 @@ export const Invitation = () => {
           </span>{" "}
           {GROOM_FULLNAME}
         </div>
+        {/* 혼주 및 신부 정보 */}
         <div className="name">
           {BRIDE_FATHER} · {BRIDE_MOTHER}
           <span className="relation">
@@ -65,6 +73,8 @@ export const Invitation = () => {
           연락하기
         </Button>
       </LazyDiv>
+
+      {/* 연락처 정보 모달 */}
       <Modal
         modalState={contactModalState}
         className="contact-modal"
@@ -80,6 +90,7 @@ export const Invitation = () => {
         </div>
 
         <div className="content">
+          {/* 신랑측 연락처 */}
           <div className="contact-info">
             {GROOM_INFO.filter(({ phone }) => !!phone).map(
               ({ relation, name, phone }) => (
@@ -87,12 +98,14 @@ export const Invitation = () => {
                   <div className="relation">{relation}</div>
                   <div>{name}</div>
                   <div>
+                    {/* 전화 걸기 */}
                     <PhoneIcon
                       className="flip icon"
                       onClick={() => {
                         window.open(`tel:${phone}`, "_self")
                       }}
                     />
+                    {/* 문자 보내기 */}
                     <EnvelopeIcon
                       className="icon"
                       onClick={() => {
@@ -104,6 +117,7 @@ export const Invitation = () => {
               ),
             )}
           </div>
+          {/* 신부측 연락처 */}
           <div className="contact-info">
             {BRIDE_INFO.filter(({ phone }) => !!phone).map(
               ({ relation, name, phone }) => (
